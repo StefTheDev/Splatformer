@@ -9,17 +9,21 @@ FMOD::Channel* SoundManager::loopChannel;
 FMOD::Channel* SoundManager::miscChannel;
 std::map<std::string, FMOD::Sound*> SoundManager::sounds;
 
-bool SoundManager::LoadSounds(std::string _defaultPath) {
+FMOD_RESULT SoundManager::Initialise() {
 	FMOD_RESULT result;
 	result = FMOD::System_Create(&audioSystem);
 	if (result != FMOD_OK) {
-		return false;
+		return result;
 	}
 
 	result = audioSystem->init(100, FMOD_INIT_NORMAL | FMOD_INIT_3D_RIGHTHANDED, 0);
 	if (result != FMOD_OK) {
-		return false;
+		return result;
 	}
+}
+
+FMOD_RESULT SoundManager::LoadSounds(std::string _defaultPath) {
+	FMOD_RESULT result;
 
 	for (auto& path : fsys::directory_iterator(_defaultPath)) {
 		std::string pthStr = path.path().generic_string();
@@ -42,7 +46,7 @@ bool SoundManager::LoadSounds(std::string _defaultPath) {
 		fileName = fileName.substr(0, fileName.find("."));
 
 		if (result != FMOD_OK) {
-			return false;
+			return result;
 		}
 
 		sounds.insert(std::make_pair(
@@ -54,8 +58,9 @@ bool SoundManager::LoadSounds(std::string _defaultPath) {
 		newSound = nullptr;
 	}
 
-	return true;
+	return FMOD_OK;
 }
+
 
 void SoundManager::update() {
 	audioSystem->update();
@@ -86,6 +91,17 @@ void SoundManager::playSound(std::string _sound, int _mode) {
 
 void SoundManager::setSound(std::string _sound, int _mode) {
 	sounds[_sound]->setMode(_mode);
+}
+
+void SoundManager::ReleaseSound(std::string _sound) {
+	sounds[_sound]->release();
+	sounds.erase(_sound);
+}
+
+void SoundManager::ReleaseAll() {
+	for (auto& sound : sounds) {
+		sound.second->release();
+	}
 }
 
 void SoundManager::Release() {
