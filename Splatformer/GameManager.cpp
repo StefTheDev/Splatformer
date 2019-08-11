@@ -44,6 +44,20 @@ void GameManager::Render()
 	SDL_RenderPresent(renderer);
 }
 
+void GameManager::HandleEvents()
+{
+	SDL_Event event;
+	SDL_PollEvent(&event);
+	switch (event.type)
+	{
+		case SDL_QUIT: {
+			gameState = EXIT;
+		} break;
+	default:
+		break;
+	}
+}
+
 void GameManager::Process()
 {
 
