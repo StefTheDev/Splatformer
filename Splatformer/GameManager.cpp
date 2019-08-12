@@ -1,6 +1,6 @@
 #include "GameManager.h"
 
-GameManager::GameManager(std::string _title)
+GameManager::GameManager()
 {
 }
 
@@ -73,4 +73,19 @@ void GameManager::Clean()
 GameState GameManager::GetState()
 {
 	return gameState;
+}
+
+SDL_Window * GameManager::GetWindow()
+{
+	return window;
+}
+
+SDL_Renderer* GameManager::GetRenderer()
+{
+	return renderer;
+}
+
+SDL_Surface * GameManager::GetSurface()
+{
+	return surface;
 }
