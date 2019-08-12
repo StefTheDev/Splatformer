@@ -21,7 +21,7 @@ const int FRAME_DELAY = 1000 / FPS;
 class GameManager
 {
 public:
-	GameManager(std::string);
+	GameManager();
 	~GameManager();
 
 	void Initialise(std::string _title);
@@ -30,6 +30,10 @@ public:
 	void HandleEvents();
 	void Process();
 	void Clean();
+
+	SDL_Window * GetWindow();
+	SDL_Renderer* GetRenderer();
+	SDL_Surface* GetSurface();
 
 	GameState GetState();
 

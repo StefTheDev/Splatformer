@@ -5,9 +5,7 @@ std::unique_ptr<GameManager> gameManager;
 int main(int argc, char* args[]) {
 
 	gameManager = std::make_unique<GameManager>();
-	
-	Uint32 startFrame;
-	Uint32 timeFrame;
+	Uint32 startFrame, timeFrame;
 	
 	while (gameManager->GetState() != EXIT)
 	{
