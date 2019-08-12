@@ -139,6 +139,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="player.h" />
     <ClInclude Include="helpers.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="soundmanager.h" />
@@ -147,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="soundmanager.cpp" />
   </ItemGroup>

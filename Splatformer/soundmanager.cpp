@@ -17,9 +17,8 @@ FMOD_RESULT SoundManager::Initialise() {
 	}
 
 	result = audioSystem->init(100, FMOD_INIT_NORMAL | FMOD_INIT_3D_RIGHTHANDED, 0);
-	if (result != FMOD_OK) {
-		return result;
-	}
+	
+	return result;
 }
 
 FMOD_RESULT SoundManager::LoadSounds(std::string _defaultPath) {
@@ -78,7 +77,7 @@ void SoundManager::playSound(std::string _sound) {
 	}
 }
 
-void SoundManager::playSound(std::string _sound, int _mode) {
+void SoundManager::playSound(std::string _sound, FMOD_MODE _mode) {
 	FMOD_RESULT result;
 	sounds[_sound]->setMode(_mode);
 
@@ -89,7 +88,7 @@ void SoundManager::playSound(std::string _sound, int _mode) {
 	}
 }
 
-void SoundManager::setSound(std::string _sound, int _mode) {
+void SoundManager::setSound(std::string _sound, FMOD_MODE _mode) {
 	sounds[_sound]->setMode(_mode);
 }
 

@@ -21,10 +21,10 @@ namespace SoundManager {
 
 	//Update the state of all the currently in-use channels
 	void update();
+	//Play a sound using its file name sans extension, and sets the mode of the sound using FMOD_MODE
+	void playSound(std::string soundName, FMOD_MODE soundMode);
 	//Play a sound using its file name sans extension
 	void playSound(std::string soundName);
-	//Play a sound using its file name sans extension, and sets the mode of the sound using FMOD_MODE
-	void playSound(std::string soundName, int soundMode);
 	//Sets the mode of the sound using FMOD_MODE
-	void setSound(std::string soundName, int soundMode);
+	void setSound(std::string soundName, FMOD_MODE soundMode);
 };
