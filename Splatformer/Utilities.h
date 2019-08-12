@@ -12,5 +12,7 @@
 #include <stdio.h>
 #include <Box2D/Box2D.h>
 
+//Pixels per metre for B2D
+constexpr float PPM = 32.0f;
 
 #endif // !UTILITIES_H
