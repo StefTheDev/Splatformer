@@ -31,9 +31,11 @@ Player::Player(int _controller, b2World& _world) {
 	body->CreateFixture(&fixtureDef);
 }
 
-void Player::Render() {
-	
+void Player::Render(SDL_Renderer* _renderer) {
+	SDL_RenderDrawRect(_renderer, dispBody.get());
 }
 
 void Player::Update() {
+	dispBody->x = body->GetPosition().x;
+	dispBody->y = body->GetPosition().y;
 }

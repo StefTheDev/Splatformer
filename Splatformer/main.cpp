@@ -4,7 +4,7 @@ std::unique_ptr<GameManager> gameManager;
 
 int main(int argc, char* args[]) {
 
-	gameManager = std::make_unique<GameManager>();
+	gameManager = std::make_unique<GameManager>("Filler");
 	
 	Uint32 startFrame;
 	Uint32 timeFrame;
