@@ -13,6 +13,6 @@ private:
 	
 	std::unique_ptr<SDL_Rect> dispBody;
 
-	std::unique_ptr<b2Body, b2BodyDeleter> body;
+	b2BodyPtr body;
 	std::unique_ptr<b2PolygonShape> shape;
 };
