@@ -1,6 +1,6 @@
 #pragma once
-#include "helpers.h"
-#include <fmod.hpp>
+
+#include "Utilities.h"
 
 namespace SoundManager {
 	//Initialise the manager

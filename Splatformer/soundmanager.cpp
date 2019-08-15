@@ -1,6 +1,4 @@
 #include "soundmanager.h"
-#include <filesystem>
-#include <cstring>
 
 namespace fsys = std::experimental::filesystem;
 
