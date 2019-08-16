@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{1732FFFB-72DC-4D11-9E4C-42B11F183C2A}</ProjectGuid>
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{B8AC1D27-3D9D-442E-9469-5135D264F8FB}</ProjectGuid>
     <RootNamespace>Splatformer</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -28,13 +28,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -69,21 +69,21 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>D:\Users\tjeu.vre8109\Documents\GitHub\Splatformer\Splatformer\Dependencies;$(ProjectDir)\Dependencies\fmod;$(ProjectDir)\Dependencies\SDL;$(ProjectDir)\Dependencies\SDL_Image;$(ProjectDir)\Dependencies\SDL_Image\include;$(ProjectDir)\Dependencies\SDL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Users\tjeu.vre8109\Documents\GitHub\Splatformer\Splatformer;$(ProjectDir)\Dependencies\fmod;$(ProjectDir)\Dependencies\SDL;$(ProjectDir)\Dependencies\SDL_Image;$(ProjectDir)\Dependencies\SDL_Image\include;$(ProjectDir)\Dependencies\SDL\include;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>D:\Users\tjeu.vre8109\Documents\GitHub\Splatformer\Splatformer\Dependencies;$(ProjectDir)\Dependencies\fmod;$(ProjectDir)\Dependencies\SDL;$(ProjectDir)\Dependencies\SDL_Image;$(ProjectDir)\Dependencies\SDL_Image\include;$(ProjectDir)\Dependencies\SDL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Users\tjeu.vre8109\Documents\GitHub\Splatformer\Splatformer;$(ProjectDir)\Dependencies\fmod;$(ProjectDir)\Dependencies\SDL;$(ProjectDir)\Dependencies\SDL_Image;$(ProjectDir)\Dependencies\SDL_Image\include;$(ProjectDir)\Dependencies\SDL\include;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\Dependencies\SDL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\Dependencies\SDL\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>D:\Users\tjeu.vre8109\Documents\GitHub\Splatformer\Splatformer\Dependencies;$(ProjectDir)\Dependencies\fmod;$(ProjectDir)\Dependencies\SDL;$(ProjectDir)\Dependencies\SDL_Image;$(ProjectDir)\Dependencies\SDL_Image\include;$(ProjectDir)\Dependencies\SDL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Users\tjeu.vre8109\Documents\GitHub\Splatformer\Splatformer;$(ProjectDir)\Dependencies\fmod;$(ProjectDir)\Dependencies\SDL;$(ProjectDir)\Dependencies\SDL_Image;$(ProjectDir)\Dependencies\SDL_Image\include;$(ProjectDir)\Dependencies\SDL\include;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\Dependencies\SDL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\Dependencies\SDL\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(ProjectDir)\Dependencies\SDL\include;$(ProjectDir)\Dependencies\SDL_Image\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\Dependencies\SDL\lib;$(ProjectDir)\Dependencies\SDL_Image\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>D:\Users\tjeu.vre8109\Documents\GitHub\Splatformer\Splatformer\Dependencies;$(ProjectDir)\Dependencies\fmod;$(ProjectDir)\Dependencies\SDL;$(ProjectDir)\Dependencies\SDL_Image;$(ProjectDir)\Dependencies\SDL_Image\include;$(ProjectDir)\Dependencies\SDL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Users\tjeu.vre8109\Documents\GitHub\Splatformer\Splatformer;$(ProjectDir)\Dependencies\fmod;$(ProjectDir)\Dependencies\SDL;$(ProjectDir)\Dependencies\SDL_Image;$(ProjectDir)\Dependencies\SDL_Image\include;$(ProjectDir)\Dependencies\SDL\include;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\Dependencies\SDL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\Dependencies\SDL\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -91,12 +91,10 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Dependencies\SDL\include;$(ProjectDir)\Dependencies;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>G:\MDS\Visual Studio\Splatformer\Splatformer\Dependencies\SDL\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>NotSet</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -105,12 +103,10 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Dependencies\SDL\include;$(ProjectDir)\Dependencies;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>G:\MDS\Visual Studio\Splatformer\Splatformer\Dependencies\SDL\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -121,14 +117,12 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Dependencies\SDL\include;$(ProjectDir)\Dependencies;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>G:\MDS\Visual Studio\Splatformer\Splatformer\Dependencies\SDL\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>NotSet</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -139,29 +133,27 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Dependencies\SDL\include;$(ProjectDir)\Dependencies;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>G:\MDS\Visual Studio\Splatformer\Splatformer\Dependencies\SDL\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>NotSet</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="GameManager.h" />
-    <ClInclude Include="player.h" />
-    <ClInclude Include="scene.h" />
-    <ClInclude Include="soundmanager.h" />
-    <ClInclude Include="Utilities.h" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="player.cpp" />
-    <ClCompile Include="scene.cpp" />
-    <ClCompile Include="soundmanager.cpp" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Utilities.h" />
+    <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

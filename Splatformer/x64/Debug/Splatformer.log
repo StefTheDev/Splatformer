@@ -1,0 +1,120 @@
+﻿  Entity.cpp
+  Sprite.cpp
+c:\program files (x86)\microsoft visual studio\2017\professional\vc\tools\msvc\14.15.26726\include\tuple(1305): error C2512: 'SpriteAnimation::SpriteAnimation': no appropriate default constructor available
+  c:\program files (x86)\microsoft visual studio\2017\professional\vc\tools\msvc\14.15.26726\include\tuple(1318): note: see reference to function template instantiation 'std::pair<const _Kty,_Ty>::pair<std::tuple<const char *const &>,std::tuple<>,0,>(_Tuple1 &,_Tuple2 &,std::integer_sequence<unsigned __int64,0>,std::integer_sequence<size_t>)' being compiled
+          with
+          [
+              _Kty=const char *,
+              _Ty=SpriteAnimation,
+              _Tuple1=std::tuple<const char *const &>,
+              _Tuple2=std::tuple<>
+          ]
+  c:\program files (x86)\microsoft visual studio\2017\professional\vc\tools\msvc\14.15.26726\include\tuple(1318): note: see reference to function template instantiation 'std::pair<const _Kty,_Ty>::pair<std::tuple<const char *const &>,std::tuple<>,0,>(_Tuple1 &,_Tuple2 &,std::integer_sequence<unsigned __int64,0>,std::integer_sequence<size_t>)' being compiled
+          with
+          [
+              _Kty=const char *,
+              _Ty=SpriteAnimation,
+              _Tuple1=std::tuple<const char *const &>,
+              _Tuple2=std::tuple<>
+          ]
+  c:\program files (x86)\microsoft visual studio\2017\professional\vc\tools\msvc\14.15.26726\include\xmemory0(879): note: see reference to function template instantiation 'std::pair<const _Kty,_Ty>::pair<const char*const &,>(std::piecewise_construct_t,std::tuple<const char *const &>,std::tuple<>)' being compiled
+          with
+          [
+              _Kty=const char *,
+              _Ty=SpriteAnimation
+          ]
+  c:\program files (x86)\microsoft visual studio\2017\professional\vc\tools\msvc\14.15.26726\include\xmemory0(881): note: see reference to function template instantiation 'std::pair<const _Kty,_Ty>::pair<const char*const &,>(std::piecewise_construct_t,std::tuple<const char *const &>,std::tuple<>)' being compiled
+          with
+          [
+              _Kty=const char *,
+              _Ty=SpriteAnimation
+          ]
+  c:\program files (x86)\microsoft visual studio\2017\professional\vc\tools\msvc\14.15.26726\include\xtree(976): note: see reference to function template instantiation 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,const std::piecewise_construct_t&,std::tuple<const char *const &>,std::tuple<>>(_Alloc &,_Objty *const ,const std::piecewise_construct_t &,std::tuple<const char *const &> &&,std::tuple<> &&)' being compiled
+          with
+          [
+              _Alloc=std::allocator<std::_Tree_node<std::pair<const char *const ,SpriteAnimation>,std::_Default_allocator_traits<std::allocator<std::pair<const char *const ,SpriteAnimation>>>::void_pointer>>,
+              _Ty=std::pair<const char *const ,SpriteAnimation>,
+              _Objty=std::pair<const char *const ,SpriteAnimation>
+          ]
+  c:\program files (x86)\microsoft visual studio\2017\professional\vc\tools\msvc\14.15.26726\include\xtree(983): note: see reference to function template instantiation 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,const std::piecewise_construct_t&,std::tuple<const char *const &>,std::tuple<>>(_Alloc &,_Objty *const ,const std::piecewise_construct_t &,std::tuple<const char *const &> &&,std::tuple<> &&)' being compiled
+          with
+          [
+              _Alloc=std::allocator<std::_Tree_node<std::pair<const char *const ,SpriteAnimation>,std::_Default_allocator_traits<std::allocator<std::pair<const char *const ,SpriteAnimation>>>::void_pointer>>,
+              _Ty=std::pair<const char *const ,SpriteAnimation>,
+              _Objty=std::pair<const char *const ,SpriteAnimation>
+          ]
+  c:\program files (x86)\microsoft visual studio\2017\professional\vc\tools\msvc\14.15.26726\include\xtree(1161): note: see reference to function template instantiation 'std::_Tree_node<_Ty,std::_Default_allocator_traits<_Alloc>::void_pointer> *std::_Tree_comp_alloc<_Traits>::_Buynode<const std::piecewise_construct_t&,std::tuple<const char *const &>,std::tuple<>>(const std::piecewise_construct_t &,std::tuple<const char *const &> &&,std::tuple<> &&)' being compiled
+          with
+          [
+              _Ty=std::pair<const char *const ,SpriteAnimation>,
+              _Alloc=std::allocator<std::pair<const char *const ,SpriteAnimation>>,
+              _Traits=std::_Tmap_traits<const char *,SpriteAnimation,std::less<const char *>,std::allocator<std::pair<const char *const ,SpriteAnimation>>,false>
+          ]
+  c:\program files (x86)\microsoft visual studio\2017\professional\vc\tools\msvc\14.15.26726\include\xtree(1162): note: see reference to function template instantiation 'std::_Tree_node<_Ty,std::_Default_allocator_traits<_Alloc>::void_pointer> *std::_Tree_comp_alloc<_Traits>::_Buynode<const std::piecewise_construct_t&,std::tuple<const char *const &>,std::tuple<>>(const std::piecewise_construct_t &,std::tuple<const char *const &> &&,std::tuple<> &&)' being compiled
+          with
+          [
+              _Ty=std::pair<const char *const ,SpriteAnimation>,
+              _Alloc=std::allocator<std::pair<const char *const ,SpriteAnimation>>,
+              _Traits=std::_Tmap_traits<const char *,SpriteAnimation,std::less<const char *>,std::allocator<std::pair<const char *const ,SpriteAnimation>>,false>
+          ]
+  c:\program files (x86)\microsoft visual studio\2017\professional\vc\tools\msvc\14.15.26726\include\map(227): note: see reference to function template instantiation 'std::_Tree_iterator<std::_Tree_val<std::_Tree_simple_types<_Ty>>> std::_Tree<std::_Tmap_traits<_Kty,SpriteAnimation,_Pr,_Alloc,false>>::emplace_hint<const std::piecewise_construct_t&,std::tuple<const char *const &>,std::tuple<>>(std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<_Ty>>>,const std::piecewise_construct_t &,std::tuple<const char *const &> &&,std::tuple<> &&)' being compiled
+          with
+          [
+              _Ty=std::pair<const char *const ,SpriteAnimation>,
+              _Kty=const char *,
+              _Pr=std::less<const char *>,
+              _Alloc=std::allocator<std::pair<const char *const ,SpriteAnimation>>
+          ]
+  c:\program files (x86)\microsoft visual studio\2017\professional\vc\tools\msvc\14.15.26726\include\map(232): note: see reference to function template instantiation 'std::_Tree_iterator<std::_Tree_val<std::_Tree_simple_types<_Ty>>> std::_Tree<std::_Tmap_traits<_Kty,SpriteAnimation,_Pr,_Alloc,false>>::emplace_hint<const std::piecewise_construct_t&,std::tuple<const char *const &>,std::tuple<>>(std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<_Ty>>>,const std::piecewise_construct_t &,std::tuple<const char *const &> &&,std::tuple<> &&)' being compiled
+          with
+          [
+              _Ty=std::pair<const char *const ,SpriteAnimation>,
+              _Kty=const char *,
+              _Pr=std::less<const char *>,
+              _Alloc=std::allocator<std::pair<const char *const ,SpriteAnimation>>
+          ]
+  c:\program files (x86)\microsoft visual studio\2017\professional\vc\tools\msvc\14.15.26726\include\map(247): note: see reference to function template instantiation 'std::pair<std::_Tree_iterator<std::_Tree_val<std::_Tree_simple_types<_Ty>>>,bool> std::map<const char *,SpriteAnimation,std::less<_Kty>,std::allocator<_Ty>>::_Try_emplace<const char*const &,>(_Keyty)' being compiled
+          with
+          [
+              _Ty=std::pair<const char *const ,SpriteAnimation>,
+              _Kty=const char *,
+              _Keyty=const char *const &
+          ]
+  c:\program files (x86)\microsoft visual studio\2017\professional\vc\tools\msvc\14.15.26726\include\map(248): note: see reference to function template instantiation 'std::pair<std::_Tree_iterator<std::_Tree_val<std::_Tree_simple_types<_Ty>>>,bool> std::map<const char *,SpriteAnimation,std::less<_Kty>,std::allocator<_Ty>>::_Try_emplace<const char*const &,>(_Keyty)' being compiled
+          with
+          [
+              _Ty=std::pair<const char *const ,SpriteAnimation>,
+              _Kty=const char *,
+              _Keyty=const char *const &
+          ]
+  c:\program files (x86)\microsoft visual studio\2017\professional\vc\tools\msvc\14.15.26726\include\map(363): note: see reference to function template instantiation 'std::pair<std::_Tree_iterator<std::_Tree_val<std::_Tree_simple_types<_Ty>>>,bool> std::map<const char *,SpriteAnimation,std::less<_Kty>,std::allocator<_Ty>>::try_emplace<>(const char *const &)' being compiled
+          with
+          [
+              _Ty=std::pair<const char *const ,SpriteAnimation>,
+              _Kty=const char *
+          ]
+  c:\program files (x86)\microsoft visual studio\2017\professional\vc\tools\msvc\14.15.26726\include\map(363): note: see reference to function template instantiation 'std::pair<std::_Tree_iterator<std::_Tree_val<std::_Tree_simple_types<_Ty>>>,bool> std::map<const char *,SpriteAnimation,std::less<_Kty>,std::allocator<_Ty>>::try_emplace<>(const char *const &)' being compiled
+          with
+          [
+              _Ty=std::pair<const char *const ,SpriteAnimation>,
+              _Kty=const char *
+          ]
+  c:\program files (x86)\microsoft visual studio\2017\professional\vc\tools\msvc\14.15.26726\include\map(362): note: while compiling class template member function 'SpriteAnimation &std::map<const char *,SpriteAnimation,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>::operator [](const char *const &)'
+          with
+          [
+              _Kty=const char *,
+              _Ty=SpriteAnimation
+          ]
+  d:\users\tjeu.vre8109\documents\visual studios\splatformer\splatformer\sprite.cpp(33): note: see reference to function template instantiation 'SpriteAnimation &std::map<const char *,SpriteAnimation,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>::operator [](const char *const &)' being compiled
+          with
+          [
+              _Kty=const char *,
+              _Ty=SpriteAnimation
+          ]
+  d:\users\tjeu.vre8109\documents\visual studios\splatformer\splatformer\sprite.h(41): note: see reference to class template instantiation 'std::map<const char *,SpriteAnimation,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>' being compiled
+          with
+          [
+              _Kty=const char *,
+              _Ty=SpriteAnimation
+          ]
+  Generating Code...
