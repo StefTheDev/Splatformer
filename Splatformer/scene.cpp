@@ -1,5 +1,10 @@
 #include "scene.h"
 
+//Map a value, x, that exists between lower and upper, to a value between min and max
+float MapBetween(float x, float lower, float upper, float min, float max) {
+	return ((x - lower) / (upper - lower) * (max - min) + min);
+}
+
 void Scene::HandleEvents(SDL_Event _sdlEvent) {
 	switch (_sdlEvent.type) {
 	case SDL_CONTROLLERBUTTONDOWN: {
@@ -15,14 +20,15 @@ void Scene::HandleEvents(SDL_Event _sdlEvent) {
 		case SDL_CONTROLLER_AXIS_LEFTX:;
 		case SDL_CONTROLLER_AXIS_LEFTY: {
 			//TODO: Hand in a Vector2D with x and y mapped between -1.0f and 1.0f
-			LeftStick(_sdlEvent.caxis.which, Vector2D());
+			LeftStick(_sdlEvent.caxis.which, Vector2(0.0f, 0.0f));
+			Vector2 absolutely;
 			break;
 		}
 		case SDL_CONTROLLER_AXIS_RIGHTX:;
 		case SDL_CONTROLLER_AXIS_RIGHTY:
 		{
 			//TODO: Hand in a Vector2D with x and y mapped between -1.0f and 1.0f
-			RightStick(_sdlEvent.caxis.which, Vector2D());
+			RightStick(_sdlEvent.caxis.which, Vector2());
 			break;
 		}
 		case SDL_CONTROLLER_AXIS_TRIGGERLEFT:
@@ -64,10 +70,10 @@ void Scene::ButtonDown(SDL_JoystickID _gamepadID, Uint8 _button) {
 void Scene::ButtonUp(SDL_JoystickID _gamepadID, Uint8 _button) {
 }
 
-void Scene::LeftStick(SDL_JoystickID _gamepadID, Vector2D _axisPosition) {
+void Scene::LeftStick(SDL_JoystickID _gamepadID, Vector2 _axisPosition) {
 }
 
-void Scene::RightStick(SDL_JoystickID _gamepadID, Vector2D _axisPosition) {
+void Scene::RightStick(SDL_JoystickID _gamepadID, Vector2 _axisPosition) {
 }
 
 void Scene::LeftTrigger(SDL_JoystickID _gamepadID, float _triggerPosition) {

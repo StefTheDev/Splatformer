@@ -1,7 +1,7 @@
 #pragma once
 #include "Utilities.h"
+#include "Vector2.h"
 
-class Vector2D;
 class GameObject;
 
 class Scene {
@@ -17,9 +17,9 @@ public:
 	//Event fired when a gamepad button is released. Uses SDL_GameControllerButton
 	virtual void ButtonUp(SDL_JoystickID gamepadID, Uint8 button);
 	//Event fired when a gamepad left stick is moved
-	virtual void LeftStick(SDL_JoystickID gamepadID, Vector2D axisPosition);
+	virtual void LeftStick(SDL_JoystickID gamepadID, Vector2 axisPosition);
 	//Event fired when a gamepad right stick is moved
-	virtual void RightStick(SDL_JoystickID gamepadID, Vector2D axisPosition);
+	virtual void RightStick(SDL_JoystickID gamepadID, Vector2 axisPosition);
 	//Event fired when a gamepad left trigger is adjusted
 	virtual void LeftTrigger(SDL_JoystickID gamepadID, float triggerPosition);
 	//Event fired when a gamepad right trigger is adjusted

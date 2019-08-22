@@ -33,10 +33,5 @@ struct b2BodyDeleter {
 using b2BodyPtr = std::unique_ptr<b2Body, b2BodyDeleter>;
 */
 
-//Map a value, x, that exists between lower and upper, to a value between min and max
-float MapBetween(float x, float lower, float upper, float min, float max) {
-	return ((x - lower) / (upper - lower) * (max - min) + min);
-}
-
 
 #endif
