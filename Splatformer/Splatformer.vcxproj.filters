@@ -55,7 +55,10 @@
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="scene.cpp">
-      <Filter>Source Files\Objects</Filter>
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneTest.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -75,7 +78,13 @@
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="scene.h">
-      <Filter>Header Files\Objects</Filter>
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneTest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

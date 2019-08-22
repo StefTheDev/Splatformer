@@ -145,14 +145,17 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="scene.cpp" />
+    <ClCompile Include="sceneTest.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Collider.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="scene.h" />
+    <ClInclude Include="sceneTest.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Vector2.h" />
