@@ -14,12 +14,12 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <stdio.h>
+#include <Box2D/Box2D.h>
 
 //Local Includes
 #include "Vector2.h"
 
 /*
-#include <Box2D/Box2D.h>
 
 //Pixels per metre for B2D
 constexpr float PPM = 32.0f;
