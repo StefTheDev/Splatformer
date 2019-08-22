@@ -5,7 +5,7 @@ class Player {
 public:
 	//Player(int controller, b2World& world);
 
-	void Render();
+	void Render(SDL_Renderer* renderer);
 	void Update();
 
 private:
@@ -18,7 +18,7 @@ private:
 	
 	std::unique_ptr<SDL_Rect> dispBody;
 
-	std::unique_ptr<b2Body> body;
+	b2BodyPtr body;
 	std::unique_ptr<b2PolygonShape> shape;
 	*/
 <<<<<<< Updated upstream

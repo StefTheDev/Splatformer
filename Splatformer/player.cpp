@@ -18,7 +18,8 @@ Player::Player(int _controller, b2World& _world) {
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(0.0f, 0.0f);
-	body = std::make_unique<b2Body>(_world.CreateBody(&bodyDef));
+
+	body.reset(_world.CreateBody(&bodyDef));
 
 	shape = std::make_unique<b2PolygonShape>();
 	shape->SetAsBox(1.0f, 1.0f);
@@ -32,9 +33,11 @@ Player::Player(int _controller, b2World& _world) {
 }
 */
 
-void Player::Render() {
-	
+void Player::Render(SDL_Renderer* _renderer) {
+	SDL_RenderDrawRect(_renderer, dispBody.get());
 }
 
 void Player::Update() {
+	dispBody->x = body->GetPosition().x;
+	dispBody->y = body->GetPosition().y;
 }
