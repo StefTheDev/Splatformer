@@ -1,5 +1,9 @@
 #pragma once
 
+//#ifndef _DEBUG
+//#define _ITERATOR_DEBUG_LEVEL 1
+//#endif // _DEBUG
+
 #ifndef UTILITIES_H
 #define UTILITIES_H
 
@@ -19,10 +23,15 @@
 //Local Includes
 #include "Vector2.h"
 
-/*
+//Constant expressions
 
 //Pixels per metre for B2D
 constexpr float PPM = 32.0f;
+
+//Global Variables
+
+//Time since last frame in seconds
+extern float deltaTime;
 
 struct b2BodyDeleter {
 	void operator()(b2Body* _body) const {
@@ -31,7 +40,6 @@ struct b2BodyDeleter {
 };
 
 using b2BodyPtr = std::unique_ptr<b2Body, b2BodyDeleter>;
-*/
 
 
 #endif

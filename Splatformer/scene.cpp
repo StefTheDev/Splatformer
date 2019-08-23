@@ -21,24 +21,23 @@ void Scene::HandleEvents(SDL_Event _sdlEvent) {
 		case SDL_CONTROLLER_AXIS_LEFTY: {
 			//TODO: Hand in a Vector2D with x and y mapped between -1.0f and 1.0f
 			LeftStick(_sdlEvent.caxis.which, Vector2(0.0f, 0.0f));
-			Vector2 absolutely;
 			break;
 		}
 		case SDL_CONTROLLER_AXIS_RIGHTX:;
 		case SDL_CONTROLLER_AXIS_RIGHTY:
 		{
 			//TODO: Hand in a Vector2D with x and y mapped between -1.0f and 1.0f
-			RightStick(_sdlEvent.caxis.which, Vector2());
+			RightStick(_sdlEvent.caxis.which, Vector2(0.0f, 0.0f));
 			break;
 		}
 		case SDL_CONTROLLER_AXIS_TRIGGERLEFT:
 		{
-			LeftTrigger(_sdlEvent.caxis.which, MapBetween((float)_sdlEvent.caxis.axis, -32768.0f, 32767.0f, -1.0f, 1.0f));
+			LeftTrigger(_sdlEvent.caxis.which, MapBetween((float)_sdlEvent.caxis.value, -32768.0f, 32767.0f, -1.0f, 1.0f));
 			break;
 		}
 		case SDL_CONTROLLER_AXIS_TRIGGERRIGHT:
 		{
-			RightTrigger(_sdlEvent.caxis.which, MapBetween((float)_sdlEvent.caxis.axis, -32768.0f, 32767.0f, -1.0f, 1.0f));
+			RightTrigger(_sdlEvent.caxis.which, MapBetween((float)_sdlEvent.caxis.value, -32768.0f, 32767.0f, -1.0f, 1.0f));
 			break;
 		}
 		default: break;
@@ -82,13 +81,13 @@ void Scene::LeftTrigger(SDL_JoystickID _gamepadID, float _triggerPosition) {
 void Scene::RightTrigger(SDL_JoystickID _gamepadID, float _triggerPosition) {
 }
 
-void Scene::ControllerAdded(SDL_JoystickID _gamepadID) {
+void Scene::ControllerAdded(int _deviceIndex) {
 }
 
-void Scene::ControllerRemoved(SDL_JoystickID _gamepadID) {
+void Scene::ControllerRemoved(SDL_JoystickID _instanceID) {
 }
 
-void Scene::ControllerRemapped(SDL_JoystickID _gamepadID) {
+void Scene::ControllerRemapped(SDL_JoystickID _instanceID) {
 }
 
 void Scene::Quit() {

@@ -1,8 +1,7 @@
 #pragma once
 #include "Utilities.h"
 #include "Vector2.h"
-
-class GameObject;
+#include "Entity.h"
 
 class Scene {
 public:
@@ -25,14 +24,14 @@ public:
 	//Event fired when a gamepad right trigger is adjusted
 	virtual void RightTrigger(SDL_JoystickID gamepadID, float triggerPosition);
 	//Event fired when a gamepad is plugged in
-	virtual void ControllerAdded(SDL_JoystickID gamepadID);
+	virtual void ControllerAdded(int _deviceIndex);
 	//Event fired when a gamepad is unplugged
-	virtual void ControllerRemoved(SDL_JoystickID gamepadID);
+	virtual void ControllerRemoved(SDL_JoystickID instanceID);
 	//Event fired when a gamepad's ID is changed
-	virtual void ControllerRemapped(SDL_JoystickID gamepadID);
+	virtual void ControllerRemapped(SDL_JoystickID instanceID);
 	//Event fired when game is quit
 	virtual void Quit();
 
 protected:
-	std::vector<GameObject> objects;
+	std::vector<Entity> objects;
 };

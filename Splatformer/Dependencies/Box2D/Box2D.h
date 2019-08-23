@@ -16,6 +16,10 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
+#ifndef _DEBUG
+#define _ITERATOR_DEBUG_LEVEL 0
+#endif
+
 #ifndef BOX2D_H
 #define BOX2D_H
 

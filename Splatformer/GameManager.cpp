@@ -28,6 +28,8 @@ void GameManager::Initialise(std::string _title)
 		SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0xFF, 0xFF, 0xFF));
 		SDL_UpdateWindowSurface(window);
 
+		timeCurrentFrame = SDL_GetPerformanceCounter();
+
 		gameState = MENU;
 	}
 	else
@@ -61,7 +63,10 @@ void GameManager::HandleEvents()
 
 void GameManager::Process()
 {
+	timeLastFrame = timeCurrentFrame;
+	timeCurrentFrame = SDL_GetPerformanceCounter();
 
+	deltaTime = (float)((timeCurrentFrame - timeLastFrame) / (float)SDL_GetPerformanceFrequency());
 }
 
 void GameManager::Clean()

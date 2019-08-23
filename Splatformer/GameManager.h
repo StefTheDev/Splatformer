@@ -5,6 +5,11 @@
 
 #include "Utilities.h"
 
+
+
+#include "sceneTest.h"
+
+
 enum GameState
 {
 	MENU,
@@ -43,6 +48,9 @@ private:
 	SDL_Surface * surface;
 
 	GameState gameState;
+
+	Uint64 timeCurrentFrame = 0;
+	Uint64 timeLastFrame = 0;
 };
 
 #endif 
