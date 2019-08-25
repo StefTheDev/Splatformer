@@ -4,6 +4,8 @@
 constexpr int CATEGORY_PLATFORM			= 0b000010;
 constexpr int CATEGORY_PLAYER			= 0b000100;
 
+constexpr int MASK_SENSOR				= 0b000000;
+
 constexpr int MASK_PLATFORM_COLLIDE		= 0b000100;
 constexpr int MASK_PLATFORM_NOCOLLIDE	= 0b001000;
 

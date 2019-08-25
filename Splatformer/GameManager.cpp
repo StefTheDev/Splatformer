@@ -50,14 +50,15 @@ void GameManager::Render()
 void GameManager::HandleEvents()
 {
 	SDL_Event event;
-	SDL_PollEvent(&event);
-	switch (event.type)
-	{
-	case SDL_QUIT: {
-		gameState = EXIT;
-	} break;
-	default:
-		break;
+	while (SDL_PollEvent(&event)) {
+		switch (event.type) {
+		case SDL_QUIT:
+		{
+			gameState = EXIT;
+		} break;
+		default:
+			break;
+		}
 	}
 }
 

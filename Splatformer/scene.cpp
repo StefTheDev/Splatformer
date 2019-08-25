@@ -5,6 +5,16 @@ float MapBetween(float x, float lower, float upper, float min, float max) {
 	return ((x - lower) / (upper - lower) * (max - min) + min);
 }
 
+void Scene::LoadScene() {
+	//Do something each time a scene is loaded
+	Load();
+}
+
+void Scene::UnloadScene() {
+	//Do something each time a scene is unloaded
+	Unload();
+}
+
 void Scene::HandleEvents(SDL_Event _sdlEvent) {
 	switch (_sdlEvent.type) {
 	case SDL_CONTROLLERBUTTONDOWN: {
@@ -48,11 +58,11 @@ void Scene::HandleEvents(SDL_Event _sdlEvent) {
 		ControllerAdded(_sdlEvent.cdevice.which);
 		break;
 	}
-	case SDL_CONTROLLERDEVICEREMOVED:{
+	case SDL_CONTROLLERDEVICEREMOVED: {
 		ControllerRemoved(_sdlEvent.cdevice.which);
 		break;
 	}
-	case SDL_CONTROLLERDEVICEREMAPPED:{
+	case SDL_CONTROLLERDEVICEREMAPPED: {
 		ControllerRemapped(_sdlEvent.cdevice.which);
 		break;
 	}

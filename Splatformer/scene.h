@@ -5,7 +5,12 @@
 
 class Scene {
 public:
-	virtual void Initialise() = 0;
+	void LoadScene();
+	void UnloadScene();
+
+	virtual void Load() = 0;
+	virtual void Unload() = 0;
+
 	virtual void Update() = 0;
 	virtual void Render() = 0;
 
@@ -32,6 +37,8 @@ public:
 	virtual void ControllerRemapped(SDL_JoystickID instanceID);
 	//Event fired when game is quit
 	virtual void Quit();
+
+	//TODO: Camera Controls
 
 protected:
 	std::vector<Entity> objects;

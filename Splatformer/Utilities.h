@@ -25,6 +25,9 @@
 
 //Constant expressions
 
+//Into Box2D: Divide values by PPM
+//Out of Box2D: Multiply by PPM
+
 //Pixels per metre for B2D
 constexpr float PPM = 32.0f;
 

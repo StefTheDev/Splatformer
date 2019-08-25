@@ -7,7 +7,9 @@ class SceneTest : public Scene {
 public:
 	SceneTest();
 
-	void Initialise() override;
+	void Load() override;
+	void Unload() override;
+
 	void Update() override;
 	void Render() override;
 
@@ -21,5 +23,5 @@ private:
 	Collider* player;
 	Collider* platform;
 
-	SDL_GameController* controller = nullptr;
+	std::vector<SDL_GameController*> controllers;
 };
