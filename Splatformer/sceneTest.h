@@ -7,7 +7,7 @@ class SceneTest : public Scene {
 public:
 	SceneTest();
 
-	void Initialise();
+	void Initialise() override;
 	void Update() override;
 	void Render() override;
 

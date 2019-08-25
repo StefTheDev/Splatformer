@@ -5,11 +5,6 @@
 
 #include "Utilities.h"
 
-
-
-#include "sceneTest.h"
-
-
 enum GameState
 {
 	MENU,

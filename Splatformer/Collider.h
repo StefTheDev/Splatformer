@@ -1,9 +1,13 @@
 #pragma once
 #include "Utilities.h"
 
-#define PLATFORM_MASK_DEFAULT 0b0001
-#define PLATFORM_CATEGORY_COLLIDE 0b0001
-#define PLATFORM_CATEGORY_NO_COLLIDE 0b0010
+constexpr int CATEGORY_PLATFORM			= 0b000010;
+constexpr int CATEGORY_PLAYER			= 0b000100;
+
+constexpr int MASK_PLATFORM_COLLIDE		= 0b000100;
+constexpr int MASK_PLATFORM_NOCOLLIDE	= 0b001000;
+
+constexpr int MASK_PLAYER_DEFAULT		= 0b000010;
 
 class Collider {
 public:
@@ -12,7 +16,7 @@ public:
 	void InitialiseStatic(b2World* worldRef);
 	void InitialiseDynamic(b2World* worldRef, float density, float friction, float damping);
 
-	//Reminder: if ((categoryA & maskB) != 0 && (categoryB & maskA) != 0) Collisions Can Happen
+	//Reminder: If ((categoryA & maskB) != 0 && (categoryB & maskA) != 0) Collisions Can Happen
 
 	//Set the collider category bits
 	void SetCollisionCategory(int category);

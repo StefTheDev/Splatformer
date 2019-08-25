@@ -18,6 +18,12 @@ void SceneTest::Initialise() {
 	platform->InitialiseStatic(sceneWorld.get());
 
 
+	player->SetCollisionCategory(CATEGORY_PLAYER);
+	player->SetCollisionMask(MASK_PLAYER_DEFAULT);
+
+	platform->SetCollisionCategory(CATEGORY_PLATFORM);
+	platform->SetCollisionMask(MASK_PLATFORM_NOCOLLIDE);
+
 	for (int i = 0; i < SDL_NumJoysticks(); ++i) {
 		if (SDL_IsGameController(i)) {
 			controller = SDL_GameControllerOpen(i);
@@ -32,6 +38,7 @@ void SceneTest::Initialise() {
 
 void SceneTest::Update() {
 	sceneWorld->Step(deltaTime, velIterations, posIterations);
+	std::cout << "Player Y: " << player->body->GetPosition().y << std::endl;
 }
 
 void SceneTest::Render() {
@@ -39,7 +46,7 @@ void SceneTest::Render() {
 
 void SceneTest::ButtonDown(SDL_JoystickID _gamepadID, Uint8 _button) {
 	if (_button == SDL_CONTROLLER_BUTTON_A) {
-		player->Jump();
+		player->body->ApplyLinearImpulseToCenter({0.0f, 5.0f}, true);
 	}
 }
 
