@@ -11,20 +11,26 @@ public:
 	Entity();
 	~Entity();
 
+	//General
+	bool Initialise(Vector2 _position, Vector2 dimension);
+	void Render(SDL_Renderer * renderer);
+	void Update();
+
 	//Sprite
-	void LoadTexture(const char *);
+	void LoadSprite(std::shared_ptr<Sprite> _sprite);
 
-	//Collision
-	//Box2D
-
-	//Transform
-	void Translate(Vector2 &);
-	void Scale(Vector2 &);
+	//Manipulation
+	void Transform(Vector2 position);
 	void Rotate(float);
+	void Scale(float);
 
 private:
-	Vector2 position, scale;
-	float rotation;
+	Vector2 position, dimension;
+	SDL_Rect source, destination;
+
+	float angle, scale;
+
+	std::shared_ptr<Sprite> sprite;
 };
 
 #endif
