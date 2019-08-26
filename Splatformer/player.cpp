@@ -3,6 +3,7 @@
 const float playerWidth = 1.0f;
 const float playerHeight = 1.0f;
 
+/*
 Player::Player(int _controller, b2World& _world) {
 	if (SDL_IsGameController(_controller)) {
 		controller = std::make_unique<SDL_GameController>(SDL_GameControllerOpen(_controller));
@@ -14,11 +15,11 @@ Player::Player(int _controller, b2World& _world) {
 
 	dispBody->w = 1.0f * PPM;
 	dispBody->h = 1.0f * PPM;
-
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(0.0f, 0.0f);
-	body = std::make_unique<b2Body>(_world.CreateBody(&bodyDef));
+
+	body.reset(_world.CreateBody(&bodyDef));
 
 	shape = std::make_unique<b2PolygonShape>();
 	shape->SetAsBox(1.0f, 1.0f);
@@ -30,10 +31,13 @@ Player::Player(int _controller, b2World& _world) {
 
 	body->CreateFixture(&fixtureDef);
 }
+*/
 
-void Player::Render() {
-	
+void Player::Render(SDL_Renderer* _renderer) {
+	SDL_RenderDrawRect(_renderer, dispBody.get());
 }
 
 void Player::Update() {
+	dispBody->x = body->GetPosition().x;
+	dispBody->y = body->GetPosition().y;
 }

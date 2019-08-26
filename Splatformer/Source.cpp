@@ -1,12 +1,14 @@
 #include "GameManager.h"
 
+
 std::unique_ptr<GameManager> gameManager;
 
-int main(int argc, char* args[]) {
+int main(int argc, char* argv[]) {
 	gameManager = std::make_unique<GameManager>();
-	
+	gameManager->Initialise("Splatformer");
+
 	Uint32 startFrame, timeFrame;
-	
+
 	while (gameManager->GetState() != EXIT)
 	{
 		startFrame = SDL_GetTicks();

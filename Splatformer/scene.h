@@ -1,39 +1,50 @@
 #pragma once
-//#include "helpers.h"
-
-enum InputState {
-	UP = 0,
-	DOWN,
-	UP_FIRST,
-	DOWN_FIRST
-};
+#include "Utilities.h"
+#include "Vector2.h"
+#include "Entity.h"
+#include "Camera.h"
 
 class Scene {
 public:
-	virtual void Initialise() = 0;
-	virtual void Update() = 0;
-	virtual void Render() = 0;
-	virtual void KeyUp(unsigned char key) = 0;
-	virtual void KeyDown(unsigned char key) = 0;
-	virtual void SpecialKeyUp(int key) = 0;
-	virtual void SpecialKeyDown(int key) = 0;
-	virtual void MouseClick(int button, int state) = 0;
-	virtual void MouseMove() = 0;
-	virtual void MouseMoveActive() = 0;
+	void LoadScene();
+	void UnloadScene();
 
-	static void UpdateGlobal();
-	static void UpdateDowns(unsigned char key);
-	static void UpdateUps(unsigned char key);
-	static void UpdateSpecialDowns(int key);
-	static void UpdateSpecialUps(int key);
-	static void UpdateMousePos(int x, int y);
+	virtual void Load() = 0;
+	virtual void Unload() = 0;
+
+	virtual void Update() = 0;
+	
+	//TODO: Draw background inside camera rect
+	virtual void Render() = 0;
+
+	//Used to break up SDL events into separate Scene function calls
+	void HandleEvents(SDL_Event sdlEvent);
+
+	//Event fired when a gamepad button is pressed. Uses SDL_GameControllerButton
+	virtual void ButtonDown(SDL_JoystickID gamepadID, Uint8 button);
+	//Event fired when a gamepad button is released. Uses SDL_GameControllerButton
+	virtual void ButtonUp(SDL_JoystickID gamepadID, Uint8 button);
+	//Event fired when a gamepad left stick is moved
+	virtual void LeftStick(SDL_JoystickID gamepadID, Vector2 axisPosition);
+	//Event fired when a gamepad right stick is moved
+	virtual void RightStick(SDL_JoystickID gamepadID, Vector2 axisPosition);
+	//Event fired when a gamepad left trigger is adjusted
+	virtual void LeftTrigger(SDL_JoystickID gamepadID, float triggerPosition);
+	//Event fired when a gamepad right trigger is adjusted
+	virtual void RightTrigger(SDL_JoystickID gamepadID, float triggerPosition);
+	//Event fired when a gamepad is plugged in
+	virtual void ControllerAdded(int _deviceIndex);
+	//Event fired when a gamepad is unplugged
+	virtual void ControllerRemoved(SDL_JoystickID instanceID);
+	//Event fired when a gamepad's ID is changed
+	virtual void ControllerRemapped(SDL_JoystickID instanceID);
+	//Event fired when game is quit
+	virtual void Quit();
+
+	//Return a pointer to this scene's camera object
+	Camera* GetCamera();
 
 protected:
-	static InputState KeyState[255];
-	static InputState SpecialKeyState[128];
-	//static glm::vec2 MousePos;
-
-	//static std::chrono::time_point<std::chrono::system_clock> currTime;
-	//static std::chrono::duration<double> deltaTimeDuration;
-	static float deltaTime;
+	std::vector<Entity> objects;
+	Camera camera;
 };

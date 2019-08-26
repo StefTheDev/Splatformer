@@ -1,6 +1,12 @@
 #pragma once
-#include "helpers.h"
+<<<<<<< Updated upstream
+
+#include "Utilities.h"
+=======
+#include <map>
+/*
 #include <fmod.hpp>
+>>>>>>> Stashed changes
 
 namespace SoundManager {
 	//Initialise the manager
@@ -28,3 +34,5 @@ namespace SoundManager {
 	//Sets the mode of the sound using FMOD_MODE
 	void setSound(std::string soundName, FMOD_MODE soundMode);
 };
+
+*/

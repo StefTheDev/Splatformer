@@ -1,6 +1,11 @@
 #include "soundmanager.h"
+<<<<<<< Updated upstream
+=======
+
+/*
 #include <filesystem>
 #include <cstring>
+>>>>>>> Stashed changes
 
 namespace fsys = std::experimental::filesystem;
 
@@ -110,3 +115,5 @@ void SoundManager::Release() {
 
 	audioSystem->release();
 }
+
+*/
