@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef GAME_MANAGER_H
-#define GAME_MANAGER_H
-
 #include "Utilities.h"
 
 enum GameState
@@ -46,6 +43,4 @@ private:
 
 	Uint64 timeCurrentFrame = 0;
 	Uint64 timeLastFrame = 0;
-};
-
-#endif 
+}; 
