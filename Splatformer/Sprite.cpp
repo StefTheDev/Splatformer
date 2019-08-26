@@ -9,9 +9,9 @@ Sprite::~Sprite()
 {
 }
 
-void Sprite::Render()
+void Sprite::Render(Camera _camera)
 {
-
+	//TODO: Offset non-UI sprites by _camera.position
 }
 
 void Sprite::Load(const char * fileName, SDL_Renderer * renderer)
