@@ -22,6 +22,7 @@
 
 //Local Includes
 #include "Vector2.h"
+#include "input.h"
 
 //Constant expressions
 

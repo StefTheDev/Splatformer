@@ -43,4 +43,6 @@ private:
 
 	Uint64 timeCurrentFrame = 0;
 	Uint64 timeLastFrame = 0;
-}; 
+
+	Input inputManager;
+};

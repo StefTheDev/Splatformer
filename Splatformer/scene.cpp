@@ -28,10 +28,11 @@ void Scene::HandleEvents(SDL_Event _sdlEvent) {
 	}
 	case SDL_CONTROLLERAXISMOTION: {
 		switch (_sdlEvent.caxis.axis) {
-		case SDL_CONTROLLER_AXIS_LEFTX:;
+		case SDL_CONTROLLER_AXIS_LEFTX:
 		case SDL_CONTROLLER_AXIS_LEFTY: {
 			//TODO: Hand in a Vector2D with x and y mapped between -1.0f and 1.0f
 			LeftStick(_sdlEvent.caxis.which, Vector2(0.0f, 0.0f));
+			Vector2 absolutely;
 			break;
 		}
 		case SDL_CONTROLLER_AXIS_RIGHTX:;

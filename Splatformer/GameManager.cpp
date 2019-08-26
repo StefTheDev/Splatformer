@@ -31,6 +31,8 @@ void GameManager::Initialise(std::string _title)
 		timeCurrentFrame = SDL_GetPerformanceCounter();
 
 		gameState = MENU;
+
+		inputManager.Initialise();
 	}
 	else
 	{
@@ -49,6 +51,7 @@ void GameManager::Render()
 
 void GameManager::HandleEvents()
 {
+	inputManager.HandleEvents();
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
@@ -60,6 +63,7 @@ void GameManager::HandleEvents()
 			break;
 		}
 	}
+
 }
 
 void GameManager::Process()
@@ -68,6 +72,10 @@ void GameManager::Process()
 	timeCurrentFrame = SDL_GetPerformanceCounter();
 
 	deltaTime = (float)((timeCurrentFrame - timeLastFrame) / (float)SDL_GetPerformanceFrequency());
+
+
+	// call this last
+	inputManager.Process();
 }
 
 void GameManager::Clean()
