@@ -13,15 +13,20 @@ public:
 
 	friend Vector2& operator+(Vector2&, Vector2&);
 	friend Vector2& operator-(Vector2&, Vector2&);
-	friend Vector2& operator*(Vector2&, Vector2&);
-	friend Vector2& operator/(Vector2&, Vector2&);
+	friend Vector2& operator*(Vector2&, float);
+	friend Vector2& operator/(Vector2&, float);
+
+
 
 	Vector2& operator=(Vector2&);
 
 	Vector2& operator+=(Vector2&);
 	Vector2& operator-=(Vector2&);
-	Vector2& operator*=(Vector2&);
-	Vector2& operator/=(Vector2&);
+	Vector2& operator*=(float);
+	Vector2& operator/=(float);
+
+	float Magnitude();
+	Vector2 Normalised();
 
 	float x, y;
 };
