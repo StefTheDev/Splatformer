@@ -3,6 +3,7 @@
 
 class Camera {
 public:
+	Camera() = default;
 	Camera(float width, float height);
 
 	void SetPosition(Vector2 newPosition);

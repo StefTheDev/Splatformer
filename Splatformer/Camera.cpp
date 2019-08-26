@@ -4,7 +4,7 @@ Camera::Camera(float _width, float _height) {
 	width = _width;
 	height = _height;
 
-	drawRect = { 0, 0, width, height };
+	drawRect = { 0, 0, (int)width, (int)height };
 }
 
 void Camera::SetPosition(Vector2 _newPosition) {

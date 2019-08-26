@@ -9,7 +9,7 @@ SceneTest::SceneTest() {
 
 	sceneWorld = std::make_unique<b2World>(gravity);
 
-	player = new Collider({0.0f, 0.0f});
+	player = new Collider({ 0.0f, 0.0f });
 	platform = new Collider({ 0.0f, -5.0f });
 }
 
