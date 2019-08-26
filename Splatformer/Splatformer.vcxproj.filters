@@ -66,6 +66,9 @@
     <ClCompile Include="Utilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
@@ -94,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Header Files\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header Files\Objects</Filter>
