@@ -4,6 +4,7 @@
 #define SPRITE_H
 
 #include "Utilities.h"
+#include "Camera.h"
 
 struct SpriteAnimation
 {
@@ -24,7 +25,7 @@ public:
 	~Sprite();
 
 	//General
-	void Render();
+	void Render(Camera camera);
 	void Update();
 
 	//Textures

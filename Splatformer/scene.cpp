@@ -6,12 +6,13 @@ float MapBetween(float x, float lower, float upper, float min, float max) {
 }
 
 void Scene::LoadScene() {
-	//Do something each time a scene is loaded
+	//Do something each time any scene is loaded
 	Load();
 }
 
 void Scene::UnloadScene() {
-	//Do something each time a scene is unloaded
+	//Do something each time any scene is unloaded
+	camera.SetPosition({ 0.0f, 0.0f });
 	Unload();
 }
 
@@ -101,4 +102,8 @@ void Scene::ControllerRemapped(SDL_JoystickID _instanceID) {
 }
 
 void Scene::Quit() {
+}
+
+Camera* Scene::GetCamera() {
+	return &camera;
 }

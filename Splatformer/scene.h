@@ -2,6 +2,7 @@
 #include "Utilities.h"
 #include "Vector2.h"
 #include "Entity.h"
+#include "Camera.h"
 
 class Scene {
 public:
@@ -12,6 +13,8 @@ public:
 	virtual void Unload() = 0;
 
 	virtual void Update() = 0;
+	
+	//TODO: Draw background inside camera rect
 	virtual void Render() = 0;
 
 	//Used to break up SDL events into separate Scene function calls
@@ -38,8 +41,10 @@ public:
 	//Event fired when game is quit
 	virtual void Quit();
 
-	//TODO: Camera Controls
+	//Return a pointer to this scene's camera object
+	Camera* GetCamera();
 
 protected:
 	std::vector<Entity> objects;
+	Camera camera;
 };
