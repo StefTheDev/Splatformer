@@ -38,8 +38,6 @@ void GameManager::Initialise(std::string _title)
 	{
 		gameState = EXIT;
 	}
-
-	//InitialiseGamepads();
 }
 
 void GameManager::Render()
@@ -53,7 +51,6 @@ void GameManager::Render()
 
 void GameManager::HandleEvents()
 {
-
 	inputManager.HandleEvents();
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
@@ -79,18 +76,6 @@ void GameManager::Process()
 
 	// call this last
 	inputManager.Process();
-	//// Updates previous states for input
-	//for (int i = 0; i < numGamepads; i++)
-	//{
-	//	for (int a = 0; a < SDL_CONTROLLER_AXIS_MAX; a++)
-	//	{
-	//		lastControllerInputs[i].axis[a] = controllerInputs[i].axis[a];
-	//	}
-	//	for (int b = 0; b < SDL_CONTROLLER_BUTTON_MAX; b++)
-	//	{
-	//		lastControllerInputs[i].buttons[b] = controllerInputs[i].buttons[b];
-	//	}
-	//}
 }
 
 void GameManager::Clean()
@@ -104,62 +89,6 @@ GameState GameManager::GetState()
 {
 	return gameState;
 }
-
-//void GameManager::InitialiseGamepads()
-//{
-//	if (SDL_WasInit(SDL_INIT_GAMECONTROLLER) != 1)
-//	{
-//		SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER);
-//	}
-//
-//	int nJoysticks = SDL_NumJoysticks();
-//	numGamepads = 0;
-//
-//	//Count how many controllers there are
-//	for (int i = 0; i < nJoysticks; i++)
-//	{
-//		if (SDL_IsGameController(i))
-//		{
-//			numGamepads++;
-//		}
-//	}
-//
-//	// if we have some controllers attached
-//	if (numGamepads > 0)
-//	{
-//		for (int i = 0; i < numGamepads; i++)
-//		{
-//			// Open the controller and add it to our list
-//			SDL_GameController* pad = SDL_GameControllerOpen(i);
-//			if (SDL_GameControllerGetAttached(pad) == 1)
-//			{
-//				connectedControllers.push_back(pad);
-//			}
-//			else
-//				std::cout << "SDL_GetError() = " << SDL_GetError() << std::endl;
-//		}
-//		SDL_GameControllerEventState(SDL_ENABLE);
-//	}
-//
-//	// Set vector sizes
-//	controllerInputs.resize(numGamepads);
-//	lastControllerInputs.resize(numGamepads);
-//
-//	// reset status of controllers
-//	for (int i = 0; i < numGamepads; i++)
-//	{
-//		for (int a = 0; a < SDL_CONTROLLER_AXIS_MAX; a++)
-//		{
-//			controllerInputs[i].axis[a] = 0;
-//			lastControllerInputs[i].axis[a] = 0;
-//		}
-//		for (int b = 0; b < SDL_CONTROLLER_BUTTON_MAX; b++)
-//		{
-//			controllerInputs[i].buttons[b] = false;
-//			lastControllerInputs[i].buttons[b] = false;
-//		}
-//	}
-//}
 
 SDL_Window * GameManager::GetWindow()
 {

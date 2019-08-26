@@ -45,13 +45,4 @@ private:
 	Uint64 timeLastFrame = 0;
 
 	Input inputManager;
-	//// gamepads
-	//void InitialiseGamepads();
-
-	//std::vector<SDL_GameController*> connectedControllers;
-	//std::vector<GamePad> controllerInputs;
-	//std::vector<GamePad> lastControllerInputs;
-	//int numGamepads;
 };
-
-#endif 
