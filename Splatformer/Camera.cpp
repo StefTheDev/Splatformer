@@ -10,7 +10,7 @@ Camera::Camera(float _width, float _height) {
 void Camera::Update() {
 	Vector2 direction = (targetPosition - position).Normalised();
 
-	position += direction * moveSpeed;
+	position += direction * (moveSpeed * deltaTime);
 }
 
 void Camera::SetPosition(Vector2 _newPosition) {
