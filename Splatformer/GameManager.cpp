@@ -56,53 +56,15 @@ void GameManager::HandleEvents()
 
 	inputManager.HandleEvents();
 	SDL_Event event;
-	SDL_PollEvent(&event);
-	switch (event.type)
-	{
-	case SDL_QUIT: {
-		gameState = EXIT;
-	} break;
-
-	//case SDL_CONTROLLERDEVICEADDED:
-	//	std::cout << "DEVICEADDED cdevice.which = " << event.cdevice.which << std::endl;
-	//	break;
-	//case SDL_CONTROLLERBUTTONDOWN:
-	//	// cycle through the controllers
-	//	for (int i = 0; i < numGamepads; i++)
-	//	{
-	//		// Looking for the button that was pressed
-	//		if (event.cbutton.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(connectedControllers[i])))
-	//		{
-	//			// so the relevant state can be updated
-	//			controllerInputs[i].buttons[event.cbutton.button] = true;
-	//			//std::cout << "BUTTON DOWN = " << event.cbutton.button << std::endl;
-	//		}
-	//	}
-	//	break;
-	//	// Do the same for releasing a button
-	//case SDL_CONTROLLERBUTTONUP:
-	//	for (int i = 0; i < numGamepads; i++)
-	//	{
-	//		if (event.cbutton.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(connectedControllers[i])))
-	//		{
-	//			controllerInputs[i].buttons[event.cbutton.button] = false;
-	//			//std::cout << "BUTTON UP = " << event.cbutton.button << std::endl;
-	//		}
-	//	}
-	//	break;
-
-	//	// And axis motions
-	//case SDL_CONTROLLERAXISMOTION:
-	//	for (int i = 0; i < numGamepads; i++) {
-	//		if (event.cbutton.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(connectedControllers[i]))) {
-	//			controllerInputs[i].axis[event.caxis.axis] = event.caxis.value;
-	//			//std::cout << "AXIS" << std::endl;
-	//		}
-	//	}
-	//	break;
-
-	default:
-		break;
+	while (SDL_PollEvent(&event)) {
+		switch (event.type) {
+		case SDL_QUIT:
+		{
+			gameState = EXIT;
+		} break;
+		default:
+			break;
+		}
 	}
 
 }

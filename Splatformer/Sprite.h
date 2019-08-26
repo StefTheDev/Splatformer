@@ -4,6 +4,7 @@
 #define SPRITE_H
 
 #include "Utilities.h"
+#include "Camera.h"
 
 struct SpriteAnimation
 {
@@ -24,23 +25,31 @@ public:
 	~Sprite();
 
 	//General
-	void Render();
-	void Update();
+	void Render(Camera camera);
 
 	//Textures
-	void Load(const char *, SDL_Renderer * renderer);
-
+	void Load(std::string, SDL_Renderer *, bool animated);
 
 	//Animation
-	void Add(const char *, SpriteAnimation);
-	void Play(const char *);
+	void Add(std::string, SpriteAnimation);
+	void Play(std::string);
+
+	SDL_Texture * GetTexture();
+
+	//Data
+	int GetSpeed() const;
+	int GetFrames() const;
+	int GetIndex() const;
+	bool IsAnimated() const;
 
 private:
 
-	//Animation
-	std::map<const char*, SpriteAnimation> animations;
+	std::map<std::string, SpriteAnimation> animations;
+	
 	int index, frames, speed;
+	bool animated = false;
 
+	SDL_Rect srcRect, destRect;
 	SDL_Texture* texture;
 };
 

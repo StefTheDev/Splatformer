@@ -5,6 +5,17 @@ float MapBetween(float x, float lower, float upper, float min, float max) {
 	return ((x - lower) / (upper - lower) * (max - min) + min);
 }
 
+void Scene::LoadScene() {
+	//Do something each time any scene is loaded
+	Load();
+}
+
+void Scene::UnloadScene() {
+	//Do something each time any scene is unloaded
+	camera.SetPosition({ 0.0f, 0.0f });
+	Unload();
+}
+
 void Scene::HandleEvents(SDL_Event _sdlEvent) {
 	switch (_sdlEvent.type) {
 	case SDL_CONTROLLERBUTTONDOWN: {
@@ -49,11 +60,11 @@ void Scene::HandleEvents(SDL_Event _sdlEvent) {
 		ControllerAdded(_sdlEvent.cdevice.which);
 		break;
 	}
-	case SDL_CONTROLLERDEVICEREMOVED:{
+	case SDL_CONTROLLERDEVICEREMOVED: {
 		ControllerRemoved(_sdlEvent.cdevice.which);
 		break;
 	}
-	case SDL_CONTROLLERDEVICEREMAPPED:{
+	case SDL_CONTROLLERDEVICEREMAPPED: {
 		ControllerRemapped(_sdlEvent.cdevice.which);
 		break;
 	}
@@ -92,4 +103,8 @@ void Scene::ControllerRemapped(SDL_JoystickID _instanceID) {
 }
 
 void Scene::Quit() {
+}
+
+Camera* Scene::GetCamera() {
+	return &camera;
 }

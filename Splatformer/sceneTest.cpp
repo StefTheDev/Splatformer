@@ -9,11 +9,11 @@ SceneTest::SceneTest() {
 
 	sceneWorld = std::make_unique<b2World>(gravity);
 
-	player = new Collider({0.0f, 0.0f});
+	player = new Collider({ 0.0f, 0.0f });
 	platform = new Collider({ 0.0f, -5.0f });
 }
 
-void SceneTest::Initialise() {
+void SceneTest::Load() {
 	player->InitialiseDynamic(sceneWorld.get(), 1.0f, 0.3f, 0.5f);
 	platform->InitialiseStatic(sceneWorld.get());
 
@@ -26,19 +26,16 @@ void SceneTest::Initialise() {
 
 	for (int i = 0; i < SDL_NumJoysticks(); ++i) {
 		if (SDL_IsGameController(i)) {
-			controller = SDL_GameControllerOpen(i);
-			if (controller) {
-				break;
-			} else {
-				fprintf(stderr, "Could not open gamecontroller %i: %s\n", i, SDL_GetError());
-			}
+			controllers.push_back(SDL_GameControllerOpen(i));
 		}
 	}
 }
 
+void SceneTest::Unload() {
+}
+
 void SceneTest::Update() {
 	sceneWorld->Step(deltaTime, velIterations, posIterations);
-	std::cout << "Player Y: " << player->body->GetPosition().y << std::endl;
 }
 
 void SceneTest::Render() {
@@ -46,7 +43,7 @@ void SceneTest::Render() {
 
 void SceneTest::ButtonDown(SDL_JoystickID _gamepadID, Uint8 _button) {
 	if (_button == SDL_CONTROLLER_BUTTON_A) {
-		player->body->ApplyLinearImpulseToCenter({0.0f, 5.0f}, true);
+		std::cout << "Pressed A" << std::endl;
 	}
 }
 
