@@ -9,11 +9,13 @@ Entity::~Entity()
 {
 }
 
-bool Entity::Initialise(Vector2 _position, Vector2 dimension)
+bool Entity::Initialise(Vector2 _position, Vector2 _dimension)
 {
 	position = _position;
+	dimension = _dimension;
+
 	angle = 0.0f;
-	scale = 100.0f;
+	scale = 1.0f;
 
 	source.x = source.y = 0;
 	source.w = dimension.x;
