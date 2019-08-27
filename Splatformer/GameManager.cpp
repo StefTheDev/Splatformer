@@ -33,6 +33,8 @@ void GameManager::Initialise(std::string _title)
 		gameState = MENU;
 
 		inputManager.Initialise();
+
+		testScene.LoadScene(renderer);
 	}
 	else
 	{
@@ -45,6 +47,7 @@ void GameManager::Render()
 	SDL_RenderClear(renderer);
 	
 	//Render things...
+	testScene.Render(renderer);
 
 	SDL_RenderPresent(renderer);
 }
@@ -73,6 +76,7 @@ void GameManager::Process()
 
 	deltaTime = (float)((timeCurrentFrame - timeLastFrame) / (float)SDL_GetPerformanceFrequency());
 
+	testScene.Update();
 
 	// call this last
 	inputManager.Process();

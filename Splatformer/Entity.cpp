@@ -66,3 +66,7 @@ void Entity::Scale(float scale)
 {
 	this->scale += scale;
 }
+
+void Entity::SetPosition(Vector2 _newPosition) {
+	position = _newPosition;
+}

@@ -4,6 +4,7 @@
 #define ENTITY_H
 
 #include "Sprite.h"
+#include "Collider.h"
 
 class Entity
 {
@@ -24,7 +25,9 @@ public:
 	void Rotate(float);
 	void Scale(float);
 
-private:
+	void SetPosition(Vector2 newPosition);
+
+protected:
 	Vector2 position, dimension;
 	SDL_Rect source, destination;
 

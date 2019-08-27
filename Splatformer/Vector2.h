@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Utilities.h"
+
 #ifndef VECTOR_2
 #define VECTOR_2
 
@@ -9,10 +11,11 @@ public:
 	Vector2();
 	Vector2(float, float);
 	Vector2(const Vector2&);
+	Vector2(b2Vec2);
 	~Vector2();
 
-	friend Vector2& operator+(Vector2&, Vector2&);
-	friend Vector2& operator-(Vector2&, Vector2&);
+	friend Vector2& operator+(Vector2, Vector2);
+	friend Vector2& operator-(Vector2, Vector2);
 	friend Vector2& operator*(Vector2&, float);
 	friend Vector2& operator/(Vector2&, float);
 
@@ -27,6 +30,8 @@ public:
 
 	float Magnitude();
 	Vector2 Normalised();
+
+	b2Vec2 AsBox2D();
 
 	float x, y;
 };

@@ -105,3 +105,7 @@ void Collider::SetCollisionMask(int _mask) {
 
 	fix->SetFilterData(newFilter);
 }
+
+Vector2 Collider::GetPosition() {
+	return Vector2(body->GetPosition());
+}

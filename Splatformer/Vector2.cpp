@@ -20,6 +20,15 @@ Vector2::Vector2(const Vector2 & v)
 	y = v.y;
 }
 
+Vector2::Vector2(b2Vec2 bv) 
+{
+	float newX = bv.x * PPM;
+	float newY = bv.y * PPM;
+
+	x = newX;
+	y = newY;
+}
+
 Vector2::~Vector2()
 {
 }
@@ -77,7 +86,11 @@ Vector2 Vector2::Normalised() {
 	return outVec;
 }
 
-Vector2 & operator+(Vector2 & v1, Vector2 &v2)
+b2Vec2 Vector2::AsBox2D() {
+	return b2Vec2(x/PPM, y/PPM);
+}
+
+Vector2 & operator+(Vector2 v1, Vector2 v2)
 {
 	Vector2 outVec(v1);
 	outVec.x += v2.x;
@@ -86,7 +99,7 @@ Vector2 & operator+(Vector2 & v1, Vector2 &v2)
 	return outVec;
 }
 
-Vector2 & operator-(Vector2 & v1, Vector2 &v2)
+Vector2 & operator-(Vector2 v1, Vector2 v2)
 {
 	Vector2 outVec(v1);
 	outVec.x -= v2.x;

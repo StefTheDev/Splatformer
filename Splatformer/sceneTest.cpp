@@ -9,26 +9,18 @@ SceneTest::SceneTest() {
 
 	sceneWorld = std::make_unique<b2World>(gravity);
 
-	player = new Collider({ 0.0f, 0.0f });
-	platform = new Collider({ 0.0f, -5.0f });
+	playerSprite = std::make_shared<Sprite>();
 }
 
-void SceneTest::Load() {
-	player->InitialiseDynamic(sceneWorld.get(), 1.0f, 0.3f, 0.5f);
-	platform->InitialiseStatic(sceneWorld.get());
-
-
-	player->SetCollisionCategory(CATEGORY_PLAYER);
-	player->SetCollisionMask(MASK_PLAYER_DEFAULT);
-
-	platform->SetCollisionCategory(CATEGORY_PLATFORM);
-	platform->SetCollisionMask(MASK_PLATFORM_NOCOLLIDE);
-
+void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 	for (int i = 0; i < SDL_NumJoysticks(); ++i) {
 		if (SDL_IsGameController(i)) {
 			controllers.push_back(SDL_GameControllerOpen(i));
 		}
 	}
+
+	playerSprite->Load("Resources/Sprites/player.png", _gameRenderer, false);
+	player.Initialise({20.0f, 20.0f}, sceneWorld.get(), playerSprite);
 }
 
 void SceneTest::Unload() {
@@ -36,9 +28,12 @@ void SceneTest::Unload() {
 
 void SceneTest::Update() {
 	sceneWorld->Step(deltaTime, velIterations, posIterations);
+
+	player.Update(GetCamera());
 }
 
-void SceneTest::Render() {
+void SceneTest::Render(SDL_Renderer* _gameRenderer) {
+	player.Render(_gameRenderer);
 }
 
 void SceneTest::ButtonDown(SDL_JoystickID _gamepadID, Uint8 _button) {

@@ -1,29 +1,14 @@
 #pragma once
 #include "Utilities.h"
+#include "Entity.h"
 
-class Player {
+class Player : public Entity {
 public:
-	//Player(int controller, b2World& world);
+	Player();
 
-	void Render(SDL_Renderer* renderer);
-	void Update();
+	void Initialise(Vector2 position, b2World* world, std::shared_ptr<Sprite> playerSprite);
+	void Update(Camera* _gameCamera);
 
 private:
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
-	/*
-	std::unique_ptr<SDL_GameController> controller;
-	
-	std::unique_ptr<SDL_Rect> dispBody;
-
-	b2BodyPtr body;
-	std::unique_ptr<b2PolygonShape> shape;
-	*/
-<<<<<<< Updated upstream
-
-	SDL_Texture* texture;
-=======
->>>>>>> Stashed changes
+	std::unique_ptr<Collider> collider;
 };

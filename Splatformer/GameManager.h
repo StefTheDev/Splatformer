@@ -2,6 +2,8 @@
 
 #include "Utilities.h"
 
+#include "sceneTest.h"
+
 enum GameState
 {
 	MENU,
@@ -45,4 +47,6 @@ private:
 	Uint64 timeLastFrame = 0;
 
 	Input inputManager;
+
+	SceneTest testScene;
 };

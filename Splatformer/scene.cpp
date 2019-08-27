@@ -5,9 +5,9 @@ float MapBetween(float x, float lower, float upper, float min, float max) {
 	return ((x - lower) / (upper - lower) * (max - min) + min);
 }
 
-void Scene::LoadScene() {
+void Scene::LoadScene(SDL_Renderer* _gameRenderer) {
 	//Do something each time any scene is loaded
-	Load();
+	Load(_gameRenderer);
 }
 
 void Scene::UnloadScene() {

@@ -29,6 +29,9 @@ public:
 	//Set the collider mask bits
 	void SetCollisionMask(int mask);
 
+	//Returns the position of the body in pixels
+	Vector2 GetPosition();
+
 	b2BodyPtr body;
 
 private:
