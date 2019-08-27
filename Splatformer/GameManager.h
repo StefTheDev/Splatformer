@@ -2,6 +2,8 @@
 
 #include "Utilities.h"
 
+class Jumper;
+
 enum GameState
 {
 	MENU,
@@ -21,7 +23,7 @@ public:
 	GameManager();
 	~GameManager();
 
-	void Initialise(std::string _title);
+	bool Initialise(std::string _title);
 
 	void Render();
 	void HandleEvents();
@@ -43,4 +45,6 @@ private:
 
 	Uint64 timeCurrentFrame = 0;
 	Uint64 timeLastFrame = 0;
+
+	std::unique_ptr<Jumper> jumper;
 }; 

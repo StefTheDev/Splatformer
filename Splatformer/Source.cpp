@@ -5,7 +5,7 @@ std::unique_ptr<GameManager> gameManager;
 
 int main(int argc, char* argv[]) {
 	gameManager = std::make_unique<GameManager>();
-	gameManager->Initialise("Splatformer");
+	if (!gameManager->Initialise("Splatformer")) return 0;
 
 	Uint32 startFrame, timeFrame;
 

@@ -17,7 +17,8 @@ public:
 	void Update();
 
 	//Sprite
-	void LoadSprite(std::shared_ptr<Sprite> _sprite);
+	bool LoadSprite(std::shared_ptr<Sprite> _sprite);
+	std::shared_ptr<Sprite> GetSprite();
 
 	//Manipulation
 	void Transform(Vector2 position);
