@@ -51,9 +51,9 @@ void GameManager::Render()
 
 void GameManager::HandleEvents()
 {
-	inputManager.HandleEvents();
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
+		inputManager.HandleEvents(event);
 		switch (event.type) {
 		case SDL_QUIT:
 		{
@@ -63,7 +63,6 @@ void GameManager::HandleEvents()
 			break;
 		}
 	}
-
 }
 
 void GameManager::Process()
@@ -73,7 +72,7 @@ void GameManager::Process()
 
 	deltaTime = (float)((timeCurrentFrame - timeLastFrame) / (float)SDL_GetPerformanceFrequency());
 
-
+	std::cout << "A is held: " << inputManager.IsControllerButtonHeld(PLAYER1, SDL_CONTROLLER_BUTTON_A) << std::endl;
 	// call this last
 	inputManager.Process();
 }

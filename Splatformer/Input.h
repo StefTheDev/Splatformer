@@ -28,7 +28,7 @@ public:
 	float GetControllerAxis(Controllers _controllerID, SDL_GameControllerAxis _axis);
 	void Initialise();
 	void Process();
-	void HandleEvents();
+	void HandleEvents(SDL_Event _event);
 
 private:
 	std::vector<SDL_GameController*> connectedControllers;
