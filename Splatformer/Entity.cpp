@@ -40,7 +40,7 @@ void Entity::Update()
 {
 	if (sprite->IsAnimated()) source.x = source.w * static_cast<int>((SDL_GetTicks() / sprite->GetSpeed()) % sprite->GetFrames());
 
-	source.y = sprite->GetIndex() * dimension.y;
+	source.y = sprite->GetIndex() * source.h;
 
 	destination.x = static_cast<int>(position.x);
 	destination.y = static_cast<int>(position.y);
