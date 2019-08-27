@@ -2,6 +2,7 @@
 #include "scene.h"
 
 #include "Player.h"
+#include "Platform.h"
 
 class SceneTest : public Scene {
 public:
@@ -22,6 +23,7 @@ private:
 
 	std::shared_ptr<Sprite> playerSprite;
 	Player player;
+	Platform platform;
 
 	std::vector<SDL_GameController*> controllers;
 };

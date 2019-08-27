@@ -26,7 +26,7 @@ bool GameManager::Initialise(std::string _title)
 		renderer = SDL_CreateRenderer(window, -1, 0);
 		surface = SDL_GetWindowSurface(window);
 
-		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_UpdateWindowSurface(window);
 
 		timeCurrentFrame = SDL_GetPerformanceCounter();
@@ -68,6 +68,7 @@ void GameManager::HandleEvents()
 		default:
 			break;
 		}
+		testScene.HandleEvents(event);
 	}
 
 }

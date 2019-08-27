@@ -6,22 +6,16 @@ Collider::Collider(Vector2 _position, Vector2 _dimensions) {
 }
 
 void Collider::InitialiseStatic(b2World* _world, bool _isSensor) {
-	b2Vec2 b2Position;
-	b2Position.x = position.x / PPM;
-	b2Position.y = position.y / PPM;
-
-	b2Vec2 b2Dimensions;
-	b2Dimensions.x = dimensions.x / PPM;
-	b2Dimensions.y = dimensions.y / PPM;
+	b2Vec2 b2Dimensions = dimensions.AsBox2D();
 	
 	b2BodyDef bodyDef;
 
-	bodyDef.position = b2Position;
+	bodyDef.position = position.AsBox2D();
 
 	body = b2BodyPtr(_world->CreateBody(&bodyDef));
 
 	b2PolygonShape boxBody;
-	boxBody.SetAsBox(b2Dimensions.x, b2Dimensions.y);
+	boxBody.SetAsBox(b2Dimensions.x, b2Dimensions.y, b2Vec2(-b2Dimensions.x, -b2Dimensions.y), 0.0f);
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &boxBody;
@@ -31,25 +25,19 @@ void Collider::InitialiseStatic(b2World* _world, bool _isSensor) {
 }
 
 void Collider::InitialiseDynamic(b2World* _world, float _density, float _friction, float _damping, bool _isSensor) {
-	b2Vec2 b2Position;
-	b2Position.x = position.x / PPM;
-	b2Position.y = position.y / PPM;
-
-	b2Vec2 b2Dimensions;
-	b2Dimensions.x = dimensions.x / PPM;
-	b2Dimensions.y = dimensions.y / PPM;
+	b2Vec2 b2Dimensions = dimensions.AsBox2D();
 
 	b2BodyDef bodyDef;
 
 	bodyDef.type = b2_dynamicBody;
-	bodyDef.position = b2Position;
+	bodyDef.position = position.AsBox2D();
 	bodyDef.linearDamping = _damping;
 	bodyDef.fixedRotation = true;
 
 	body = b2BodyPtr(_world->CreateBody(&bodyDef));
 
 	b2PolygonShape boxBody;
-	boxBody.SetAsBox(b2Dimensions.x, b2Dimensions.y);
+	boxBody.SetAsBox(b2Dimensions.x, b2Dimensions.y, b2Vec2(0.0f, 0.0f), 0.0f);
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &boxBody;
@@ -61,23 +49,17 @@ void Collider::InitialiseDynamic(b2World* _world, float _density, float _frictio
 }
 
 void Collider::InitialiseKinematic(b2World* _world, bool _isSensor) {
-	b2Vec2 b2Position;
-	b2Position.x = position.x / PPM;
-	b2Position.y = position.y / PPM;
-
-	b2Vec2 b2Dimensions;
-	b2Dimensions.x = dimensions.x / PPM;
-	b2Dimensions.y = dimensions.y / PPM;
+	b2Vec2 b2Dimensions = dimensions.AsBox2D();
 	
 	b2BodyDef bodyDef;
 
 	bodyDef.type = b2_kinematicBody;
-	bodyDef.position = b2Position;
+	bodyDef.position = position.AsBox2D();
 
 	body = b2BodyPtr(_world->CreateBody(&bodyDef));
 
 	b2PolygonShape boxBody;
-	boxBody.SetAsBox(b2Dimensions.x, b2Dimensions.y);
+	boxBody.SetAsBox(b2Dimensions.x, b2Dimensions.y, b2Vec2(0.0f, 0.0f), 0.0f);
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &boxBody;

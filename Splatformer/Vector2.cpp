@@ -23,7 +23,7 @@ Vector2::Vector2(const Vector2 & v)
 Vector2::Vector2(b2Vec2 bv) 
 {
 	float newX = bv.x * PPM;
-	float newY = bv.y * PPM;
+	float newY = bv.y * -PPM;
 
 	x = newX;
 	y = newY;
