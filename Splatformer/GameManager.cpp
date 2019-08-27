@@ -57,9 +57,9 @@ void GameManager::Render()
 
 void GameManager::HandleEvents()
 {
-	inputManager.HandleEvents();
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
+		inputManager.HandleEvents(event);
 		switch (event.type) {
 		case SDL_QUIT:
 		{
@@ -70,7 +70,6 @@ void GameManager::HandleEvents()
 		}
 		testScene.HandleEvents(event);
 	}
-
 }
 
 void GameManager::Process()
@@ -82,6 +81,7 @@ void GameManager::Process()
 
 	testScene.Update();
 	jumper->Update();
+	std::cout << "A is held: " << inputManager.IsControllerButtonHeld(PLAYER1, SDL_CONTROLLER_BUTTON_A) << std::endl;
 	// call this last
 	inputManager.Process();
 }
