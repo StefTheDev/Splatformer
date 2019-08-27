@@ -1,4 +1,5 @@
 #include "GameManager.h"
+#include "Jumper.h"
 
 GameManager::GameManager()
 {
@@ -10,14 +11,14 @@ GameManager::~GameManager()
 
 }
 
-void GameManager::Initialise(std::string _title)
+bool GameManager::Initialise(std::string _title)
 {
 	Uint32 flags = SDL_WINDOW_SHOWN;
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
 		SDL_DisplayMode displayMode;
 		SDL_GetCurrentDisplayMode(0, &displayMode);
-		
+
 		auto width = displayMode.w, height = displayMode.h;
 		auto xPosition = (width - WINDOW_WIDTH) / 2, yPosition = (height - WINDOW_HEIGHT) / 2;
 
@@ -25,7 +26,7 @@ void GameManager::Initialise(std::string _title)
 		renderer = SDL_CreateRenderer(window, -1, 0);
 		surface = SDL_GetWindowSurface(window);
 
-		SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0xFF, 0xFF, 0xFF));
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		SDL_UpdateWindowSurface(window);
 
 		timeCurrentFrame = SDL_GetPerformanceCounter();
@@ -36,18 +37,20 @@ void GameManager::Initialise(std::string _title)
 
 		testScene.LoadScene(renderer);
 	}
-	else
-	{
-		gameState = EXIT;
-	}
+
+	jumper = std::make_unique<Jumper>();
+	if (!jumper->Initialise(renderer)) return false;
+
+	return true;
 }
 
 void GameManager::Render()
 {
 	SDL_RenderClear(renderer);
-	
+
 	//Render things...
 	testScene.Render(renderer);
+	jumper->Render(renderer);
 
 	SDL_RenderPresent(renderer);
 }
@@ -77,7 +80,7 @@ void GameManager::Process()
 	deltaTime = (float)((timeCurrentFrame - timeLastFrame) / (float)SDL_GetPerformanceFrequency());
 
 	testScene.Update();
-
+	jumper->Update();
 	// call this last
 	inputManager.Process();
 }

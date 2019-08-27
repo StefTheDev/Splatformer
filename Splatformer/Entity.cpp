@@ -13,7 +13,7 @@ bool Entity::Initialise(Vector2 _position, Vector2 dimension)
 {
 	position = _position;
 	angle = 0.0f;
-	scale = 1.0f;
+	scale = 100.0f;
 
 	source.x = source.y = 0;
 	source.w = dimension.x;
@@ -39,17 +39,27 @@ void Entity::Render(SDL_Renderer * renderer)
 void Entity::Update()
 {
 	if (sprite->IsAnimated()) source.x = source.w * static_cast<int>((SDL_GetTicks() / sprite->GetSpeed()) % sprite->GetFrames());
+
 	source.y = sprite->GetIndex() * dimension.y;
 
 	destination.x = static_cast<int>(position.x);
 	destination.y = static_cast<int>(position.y);
 	destination.w = dimension.x * static_cast<int>(scale);
-	destination.h = source.h * static_cast<int>(scale);
+	destination.h = dimension.y * static_cast<int>(scale);
 }
 
-void Entity::LoadSprite(std::shared_ptr<Sprite> _sprite)
+bool Entity::LoadSprite(std::shared_ptr<Sprite> _sprite)
 {
+	if (_sprite->GetTexture() == nullptr) return false;
+
 	sprite = _sprite;
+
+	return true;
+}
+
+std::shared_ptr<Sprite> Entity::GetSprite()
+{
+	return sprite;
 }
 
 void Entity::Transform(Vector2 position)
