@@ -22,8 +22,8 @@ void Scene::UnloadScene() {
 void Scene::UpdateScene() {
 	for (auto& entity : objects) {
 		switch (entity->GetType()) {
-		case PLAYER: static_cast<Player*>(entity.get())->Update(&camera); break;
-		case PLATFORM: static_cast<Platform*>(entity.get())->Update(&camera); break;
+			case PLAYER: static_cast<Player*>(entity.get())->Update(&camera); break;
+			case PLATFORM: static_cast<Platform*>(entity.get())->Update(&camera); break;
 		}
 	}
 
@@ -33,8 +33,8 @@ void Scene::UpdateScene() {
 void Scene::RenderScene(SDL_Renderer* _gameRenderer) {
 	for (auto& entity : objects) {
 		switch (entity->GetType()) {
-		case PLAYER: static_cast<Player*>(entity.get())->Render(_gameRenderer); break;
-		case PLATFORM: static_cast<Platform*>(entity.get())->Render(_gameRenderer); break;
+			case PLAYER: static_cast<Player*>(entity.get())->Render(_gameRenderer); break;
+			case PLATFORM: static_cast<Platform*>(entity.get())->Render(_gameRenderer); break;
 		}
 	}
 
@@ -98,36 +98,6 @@ void Scene::HandleEvents(SDL_Event _sdlEvent) {
 	}
 	default: break;
 	}
-}
-
-void Scene::ButtonDown(SDL_JoystickID _gamepadID, Uint8 _button) {
-}
-
-void Scene::ButtonUp(SDL_JoystickID _gamepadID, Uint8 _button) {
-}
-
-void Scene::LeftStick(SDL_JoystickID _gamepadID, Vector2 _axisPosition) {
-}
-
-void Scene::RightStick(SDL_JoystickID _gamepadID, Vector2 _axisPosition) {
-}
-
-void Scene::LeftTrigger(SDL_JoystickID _gamepadID, float _triggerPosition) {
-}
-
-void Scene::RightTrigger(SDL_JoystickID _gamepadID, float _triggerPosition) {
-}
-
-void Scene::ControllerAdded(int _deviceIndex) {
-}
-
-void Scene::ControllerRemoved(SDL_JoystickID _instanceID) {
-}
-
-void Scene::ControllerRemapped(SDL_JoystickID _instanceID) {
-}
-
-void Scene::Quit() {
 }
 
 Camera* Scene::GetCamera() {

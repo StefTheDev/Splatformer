@@ -38,9 +38,6 @@ bool GameManager::Initialise(std::string _title)
 		testScene.LoadScene(renderer);
 	}
 
-	jumper = std::make_unique<Jumper>();
-	if (!jumper->Initialise(renderer)) return false;
-
 	return true;
 }
 
@@ -48,9 +45,7 @@ void GameManager::Render()
 {
 	SDL_RenderClear(renderer);
 
-	//Render things...
 	testScene.RenderScene(renderer);
-	jumper->Render(renderer);
 
 	SDL_RenderPresent(renderer);
 }
@@ -80,9 +75,6 @@ void GameManager::Process()
 	deltaTime = (float)((timeCurrentFrame - timeLastFrame) / (float)SDL_GetPerformanceFrequency());
 
 	testScene.UpdateScene();
-	jumper->Update();
-	//std::cout << "A is held: " << inputManager.IsControllerButtonHeld(PLAYER1, SDL_CONTROLLER_BUTTON_A) << std::endl;
-	// call this last
 	inputManager.Process();
 }
 

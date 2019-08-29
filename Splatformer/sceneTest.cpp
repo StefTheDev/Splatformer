@@ -21,10 +21,10 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 	playerSprite = std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false);
 	platformSprite = std::make_shared<Sprite>("Resources/Sprites/platform.png", _gameRenderer, false);
 
-	objects.push_back(std::make_unique<Player>(Vector2(0.0f, 0.0f)));
+	objects.push_back(std::make_unique<Player>(Vector2(64.0f, 0.0f)));
 
 	camera.SetTargetPosition(Vector2(1200.0f, 0.0f));
-	camera.SetMoveSpeed(100.0f);
+	camera.SetMoveSpeed(0.0f);
 
 	LevelLoader::LoadLevel("Resources/Levels/LevelOne.csv", objects);
 	for (auto& object : objects) {
