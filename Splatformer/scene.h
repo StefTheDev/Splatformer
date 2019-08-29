@@ -9,10 +9,10 @@ public:
 	void LoadScene(SDL_Renderer* gameRenderer);
 	void UnloadScene();
 
-	virtual void Update() = 0;
+	void UpdateScene();
+	void RenderScene(SDL_Renderer* gameRenderer);
 	
 	//TODO: Draw background inside camera rect
-	virtual void Render(SDL_Renderer* gameRenderer) = 0;
 
 	//Used to break up SDL events into separate Scene function calls
 	void HandleEvents(SDL_Event sdlEvent);
@@ -45,6 +45,9 @@ protected:
 	virtual void Load(SDL_Renderer* gameRenderer) = 0;
 	virtual void Unload() = 0;
 
-	std::vector<Entity> objects;
+	virtual void Update() = 0;
+	virtual void Render(SDL_Renderer* gameRenderer) = 0;
+
+	std::vector<std::unique_ptr<Entity>> objects;
 	Camera camera;
 };

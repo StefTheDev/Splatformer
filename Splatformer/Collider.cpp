@@ -6,7 +6,7 @@ Collider::Collider(Vector2 _position, Vector2 _dimensions) {
 }
 
 void Collider::InitialiseStatic(b2World* _world, bool _isSensor) {
-	b2Vec2 b2Dimensions = dimensions.AsBox2D();
+	b2Vec2 b2Dimensions = (dimensions/2.0f).AsBox2D();
 	
 	b2BodyDef bodyDef;
 
@@ -14,8 +14,15 @@ void Collider::InitialiseStatic(b2World* _world, bool _isSensor) {
 
 	body = b2BodyPtr(_world->CreateBody(&bodyDef));
 
+	//b2Vec2 points[] = {
+	//	{0.0f, 0.0f},
+	//	{0.0f, -dimensions.y},
+	//	{-dimensions.x, -dimensions.y},
+	//	{-dimensions.x, 0.0f}
+	//};
+
 	b2PolygonShape boxBody;
-	boxBody.SetAsBox(b2Dimensions.x, b2Dimensions.y, b2Vec2(-b2Dimensions.x, -b2Dimensions.y), 0.0f);
+	boxBody.SetAsBox(b2Dimensions.x, b2Dimensions.y);
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &boxBody;
@@ -25,7 +32,7 @@ void Collider::InitialiseStatic(b2World* _world, bool _isSensor) {
 }
 
 void Collider::InitialiseDynamic(b2World* _world, float _density, float _friction, float _damping, bool _isSensor) {
-	b2Vec2 b2Dimensions = dimensions.AsBox2D();
+	b2Vec2 b2Dimensions = (dimensions / 2.0f).AsBox2D();
 
 	b2BodyDef bodyDef;
 
@@ -37,7 +44,7 @@ void Collider::InitialiseDynamic(b2World* _world, float _density, float _frictio
 	body = b2BodyPtr(_world->CreateBody(&bodyDef));
 
 	b2PolygonShape boxBody;
-	boxBody.SetAsBox(b2Dimensions.x, b2Dimensions.y, b2Vec2(0.0f, 0.0f), 0.0f);
+	boxBody.SetAsBox(b2Dimensions.x, b2Dimensions.y);
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &boxBody;
@@ -59,7 +66,7 @@ void Collider::InitialiseKinematic(b2World* _world, bool _isSensor) {
 	body = b2BodyPtr(_world->CreateBody(&bodyDef));
 
 	b2PolygonShape boxBody;
-	boxBody.SetAsBox(b2Dimensions.x, b2Dimensions.y, b2Vec2(0.0f, 0.0f), 0.0f);
+	boxBody.SetAsBox(b2Dimensions.x, b2Dimensions.y);
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &boxBody;
@@ -89,5 +96,7 @@ void Collider::SetCollisionMask(int _mask) {
 }
 
 Vector2 Collider::GetPosition() {
-	return Vector2(body->GetPosition());
+	Vector2 offset = (dimensions / 2.0f);
+
+	return Vector2(body->GetPosition() - offset);
 }

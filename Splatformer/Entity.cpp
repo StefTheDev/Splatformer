@@ -82,3 +82,7 @@ void Entity::Scale(float scale)
 void Entity::SetPosition(Vector2 _newPosition) {
 	position = _newPosition;
 }
+
+EntityType Entity::GetType() {
+	return type;
+}

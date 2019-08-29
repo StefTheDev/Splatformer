@@ -1,5 +1,8 @@
 #include "scene.h"
 
+#include "player.h"
+#include "Platform.h"
+
 //Map a value, x, that exists between lower and upper, to a value between min and max
 float MapBetween(float x, float lower, float upper, float min, float max) {
 	return ((x - lower) / (upper - lower) * (max - min) + min);
@@ -14,6 +17,28 @@ void Scene::UnloadScene() {
 	//Do something each time any scene is unloaded
 	camera.SetPosition({ 0.0f, 0.0f });
 	Unload();
+}
+
+void Scene::UpdateScene() {
+	for (auto& entity : objects) {
+		switch (entity->GetType()) {
+		case PLAYER: static_cast<Player*>(entity.get())->Update(&camera); break;
+		case PLATFORM: static_cast<Platform*>(entity.get())->Update(&camera); break;
+		}
+	}
+
+	Update();
+}
+
+void Scene::RenderScene(SDL_Renderer* _gameRenderer) {
+	for (auto& entity : objects) {
+		switch (entity->GetType()) {
+		case PLAYER: static_cast<Player*>(entity.get())->Render(_gameRenderer); break;
+		case PLATFORM: static_cast<Platform*>(entity.get())->Render(_gameRenderer); break;
+		}
+	}
+
+	Render(_gameRenderer);
 }
 
 void Scene::HandleEvents(SDL_Event _sdlEvent) {

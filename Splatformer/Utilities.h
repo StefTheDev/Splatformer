@@ -44,6 +44,4 @@ struct b2BodyDeleter {
 };
 
 using b2BodyPtr = std::unique_ptr<b2Body, b2BodyDeleter>;
-
-
 #endif

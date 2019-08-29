@@ -1,5 +1,10 @@
 #include "Camera.h"
 
+Camera::Camera() {
+	position = Vector2(0.0f, 0.0f);
+	targetPosition = Vector2(0.0f, 0.0f);
+}
+
 Camera::Camera(float _width, float _height) {
 	width = _width;
 	height = _height;
@@ -8,7 +13,7 @@ Camera::Camera(float _width, float _height) {
 }
 
 void Camera::Update() {
-	Vector2 direction = (targetPosition - position).Normalised();
+	Vector2 direction = Vector2(targetPosition - position).Normalised();
 
 	position += direction * (moveSpeed * deltaTime);
 }

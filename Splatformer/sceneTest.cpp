@@ -1,5 +1,6 @@
 #include "sceneTest.h"
 
+#include "LevelLoader.h"
 
 constexpr int velIterations = 8;
 constexpr int posIterations = 3;
@@ -18,8 +19,20 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 	}
 
 	playerSprite = std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false);
-	player.Initialise({20.0f, 20.0f}, sceneWorld.get(), playerSprite);
-	platform.Initialise({20.0f, -420.0f}, sceneWorld.get(), playerSprite);
+	platformSprite = std::make_shared<Sprite>("Resources/Sprites/platform.png", _gameRenderer, false);
+
+	objects.push_back(std::make_unique<Player>(Vector2(0.0f, 0.0f)));
+
+	camera.SetTargetPosition(Vector2(1200.0f, 0.0f));
+	camera.SetMoveSpeed(100.0f);
+
+	LevelLoader::LoadLevel("Resources/Levels/LevelOne.csv", objects);
+	for (auto& object : objects) {
+		switch (object->GetType()) {
+		case PLAYER: static_cast<Player*>(object.get())->Initialise(sceneWorld.get(), playerSprite); break;
+		case PLATFORM: static_cast<Platform*>(object.get())->Initialise(sceneWorld.get(), platformSprite); break;
+		}
+	}
 }
 
 void SceneTest::Unload() {
@@ -27,24 +40,29 @@ void SceneTest::Unload() {
 
 void SceneTest::Update() {
 	sceneWorld->Step(deltaTime, velIterations, posIterations);
-
-	player.Update(GetCamera());
-	platform.Update(GetCamera());
+	std::cout << "Scene Updated\n";
+	camera.Update();
 }
 
 void SceneTest::Render(SDL_Renderer* _gameRenderer) {
-	player.Render(_gameRenderer);
-	platform.Render(_gameRenderer);
 }
 
 void SceneTest::ButtonDown(SDL_JoystickID _gamepadID, Uint8 _button) {
 	if (_button == SDL_CONTROLLER_BUTTON_A) {
-		player.Jump();
+		static_cast<Player*>(objects[0].get())->Jump();
 	} else if (_button == SDL_CONTROLLER_BUTTON_B) {
-		platform.SetCanCollide(!platform.CanCollide());
+		
 	}
 }
 
 void SceneTest::RightTrigger(SDL_JoystickID _gamepadID, float _axisValue) {
-	std::cout << "RTrigger Moved: " << _axisValue << std::endl;
+	static_cast<Player*>(objects[0].get())->MoveRight();
+}
+
+void SceneTest::LeftTrigger(SDL_JoystickID gamepadID, float axisValue) {
+	static_cast<Player*>(objects[0].get())->MoveLeft();
+}
+
+void SceneTest::ControllerAdded(int deviceIndex) {
+	std::cout << "Controller number " << deviceIndex << " added" << std::endl;
 }

@@ -6,6 +6,11 @@
 #include "Sprite.h"
 #include "Collider.h"
 
+enum EntityType {
+	PLAYER = 0,
+	PLATFORM
+};
+
 class Entity
 {
 public:
@@ -28,6 +33,8 @@ public:
 
 	void SetPosition(Vector2 newPosition);
 
+	EntityType GetType();
+
 protected:
 	Vector2 position, dimension;
 	SDL_Rect source, destination;
@@ -35,6 +42,8 @@ protected:
 	float angle, scale;
 
 	std::shared_ptr<Sprite> sprite;
+
+	EntityType type;
 };
 
 #endif

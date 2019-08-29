@@ -4,9 +4,9 @@
 
 class Platform : public Entity {
 public:
-	Platform();
+	Platform(Vector2 position);
 
-	void Initialise(Vector2 position, b2World* world, std::shared_ptr<Sprite> platformSprite);
+	void Initialise(b2World* world, std::shared_ptr<Sprite> platformSprite);
 	void Update(Camera* _gameCamera);
 
 	void SetCanCollide(bool canCollide);
@@ -17,6 +17,6 @@ private:
 
 	bool canCollide = true;
 
-	float width = 100.0f;
-	float height = 100.0f;
+	float width = 75.0f;
+	float height = 75.0f;
 };

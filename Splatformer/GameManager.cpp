@@ -49,7 +49,7 @@ void GameManager::Render()
 	SDL_RenderClear(renderer);
 
 	//Render things...
-	testScene.Render(renderer);
+	testScene.RenderScene(renderer);
 	jumper->Render(renderer);
 
 	SDL_RenderPresent(renderer);
@@ -79,9 +79,9 @@ void GameManager::Process()
 
 	deltaTime = (float)((timeCurrentFrame - timeLastFrame) / (float)SDL_GetPerformanceFrequency());
 
-	testScene.Update();
+	testScene.UpdateScene();
 	jumper->Update();
-	std::cout << "A is held: " << inputManager.IsControllerButtonHeld(PLAYER1, SDL_CONTROLLER_BUTTON_A) << std::endl;
+	//std::cout << "A is held: " << inputManager.IsControllerButtonHeld(PLAYER1, SDL_CONTROLLER_BUTTON_A) << std::endl;
 	// call this last
 	inputManager.Process();
 }

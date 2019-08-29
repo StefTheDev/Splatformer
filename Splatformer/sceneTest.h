@@ -17,13 +17,14 @@ private:
 
 	void ButtonDown(SDL_JoystickID gamepadID, Uint8 button) override;
 	void RightTrigger(SDL_JoystickID gamepadID, float axisValue) override;
+	void LeftTrigger(SDL_JoystickID gamepadID, float axisValue) override;
+	void ControllerAdded(int deviceIndex) override;
 
 	//std::map<SDL_JoystickID, Player> players;
 	std::unique_ptr<b2World> sceneWorld;
 
 	std::shared_ptr<Sprite> playerSprite;
-	Player player;
-	Platform platform;
+	std::shared_ptr<Sprite> platformSprite;
 
 	std::vector<SDL_GameController*> controllers;
 };
