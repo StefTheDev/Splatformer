@@ -6,7 +6,7 @@ constexpr int CATEGORY_PLAYER			= 0b000100;
 constexpr int CATEGORY_SENSOR			= 0b001000;
 
 constexpr int MASK_PLATFORM_COLLIDE		= 0b000100;
-constexpr int MASK_PLATFORM_NOCOLLIDE	= 0b001000;
+constexpr int MASK_PLATFORM_NOCOLLIDE	= 0b000000;
 
 constexpr int MASK_PLAYER_DEFAULT		= 0b000010;
 
@@ -28,6 +28,9 @@ public:
 
 	//Set the collider mask bits
 	void SetCollisionMask(int mask);
+
+	//Returns the position of the body in pixels
+	Vector2 GetPosition();
 
 	b2BodyPtr body;
 

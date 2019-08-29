@@ -1,32 +1,36 @@
 #include "sceneTest.h"
 
+#include "LevelLoader.h"
 
 constexpr int velIterations = 8;
 constexpr int posIterations = 3;
 
 SceneTest::SceneTest() {
-	b2Vec2 gravity(0.0f, -9.8f);
+	b2Vec2 gravity(0.0f, -19.6f);
 
 	sceneWorld = std::make_unique<b2World>(gravity);
-
-	player = new Collider({ 0.0f, 0.0f });
-	platform = new Collider({ 0.0f, -5.0f });
 }
 
-void SceneTest::Load() {
-	player->InitialiseDynamic(sceneWorld.get(), 1.0f, 0.3f, 0.5f);
-	platform->InitialiseStatic(sceneWorld.get());
-
-
-	player->SetCollisionCategory(CATEGORY_PLAYER);
-	player->SetCollisionMask(MASK_PLAYER_DEFAULT);
-
-	platform->SetCollisionCategory(CATEGORY_PLATFORM);
-	platform->SetCollisionMask(MASK_PLATFORM_NOCOLLIDE);
-
+void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 	for (int i = 0; i < SDL_NumJoysticks(); ++i) {
 		if (SDL_IsGameController(i)) {
 			controllers.push_back(SDL_GameControllerOpen(i));
+		}
+	}
+
+	playerSprite = std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false);
+	platformSprite = std::make_shared<Sprite>("Resources/Sprites/platform.png", _gameRenderer, false);
+
+	objects.push_back(std::make_unique<Player>(Vector2(0.0f, 0.0f)));
+
+	camera.SetTargetPosition(Vector2(1200.0f, 0.0f));
+	camera.SetMoveSpeed(100.0f);
+
+	LevelLoader::LoadLevel("Resources/Levels/LevelOne.csv", objects);
+	for (auto& object : objects) {
+		switch (object->GetType()) {
+		case PLAYER: static_cast<Player*>(object.get())->Initialise(sceneWorld.get(), playerSprite); break;
+		case PLATFORM: static_cast<Platform*>(object.get())->Initialise(sceneWorld.get(), platformSprite); break;
 		}
 	}
 }
@@ -36,17 +40,29 @@ void SceneTest::Unload() {
 
 void SceneTest::Update() {
 	sceneWorld->Step(deltaTime, velIterations, posIterations);
+	std::cout << "Scene Updated\n";
+	camera.Update();
 }
 
-void SceneTest::Render() {
+void SceneTest::Render(SDL_Renderer* _gameRenderer) {
 }
 
 void SceneTest::ButtonDown(SDL_JoystickID _gamepadID, Uint8 _button) {
 	if (_button == SDL_CONTROLLER_BUTTON_A) {
-		std::cout << "Pressed A" << std::endl;
+		static_cast<Player*>(objects[0].get())->Jump();
+	} else if (_button == SDL_CONTROLLER_BUTTON_B) {
+		
 	}
 }
 
 void SceneTest::RightTrigger(SDL_JoystickID _gamepadID, float _axisValue) {
-	std::cout << "RTrigger Moved: " << _axisValue << std::endl;
+	static_cast<Player*>(objects[0].get())->MoveRight();
+}
+
+void SceneTest::LeftTrigger(SDL_JoystickID gamepadID, float axisValue) {
+	static_cast<Player*>(objects[0].get())->MoveLeft();
+}
+
+void SceneTest::ControllerAdded(int deviceIndex) {
+	std::cout << "Controller number " << deviceIndex << " added" << std::endl;
 }

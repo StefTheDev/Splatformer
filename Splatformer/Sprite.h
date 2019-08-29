@@ -21,20 +21,15 @@ struct SpriteAnimation
 class Sprite
 {
 public:
-	Sprite();
+	Sprite(std::string fileName, SDL_Renderer * renderer, bool animated);
 	~Sprite();
 
-	//General
-	void Render(Camera camera);
-
 	//Textures
-	void Load(std::string, SDL_Renderer *, bool animated);
+	SDL_Texture * GetTexture();
 
 	//Animation
 	void Add(std::string, SpriteAnimation);
 	void Play(std::string);
-
-	SDL_Texture * GetTexture();
 
 	//Data
 	int GetSpeed() const;
