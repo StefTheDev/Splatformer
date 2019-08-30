@@ -8,7 +8,10 @@ constexpr int posIterations = 3;
 SceneTest::SceneTest() {
 	b2Vec2 gravity(0.0f, -19.6f);
 
+	contactListener = new PlatformingListener();
+
 	sceneWorld = std::make_unique<b2World>(gravity);
+	sceneWorld->SetContactListener(contactListener);
 }
 
 void SceneTest::Load(SDL_Renderer* _gameRenderer) {
@@ -21,7 +24,7 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 	playerSprite = std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false);
 	platformSprite = std::make_shared<Sprite>("Resources/Sprites/platform.png", _gameRenderer, false);
 
-	objects.push_back(std::make_unique<Player>(Vector2(0.0f, 0.0f)));
+	objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f)));
 
 	camera.SetTargetPosition(Vector2(1200.0f, 0.0f));
 	camera.SetMoveSpeed(100.0f);
@@ -40,8 +43,7 @@ void SceneTest::Unload() {
 
 void SceneTest::Update() {
 	sceneWorld->Step(deltaTime, velIterations, posIterations);
-	std::cout << "Scene Updated\n";
-	camera.Update();
+	//camera.Update();
 }
 
 void SceneTest::Render(SDL_Renderer* _gameRenderer) {

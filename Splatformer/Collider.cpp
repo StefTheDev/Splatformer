@@ -1,8 +1,9 @@
 #include "Collider.h"
 
-Collider::Collider(Vector2 _position, Vector2 _dimensions) {
+Collider::Collider(Vector2 _position, DataContainer _colliderData, Vector2 _dimensions) {
 	position = _position;
 	dimensions = _dimensions;
+	colliderData = _colliderData;
 }
 
 void Collider::InitialiseStatic(b2World* _world, bool _isSensor) {
@@ -14,13 +15,6 @@ void Collider::InitialiseStatic(b2World* _world, bool _isSensor) {
 
 	body = b2BodyPtr(_world->CreateBody(&bodyDef));
 
-	//b2Vec2 points[] = {
-	//	{0.0f, 0.0f},
-	//	{0.0f, -dimensions.y},
-	//	{-dimensions.x, -dimensions.y},
-	//	{-dimensions.x, 0.0f}
-	//};
-
 	b2PolygonShape boxBody;
 	boxBody.SetAsBox(b2Dimensions.x, b2Dimensions.y);
 
@@ -29,6 +23,7 @@ void Collider::InitialiseStatic(b2World* _world, bool _isSensor) {
 	fixtureDef.isSensor = _isSensor;
 
 	body->CreateFixture(&fixtureDef);
+	body->SetUserData(&colliderData);
 }
 
 void Collider::InitialiseDynamic(b2World* _world, float _density, float _friction, float _damping, bool _isSensor) {
@@ -53,6 +48,7 @@ void Collider::InitialiseDynamic(b2World* _world, float _density, float _frictio
 	fixtureDef.friction = _friction;
 
 	body->CreateFixture(&fixtureDef);
+	body->SetUserData(&colliderData);
 }
 
 void Collider::InitialiseKinematic(b2World* _world, bool _isSensor) {
@@ -73,6 +69,7 @@ void Collider::InitialiseKinematic(b2World* _world, bool _isSensor) {
 	fixtureDef.isSensor = _isSensor;
 
 	body->CreateFixture(&fixtureDef);
+	body->SetUserData(&colliderData);
 }
 
 void Collider::SetCollisionCategory(int _category) {

@@ -18,5 +18,5 @@ private:
 	bool canCollide = true;
 
 	float width = 75.0f;
-	float height = 75.0f;
+	float height = 40.0f;
 };

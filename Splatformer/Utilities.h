@@ -44,4 +44,19 @@ struct b2BodyDeleter {
 };
 
 using b2BodyPtr = std::unique_ptr<b2Body, b2BodyDeleter>;
+
+enum ColliderType {
+	PLR = 0,
+	PLT,
+	OTHER
+};
+
+struct DataContainer {
+	ColliderType type;
+	void* data;
+};
+
+class PlatformingListener : public b2ContactListener {
+	void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
+};
 #endif

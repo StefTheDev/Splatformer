@@ -32,6 +32,9 @@ public:
 	void Scale(float);
 
 	void SetPosition(Vector2 newPosition);
+	Vector2 GetPosition();
+
+	Vector2 GetDimensions();
 
 	EntityType GetType();
 

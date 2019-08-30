@@ -109,7 +109,7 @@ Vector2 & operator-(Vector2 v1, Vector2 v2)
 	return outVec;
 }
 
-Vector2 & operator*(Vector2 & v1, float scalar)
+Vector2 & operator*(Vector2 v1, float scalar)
 {
 	Vector2 outVec(v1);
 	outVec.x *= scalar;

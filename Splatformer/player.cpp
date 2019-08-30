@@ -11,7 +11,12 @@ void Player::Initialise(b2World* _world, std::shared_ptr<Sprite> _playerSprite) 
 
 	GetSprite()->Add("idle", SpriteAnimation{ 0, 1, 500 }); //Index, frames, speed
 
-	collider = std::make_unique<Collider>(position, Vector2(width, height));
+	DataContainer info = {
+		ColliderType::PLR, 
+		this
+	};
+
+	collider = std::make_unique<Collider>(position, info, Vector2(width, height));
 
 	collider->InitialiseDynamic(_world, 1.0f, 0.3f, 0.5f);
 	collider->SetCollisionCategory(CATEGORY_PLAYER);
@@ -22,6 +27,8 @@ void Player::Initialise(b2World* _world, std::shared_ptr<Sprite> _playerSprite) 
 
 void Player::Update(Camera* _gameCamera) {
 	SetPosition(collider->GetPosition() - _gameCamera->GetPosition());
+
+	collider->body->SetAwake(true);
 
 	GetSprite()->Play("idle");
 	Entity::Update();

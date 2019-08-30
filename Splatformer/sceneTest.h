@@ -22,6 +22,7 @@ private:
 
 	//std::map<SDL_JoystickID, Player> players;
 	std::unique_ptr<b2World> sceneWorld;
+	PlatformingListener* contactListener;
 
 	std::shared_ptr<Sprite> playerSprite;
 	std::shared_ptr<Sprite> platformSprite;
