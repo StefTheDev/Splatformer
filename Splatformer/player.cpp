@@ -8,8 +8,9 @@ Uint32 resetGravScale(Uint32 _interval, void* _param) {
 	return 0;
 }
 
-Player::Player(Vector2 _position) {
+Player::Player(Vector2 _position, Controllers _playerNum) {
 	type = PLAYER;
+	playerIndex = _playerNum;
 
 	Entity::Initialise(_position, { width, height });
 }
@@ -34,6 +35,19 @@ void Player::Initialise(b2World* _world, std::shared_ptr<Sprite> _playerSprite) 
 }
 
 void Player::Update(Camera* _gameCamera) {
+	if (Input::GetInstance()->IsControllerButtonPressed(playerIndex, SDL_CONTROLLER_BUTTON_A)) {
+		Jump();
+
+	} else if (!(Input::GetInstance()->IsControllerButtonHeld(playerIndex, SDL_CONTROLLER_BUTTON_A))) {
+		FinishJump();
+	}
+
+	float stickPos = Input::GetInstance()->GetControllerAxis(playerIndex, SDL_CONTROLLER_AXIS_LEFTX);
+
+	if (abs(stickPos) > 0.3f) {
+		MoveHorizontal(stickPos);
+	}
+
 	SetPosition(collider->GetPosition() - _gameCamera->GetPosition());
 
 	jumpedInAir = (jumpedInAir && !canJump);
@@ -47,10 +61,10 @@ void Player::Jump() {
 		collider->body->SetGravityScale(0.4f);
 		if (!canJump) {
 			jumpedInAir = true;
-			collider->body->SetLinearVelocity({ 0.0f, airJumpForce });
+			collider->body->SetLinearVelocity({ collider->body->GetLinearVelocity().x, airJumpForce });
 			jumpTimer = SDL_AddTimer(maxAirJumpTime, resetGravScale, static_cast<void*>(collider->body.get()));
 		}else{
-			collider->body->SetLinearVelocity({ 0.0f, jumpForce });
+			collider->body->SetLinearVelocity({ collider->body->GetLinearVelocity().x, jumpForce });
 			jumpTimer = SDL_AddTimer(maxJumpTime, resetGravScale, static_cast<void*>(collider->body.get()));
 		}
 	}
@@ -62,12 +76,15 @@ void Player::FinishJump() {
 	collider->body->SetGravityScale(1.0f);
 }
 
-void Player::MoveRight() {
-	collider->body->ApplyLinearImpulseToCenter({ 1.0f, 0.0f }, true);
-}
+void Player::MoveHorizontal(float _scale) {
+	float xVel = collider->body->GetLinearVelocity().x;
 
-void Player::MoveLeft() {
-	collider->body->ApplyLinearImpulseToCenter({ -1.0f, 0.0f }, true);
+	//Signs of movement and joystick are different
+	if (((_scale > 0) - (0 > _scale)) != ((xVel > 0) - (0 > xVel))) {
+		collider->body->SetLinearVelocity({ collider->body->GetLinearVelocity().x/2.0f, collider->body->GetLinearVelocity().y });
+	}
+
+	collider->body->ApplyLinearImpulseToCenter({ _scale * (1 - (xVel/maxSpeed)) * incrementSpeed * deltaTime, 0.0f }, true);
 }
 
 void Player::SetCanJump(bool _newCanJump) {

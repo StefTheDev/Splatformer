@@ -24,7 +24,7 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 	playerSprite = std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false);
 	platformSprite = std::make_shared<Sprite>("Resources/Sprites/platform.png", _gameRenderer, false);
 
-	objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f)));
+	objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER1));
 
 	camera.SetTargetPosition(Vector2(1200.0f, 0.0f));
 	camera.SetMoveSpeed(100.0f);
@@ -44,42 +44,25 @@ void SceneTest::Unload() {
 void SceneTest::Update() {
 	sceneWorld->Step(deltaTime, velIterations, posIterations);
 	//camera.Update();
-
-	if (Input::GetInstance()->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_A)) {
-		static_cast<Player*>(objects[0].get())->Jump();
-		
-	} else if (!(Input::GetInstance()->IsControllerButtonHeld(PLAYER1, SDL_CONTROLLER_BUTTON_A))) {
-		static_cast<Player*>(objects[0].get())->FinishJump();
-	}
 }
 
 void SceneTest::Render(SDL_Renderer* _gameRenderer) {
 }
 
 void SceneTest::ButtonDown(SDL_JoystickID _gamepadID, Uint8 _button) {
-	////if (_button == SDL_CONTROLLER_BUTTON_A) {
-	//if (Input::GetInstance()->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_A)) {
 
-	//	static_cast<Player*>(objects[0].get())->Jump();
-	//}
-	//} else if (_button == SDL_CONTROLLER_BUTTON_B) {
-	//static_cast<Player*>(objects[0].get())->Jump();
-	//}
 }
 
 void SceneTest::ButtonUp(SDL_JoystickID _gamepadID, Uint8 _button) {
-	/*if (_button == SDL_CONTROLLER_BUTTON_A) {
-		static_cast<Player*>(objects[0].get())->FinishJump();
-	}*/
-	//static_cast<Player*>(objects[0].get())->FinishJump();
+
 }
 
 void SceneTest::RightTrigger(SDL_JoystickID _gamepadID, float _axisValue) {
-	static_cast<Player*>(objects[0].get())->MoveRight();
+	
 }
 
 void SceneTest::LeftTrigger(SDL_JoystickID gamepadID, float axisValue) {
-	static_cast<Player*>(objects[0].get())->MoveLeft();
+	
 }
 
 void SceneTest::ControllerAdded(int deviceIndex) {

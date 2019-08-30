@@ -4,20 +4,21 @@
 
 class Player : public Entity {
 public:
-	Player(Vector2 position);
+	Player(Vector2 position, Controllers playerNum);
 
 	void Initialise(b2World* world, std::shared_ptr<Sprite> playSprite);
 	void Update(Camera* _gameCamera);
 
 	void Jump();
 	void FinishJump();
-	void MoveRight();
-	void MoveLeft();
+	void MoveHorizontal(float scale);
 
 	void SetCanJump(bool newCanJump);
 
 	Uint32 jumpTimerCallback(Uint32 interval, void* param);
 private:
+	Controllers playerIndex;
+
 	std::unique_ptr<Collider> collider;
 
 	float width = 50.0f;
@@ -33,6 +34,10 @@ private:
 
 	float jumpForce = 16.0f;
 	float airJumpForce = 12.0f;
+
+	//Running variables
+	float incrementSpeed = 96.0f;
+	float maxSpeed = 64.0f;
 
 	SDL_TimerID jumpTimer;
 };
