@@ -53,7 +53,7 @@ void SceneTest::ButtonDown(SDL_JoystickID _gamepadID, Uint8 _button) {
 	if (_button == SDL_CONTROLLER_BUTTON_A) {
 		static_cast<Player*>(objects[0].get())->Jump();
 	} else if (_button == SDL_CONTROLLER_BUTTON_B) {
-		
+
 	}
 }
 
