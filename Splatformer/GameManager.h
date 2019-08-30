@@ -47,7 +47,7 @@ private:
 	Uint64 timeCurrentFrame = 0;
 	Uint64 timeLastFrame = 0;
 
-	Input inputManager;
+	//Input inputManager;
 
 	SceneTest testScene;
 	std::unique_ptr<Jumper> jumper;

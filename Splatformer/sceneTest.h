@@ -16,6 +16,7 @@ private:
 	void Unload() override;
 
 	void ButtonDown(SDL_JoystickID gamepadID, Uint8 button) override;
+	void ButtonUp(SDL_JoystickID gamepadID, Uint8 button) override;
 	void RightTrigger(SDL_JoystickID gamepadID, float axisValue) override;
 	void LeftTrigger(SDL_JoystickID gamepadID, float axisValue) override;
 	void ControllerAdded(int deviceIndex) override;

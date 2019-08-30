@@ -58,5 +58,6 @@ struct DataContainer {
 
 class PlatformingListener : public b2ContactListener {
 	void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
+	void EndContact(b2Contact* contact);
 };
 #endif

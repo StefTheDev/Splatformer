@@ -33,7 +33,8 @@ bool GameManager::Initialise(std::string _title)
 
 		gameState = MENU;
 
-		inputManager.Initialise();
+		Input::GetInstance();
+		Input::GetInstance()->Initialise();
 
 		testScene.LoadScene(renderer);
 	}
@@ -59,7 +60,7 @@ void GameManager::HandleEvents()
 {
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
-		inputManager.HandleEvents(event);
+		Input::GetInstance()->HandleEvents(event);
 		switch (event.type) {
 		case SDL_QUIT:
 		{
@@ -83,7 +84,7 @@ void GameManager::Process()
 	jumper->Update();
 	//std::cout << "A is held: " << inputManager.IsControllerButtonHeld(PLAYER1, SDL_CONTROLLER_BUTTON_A) << std::endl;
 	// call this last
-	inputManager.Process();
+	Input::GetInstance()->Process();
 }
 
 void GameManager::Clean()

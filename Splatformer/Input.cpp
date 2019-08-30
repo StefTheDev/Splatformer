@@ -1,5 +1,18 @@
 #include "Input.h"
 
+Input* Input::instance = nullptr;
+
+Input* Input::GetInstance() {
+	if (instance == nullptr) instance = new Input();
+	return instance;
+}
+
+void Input::Destroy() {
+	if (instance != nullptr) {
+		delete(instance);
+	}
+}
+
 bool Input::IsControllerButtonPressed(Controllers _controllerID, SDL_GameControllerButton _button)
 {
 	if (_controllerID < 0 || _controllerID > numGamepads) return false;

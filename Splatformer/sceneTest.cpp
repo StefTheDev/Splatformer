@@ -6,7 +6,7 @@ constexpr int velIterations = 8;
 constexpr int posIterations = 3;
 
 SceneTest::SceneTest() {
-	b2Vec2 gravity(0.0f, -19.6f);
+	b2Vec2 gravity(0.0f, -39.2f);
 
 	contactListener = new PlatformingListener();
 
@@ -44,17 +44,34 @@ void SceneTest::Unload() {
 void SceneTest::Update() {
 	sceneWorld->Step(deltaTime, velIterations, posIterations);
 	//camera.Update();
+
+	if (Input::GetInstance()->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_A)) {
+		static_cast<Player*>(objects[0].get())->Jump();
+		
+	} else if (!(Input::GetInstance()->IsControllerButtonHeld(PLAYER1, SDL_CONTROLLER_BUTTON_A))) {
+		static_cast<Player*>(objects[0].get())->FinishJump();
+	}
 }
 
 void SceneTest::Render(SDL_Renderer* _gameRenderer) {
 }
 
 void SceneTest::ButtonDown(SDL_JoystickID _gamepadID, Uint8 _button) {
-	if (_button == SDL_CONTROLLER_BUTTON_A) {
-		static_cast<Player*>(objects[0].get())->Jump();
-	} else if (_button == SDL_CONTROLLER_BUTTON_B) {
+	////if (_button == SDL_CONTROLLER_BUTTON_A) {
+	//if (Input::GetInstance()->IsControllerButtonPressed(PLAYER1, SDL_CONTROLLER_BUTTON_A)) {
 
-	}
+	//	static_cast<Player*>(objects[0].get())->Jump();
+	//}
+	//} else if (_button == SDL_CONTROLLER_BUTTON_B) {
+	//static_cast<Player*>(objects[0].get())->Jump();
+	//}
+}
+
+void SceneTest::ButtonUp(SDL_JoystickID _gamepadID, Uint8 _button) {
+	/*if (_button == SDL_CONTROLLER_BUTTON_A) {
+		static_cast<Player*>(objects[0].get())->FinishJump();
+	}*/
+	//static_cast<Player*>(objects[0].get())->FinishJump();
 }
 
 void SceneTest::RightTrigger(SDL_JoystickID _gamepadID, float _axisValue) {

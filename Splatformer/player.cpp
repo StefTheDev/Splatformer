@@ -1,5 +1,13 @@
 #include "player.h"
 
+Uint32 resetGravScale(Uint32 _interval, void* _param) {
+	b2Body* body = static_cast<b2Body*>(_param);
+
+	body->SetGravityScale(1.0f);
+
+	return 0;
+}
+
 Player::Player(Vector2 _position) {
 	type = PLAYER;
 
@@ -28,15 +36,30 @@ void Player::Initialise(b2World* _world, std::shared_ptr<Sprite> _playerSprite) 
 void Player::Update(Camera* _gameCamera) {
 	SetPosition(collider->GetPosition() - _gameCamera->GetPosition());
 
-	collider->body->SetAwake(true);
+	jumpedInAir = (jumpedInAir && !canJump);
 
 	GetSprite()->Play("idle");
 	Entity::Update();
 }
 
 void Player::Jump() {
-	collider->body->ApplyLinearImpulseToCenter({ 0.0f, 20.0f }, true);
-	std::cout << "Jump" << std::endl;
+	if (canJump || !jumpedInAir) {
+		collider->body->SetGravityScale(0.4f);
+		if (!canJump) {
+			jumpedInAir = true;
+			collider->body->SetLinearVelocity({ 0.0f, airJumpForce });
+			jumpTimer = SDL_AddTimer(maxAirJumpTime, resetGravScale, static_cast<void*>(collider->body.get()));
+		}else{
+			collider->body->SetLinearVelocity({ 0.0f, jumpForce });
+			jumpTimer = SDL_AddTimer(maxJumpTime, resetGravScale, static_cast<void*>(collider->body.get()));
+		}
+	}
+}
+
+void Player::FinishJump() {
+	SDL_RemoveTimer(jumpTimer);
+
+	collider->body->SetGravityScale(1.0f);
 }
 
 void Player::MoveRight() {
@@ -45,4 +68,14 @@ void Player::MoveRight() {
 
 void Player::MoveLeft() {
 	collider->body->ApplyLinearImpulseToCenter({ -1.0f, 0.0f }, true);
+}
+
+void Player::SetCanJump(bool _newCanJump) {
+	canJump = _newCanJump;
+}
+
+Uint32 Player::jumpTimerCallback(Uint32 interval, void* param) {
+	collider->body->SetGravityScale(1.0f);
+
+	return 0;
 }

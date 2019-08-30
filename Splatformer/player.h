@@ -10,12 +10,29 @@ public:
 	void Update(Camera* _gameCamera);
 
 	void Jump();
+	void FinishJump();
 	void MoveRight();
 	void MoveLeft();
 
+	void SetCanJump(bool newCanJump);
+
+	Uint32 jumpTimerCallback(Uint32 interval, void* param);
 private:
 	std::unique_ptr<Collider> collider;
 
 	float width = 50.0f;
 	float height = 50.0f;
+
+	//Jumping variables
+	bool canJump = false;
+	bool jumpedInAir = false;
+	
+	//The amount of time in ms that a player can be travelling upwards for
+	Uint32 maxJumpTime = 600;
+	Uint32 maxAirJumpTime = 400;
+
+	float jumpForce = 16.0f;
+	float airJumpForce = 12.0f;
+
+	SDL_TimerID jumpTimer;
 };
