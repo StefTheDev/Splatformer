@@ -96,8 +96,11 @@
     <ClCompile Include="Platform.cpp">
       <Filter>Source Files\Objects\Platforms</Filter>
     </ClCompile>
+    <ClCompile Include="TimePlatform.cpp">
+      <Filter>Source Files\Objects\Platforms</Filter>
+    </ClCompile>
     <ClCompile Include="JumpPlatform.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Objects\Platforms</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -144,6 +147,9 @@
       <Filter>Header Files\Objects\Platforms</Filter>
     </ClInclude>
     <ClInclude Include="JumpPlatform.h">
+      <Filter>Header Files\Objects\Platforms</Filter>
+    </ClInclude>
+    <ClInclude Include="TimePlatform.h">
       <Filter>Header Files\Objects\Platforms</Filter>
     </ClInclude>
   </ItemGroup>

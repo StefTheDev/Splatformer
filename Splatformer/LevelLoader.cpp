@@ -2,6 +2,7 @@
 #include <fstream>
 
 #include "JumpPlatform.h"
+#include "TimePlatform.h"
 
 std::vector<std::string> splitBy(std::string _sentence, std::string _delim) {
 	std::vector<std::string> words;
@@ -43,6 +44,8 @@ bool LevelLoader::LoadLevel(std::string _levelPath, std::vector<std::unique_ptr<
 				std::vector<std::string> args = splitBy(tiles[y][x], ":");
 				if (args[0] == "J") {
 					_sceneEntities.push_back(std::move(std::make_unique<JumpPlatform>(Vector2(x, y), std::stoi(args[1]), std::stoi(args[2]))));
+				} else if (args[0] == "T") {
+					_sceneEntities.push_back(std::move(std::make_unique<TimePlatform>(Vector2(x, y), std::stof(args[1]), std::stof(args[2]))));
 				}
 			} else {
 				//std::cout << " ";

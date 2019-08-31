@@ -45,10 +45,12 @@ void SceneTest::Unload() {
 void SceneTest::Update() {
 	sceneWorld->Step(deltaTime, velIterations, posIterations);
 
+	timeElapsed += deltaTime;
+
 	for (auto& entity : objects) {
 		switch (entity->GetType()) {
 		case PLAYER: static_cast<Player*>(entity.get())->Update(&camera); break;
-		case PLATFORM: static_cast<Platform*>(entity.get())->Update(&camera); break;
+		case PLATFORM: static_cast<Platform*>(entity.get())->Update(&camera, timeElapsed); break;
 		}
 	}
 
