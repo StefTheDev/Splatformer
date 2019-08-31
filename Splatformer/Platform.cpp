@@ -30,7 +30,7 @@ void Platform::Initialise(b2World* _world, std::shared_ptr<Sprite> _platformSpri
 	SetPosition(collider->GetPosition());
 }
 
-void Platform::Update(Camera* _gameCamera) {
+void Platform::Update(Camera* _gameCamera, float _sceneTime) {
 	SetPosition(collider->GetPosition() - _gameCamera->GetPosition());
 
 	GetSprite()->Play("idle");

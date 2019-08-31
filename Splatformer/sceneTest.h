@@ -29,4 +29,6 @@ private:
 	std::shared_ptr<Sprite> platformSprite;
 
 	std::vector<SDL_GameController*> controllers;
+
+	float timeElapsed;
 };

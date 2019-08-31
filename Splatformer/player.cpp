@@ -1,5 +1,7 @@
 #include "player.h"
 
+int Player::currentJumps = 0;
+
 Uint32 resetGravScale(Uint32 _interval, void* _param) {
 	b2Body* body = static_cast<b2Body*>(_param);
 
@@ -67,6 +69,8 @@ void Player::Jump() {
 			collider->body->SetLinearVelocity({ collider->body->GetLinearVelocity().x, jumpForce });
 			jumpTimer = SDL_AddTimer(maxJumpTime, resetGravScale, static_cast<void*>(collider->body.get()));
 		}
+		//Increment global jump count
+		currentJumps++;
 	}
 }
 
@@ -95,4 +99,8 @@ Uint32 Player::jumpTimerCallback(Uint32 interval, void* param) {
 	collider->body->SetGravityScale(1.0f);
 
 	return 0;
+}
+
+int Player::GetJumps() {
+	return currentJumps;
 }

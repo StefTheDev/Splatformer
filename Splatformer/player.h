@@ -16,6 +16,8 @@ public:
 	void SetCanJump(bool newCanJump);
 
 	Uint32 jumpTimerCallback(Uint32 interval, void* param);
+
+	static int GetJumps();
 private:
 	Controllers playerIndex;
 
@@ -40,4 +42,6 @@ private:
 	float maxSpeed = 64.0f;
 
 	SDL_TimerID jumpTimer;
+
+	static int currentJumps;
 };

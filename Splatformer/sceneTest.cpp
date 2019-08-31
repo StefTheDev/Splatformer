@@ -30,6 +30,7 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 	camera.SetMoveSpeed(100.0f);
 
 	LevelLoader::LoadLevel("Resources/Levels/LevelOne.csv", objects);
+
 	for (auto& object : objects) {
 		switch (object->GetType()) {
 		case PLAYER: static_cast<Player*>(object.get())->Initialise(sceneWorld.get(), playerSprite); break;
@@ -43,6 +44,14 @@ void SceneTest::Unload() {
 
 void SceneTest::Update() {
 	sceneWorld->Step(deltaTime, velIterations, posIterations);
+
+	for (auto& entity : objects) {
+		switch (entity->GetType()) {
+		case PLAYER: static_cast<Player*>(entity.get())->Update(&camera); break;
+		case PLATFORM: static_cast<Platform*>(entity.get())->Update(&camera); break;
+		}
+	}
+
 	//camera.Update();
 }
 

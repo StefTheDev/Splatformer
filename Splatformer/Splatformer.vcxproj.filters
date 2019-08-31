@@ -43,6 +43,12 @@
     <Filter Include="Source Files\Entities">
       <UniqueIdentifier>{5b5360b3-6969-438d-83e9-69296a89f060}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Objects\Platforms">
+      <UniqueIdentifier>{5bd46a9d-0f30-4c1a-99c9-638179f6a20b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\Platforms">
+      <UniqueIdentifier>{a58a97f7-272b-4c0a-8f41-45dcc6d5b812}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -69,25 +75,28 @@
     <ClCompile Include="Collider.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Jumper.cpp">
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="Platform.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="player.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="LevelLoader.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>Source Files\Objects\Platforms</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpPlatform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -122,17 +131,20 @@
     <ClInclude Include="Camera.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Jumper.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="Platform.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="player.h">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="LevelLoader.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform.h">
+      <Filter>Header Files\Objects\Platforms</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpPlatform.h">
+      <Filter>Header Files\Objects\Platforms</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

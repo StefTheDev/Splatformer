@@ -1,7 +1,7 @@
 #include "LevelLoader.h"
 #include <fstream>
 
-#include "Platform.h"
+#include "JumpPlatform.h"
 
 std::vector<std::string> splitBy(std::string _sentence, std::string _delim) {
 	std::vector<std::string> words;
@@ -40,8 +40,10 @@ bool LevelLoader::LoadLevel(std::string _levelPath, std::vector<std::unique_ptr<
 	for (int y = 0; y < tiles.size(); y++) {
 		for (int x = 0; x < tiles[y].size(); x++) {
 			if (tiles[y][x] != "") {
-				//std::vector<std::string> args = splitBy(tile, ":");
-				_sceneEntities.push_back(std::move(std::make_unique<Platform>(Vector2(x, y))));
+				std::vector<std::string> args = splitBy(tiles[y][x], ":");
+				if (args[0] == "J") {
+					_sceneEntities.push_back(std::move(std::make_unique<JumpPlatform>(Vector2(x, y), std::stoi(args[1]), std::stoi(args[2]))));
+				}
 			} else {
 				//std::cout << " ";
 			}
