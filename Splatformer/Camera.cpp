@@ -13,9 +13,20 @@ Camera::Camera(float _width, float _height) {
 }
 
 void Camera::Update() {
-	Vector2 direction = Vector2(targetPosition - position).Normalised();
+	Vector2 difference(targetPosition - position);
+	Vector2 direction = difference.Normalised();
 
-	position += direction * (moveSpeed * deltaTime);
+	float scale = (difference.Magnitude() / (moveSpeed * deltaTime));
+
+	//scale = scale > 1.0f ? 1.0f : scale;
+
+	if (scale > 1.0f) {
+		scale = 1.0f;
+	} else {
+		std::cout << "Ladies and Gentlemen. We got 'em.\n";
+	}
+
+	position += direction * (moveSpeed * deltaTime * scale);
 }
 
 void Camera::SetPosition(Vector2 _newPosition) {

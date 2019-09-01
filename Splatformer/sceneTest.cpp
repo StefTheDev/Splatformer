@@ -54,7 +54,7 @@ void SceneTest::Update() {
 		}
 	}
 
-	//camera.Update();
+	camera.Update();
 }
 
 void SceneTest::Render(SDL_Renderer* _gameRenderer) {
