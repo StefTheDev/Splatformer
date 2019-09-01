@@ -2,7 +2,6 @@
 
 Camera::Camera() {
 	position = Vector2(0.0f, 0.0f);
-	targetPosition = Vector2(0.0f, 0.0f);
 }
 
 Camera::Camera(float _width, float _height) {
@@ -13,20 +12,20 @@ Camera::Camera(float _width, float _height) {
 }
 
 void Camera::Update() {
-	Vector2 difference(targetPosition - position);
-	Vector2 direction = difference.Normalised();
+	if (!targetQueue.empty()) {
+		Vector2 difference(targetQueue.front() - position);
+		Vector2 direction = difference.Normalised();
 
-	float scale = (difference.Magnitude() / (moveSpeed * deltaTime));
+		float scale = (difference.Magnitude() / (moveSpeed * deltaTime));
 
-	//scale = scale > 1.0f ? 1.0f : scale;
+		if (scale > 1.0f) {
+			scale = 1.0f;
+		} else {
+			targetQueue.pop_front();
+		}
 
-	if (scale > 1.0f) {
-		scale = 1.0f;
-	} else {
-		std::cout << "Ladies and Gentlemen. We got 'em.\n";
+		position += direction * (moveSpeed * deltaTime * scale);
 	}
-
-	position += direction * (moveSpeed * deltaTime * scale);
 }
 
 void Camera::SetPosition(Vector2 _newPosition) {
@@ -53,12 +52,24 @@ float Camera::GetHeight() {
 	return height;
 }
 
+void Camera::PushTargetBack(Vector2 _newTarget) {
+	targetQueue.push_back(_newTarget);
+}
+
+void Camera::PushTargetFront(Vector2 _newTarget) {
+	targetQueue.push_front(_newTarget);
+}
+
 void Camera::SetTargetPosition(Vector2 _newTarget) {
-	targetPosition = _newTarget;
+	if (targetQueue.empty()) {
+		PushTargetBack(_newTarget);
+	} else {
+		targetQueue.front() = _newTarget;
+	}
 }
 
 Vector2 Camera::GetTargetPosition() {
-	return targetPosition;
+	return targetQueue.front();
 }
 
 void Camera::SetMoveSpeed(float _newMoveSpeed) {

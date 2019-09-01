@@ -26,7 +26,8 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 
 	objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER1));
 
-	camera.SetTargetPosition(Vector2(1200.0f, 0.0f));
+	camera.PushTargetPosition(Vector2(1200.0f, 0.0f));
+	camera.PushTargetPosition(Vector2(0.0f, 0.0f));
 	camera.SetMoveSpeed(100.0f);
 
 	LevelLoader::LoadLevel("Resources/Levels/LevelOne.csv", objects);
