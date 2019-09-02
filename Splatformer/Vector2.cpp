@@ -80,8 +80,14 @@ float Vector2::Magnitude() {
 Vector2 Vector2::Normalised() {
 	Vector2 outVec(x, y);
 
-	outVec.x /= Magnitude();
-	outVec.y /= Magnitude();
+	//If we're about to divide by ~zero
+	if (Magnitude() <= 0.0000000001f) {
+		outVec.x = 0.0f;
+		outVec.y = 0.0f;
+	} else {
+		outVec.x /= Magnitude();
+		outVec.y /= Magnitude();
+	}
 
 	return outVec;
 }
@@ -109,7 +115,7 @@ Vector2 & operator-(Vector2 v1, Vector2 v2)
 	return outVec;
 }
 
-Vector2 & operator*(Vector2 & v1, float scalar)
+Vector2 & operator*(Vector2 v1, float scalar)
 {
 	Vector2 outVec(v1);
 	outVec.x *= scalar;

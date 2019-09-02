@@ -16,7 +16,12 @@ void Platform::Initialise(b2World* _world, std::shared_ptr<Sprite> _platformSpri
 
 	GetSprite()->Add("idle", SpriteAnimation{ 0, 1, 500 }); //Index, frames, speed
 
-	collider = std::make_unique<Collider>(position, Vector2(width, height));
+	DataContainer info = {
+		ColliderType::PLT,
+		this
+	};
+
+	collider = std::make_unique<Collider>(position, info, Vector2(width, height));
 	
 	collider->InitialiseStatic(_world);
 	collider->SetCollisionCategory(CATEGORY_PLATFORM);
@@ -25,12 +30,11 @@ void Platform::Initialise(b2World* _world, std::shared_ptr<Sprite> _platformSpri
 	SetPosition(collider->GetPosition());
 }
 
-void Platform::Update(Camera* _gameCamera) {
+void Platform::Update(Camera* _gameCamera, float _sceneTime) {
 	SetPosition(collider->GetPosition() - _gameCamera->GetPosition());
 
 	GetSprite()->Play("idle");
 
-	std::cout << "Platform Drawn\n";
 	Entity::Update();
 }
 

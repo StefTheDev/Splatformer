@@ -21,8 +21,8 @@ enum Controllers
 class Input
 {
 public:
-	Input() {};
-	~Input() {};
+	static Input* GetInstance();
+	static void Destroy();
 	bool IsControllerButtonPressed(Controllers _controllerID, SDL_GameControllerButton _button);
 	bool IsControllerButtonHeld(Controllers _controllerID, SDL_GameControllerButton _button);
 	float GetControllerAxis(Controllers _controllerID, SDL_GameControllerAxis _axis);
@@ -31,6 +31,9 @@ public:
 	void HandleEvents(SDL_Event _event);
 
 private:
+	static Input* instance;
+	Input() {};
+	~Input() {};
 	std::vector<SDL_GameController*> connectedControllers;
 	std::vector<GamePad> controllerInputs;
 	std::vector<GamePad> lastControllerInputs;

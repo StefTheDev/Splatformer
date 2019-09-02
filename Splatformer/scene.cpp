@@ -21,10 +21,7 @@ void Scene::UnloadScene() {
 
 void Scene::UpdateScene() {
 	for (auto& entity : objects) {
-		switch (entity->GetType()) {
-			case PLAYER: static_cast<Player*>(entity.get())->Update(&camera); break;
-			case PLATFORM: static_cast<Platform*>(entity.get())->Update(&camera); break;
-		}
+		entity->Update();
 	}
 
 	Update();

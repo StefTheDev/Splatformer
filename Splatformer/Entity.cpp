@@ -83,6 +83,14 @@ void Entity::SetPosition(Vector2 _newPosition) {
 	position = _newPosition;
 }
 
+Vector2 Entity::GetPosition() {
+	return position;
+}
+
+Vector2 Entity::GetDimensions() {
+	return dimension;
+}
+
 EntityType Entity::GetType() {
 	return type;
 }

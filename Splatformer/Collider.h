@@ -15,7 +15,7 @@ constexpr int MASK_SENSOR_PLATFORM		= 0b001000;
 
 class Collider {
 public:
-	Collider(Vector2 position, Vector2 dimensions = { 32.0f, 32.0f });
+	Collider(Vector2 position, DataContainer colliderData, Vector2 dimensions = { 32.0f, 32.0f });
 
 	void InitialiseStatic(b2World* worldRef, bool isSensor = false);
 	void InitialiseDynamic(b2World* worldRef, float density, float friction, float damping, bool IsSensor = false);
@@ -37,4 +37,6 @@ public:
 private:
 	Vector2 position;
 	Vector2 dimensions;
+	DataContainer colliderData;
 };
+

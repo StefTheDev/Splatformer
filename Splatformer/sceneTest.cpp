@@ -6,9 +6,12 @@ constexpr int velIterations = 8;
 constexpr int posIterations = 3;
 
 SceneTest::SceneTest() {
-	b2Vec2 gravity(0.0f, -19.6f);
+	b2Vec2 gravity(0.0f, -39.2f);
+
+	contactListener = new PlatformingListener();
 
 	sceneWorld = std::make_unique<b2World>(gravity);
+	sceneWorld->SetContactListener(contactListener);
 }
 
 void SceneTest::Load(SDL_Renderer* _gameRenderer) {
@@ -21,12 +24,14 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 	playerSprite = std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false);
 	platformSprite = std::make_shared<Sprite>("Resources/Sprites/platform.png", _gameRenderer, false);
 
-	objects.push_back(std::make_unique<Player>(Vector2(64.0f, 0.0f)));
+	objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER1));
 
-	camera.SetTargetPosition(Vector2(1200.0f, 0.0f));
-	camera.SetMoveSpeed(0.0f);
+	camera.PushTargetPosition(Vector2(1200.0f, 0.0f));
+	camera.PushTargetPosition(Vector2(0.0f, 0.0f));
+	camera.SetMoveSpeed(100.0f);
 
 	LevelLoader::LoadLevel("Resources/Levels/LevelOne.csv", objects);
+
 	for (auto& object : objects) {
 		switch (object->GetType()) {
 		case PLAYER: static_cast<Player*>(object.get())->Initialise(sceneWorld.get(), playerSprite); break;
@@ -40,7 +45,16 @@ void SceneTest::Unload() {
 
 void SceneTest::Update() {
 	sceneWorld->Step(deltaTime, velIterations, posIterations);
-	std::cout << "Scene Updated\n";
+
+	timeElapsed += deltaTime;
+
+	for (auto& entity : objects) {
+		switch (entity->GetType()) {
+		case PLAYER: static_cast<Player*>(entity.get())->Update(&camera); break;
+		case PLATFORM: static_cast<Platform*>(entity.get())->Update(&camera, timeElapsed); break;
+		}
+	}
+
 	camera.Update();
 }
 
@@ -48,19 +62,19 @@ void SceneTest::Render(SDL_Renderer* _gameRenderer) {
 }
 
 void SceneTest::ButtonDown(SDL_JoystickID _gamepadID, Uint8 _button) {
-	if (_button == SDL_CONTROLLER_BUTTON_A) {
-		static_cast<Player*>(objects[0].get())->Jump();
-	} else if (_button == SDL_CONTROLLER_BUTTON_B) {
-		
-	}
+
+}
+
+void SceneTest::ButtonUp(SDL_JoystickID _gamepadID, Uint8 _button) {
+
 }
 
 void SceneTest::RightTrigger(SDL_JoystickID _gamepadID, float _axisValue) {
-	static_cast<Player*>(objects[0].get())->MoveRight();
+
 }
 
 void SceneTest::LeftTrigger(SDL_JoystickID gamepadID, float axisValue) {
-	static_cast<Player*>(objects[0].get())->MoveLeft();
+
 }
 
 void SceneTest::ControllerAdded(int deviceIndex) {
