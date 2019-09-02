@@ -151,7 +151,6 @@
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="player.cpp" />
-    <ClCompile Include="Jumper.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="sceneTest.cpp" />
     <ClCompile Include="Source.cpp" />
@@ -168,7 +167,6 @@
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="player.h" />
-    <ClInclude Include="Jumper.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="sceneTest.h" />
     <ClInclude Include="Sprite.h" />

@@ -1,5 +1,4 @@
 #include "GameManager.h"
-#include "Jumper.h"
 
 GameManager::GameManager()
 {

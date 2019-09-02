@@ -3,7 +3,6 @@
 #include "Utilities.h"
 
 #include "sceneTest.h"
-class Jumper;
 
 enum GameState
 {
@@ -50,5 +49,4 @@ private:
 	Input inputManager;
 
 	SceneTest testScene;
-	std::unique_ptr<Jumper> jumper;
 };
