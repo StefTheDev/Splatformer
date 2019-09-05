@@ -48,6 +48,7 @@ using b2BodyPtr = std::unique_ptr<b2Body, b2BodyDeleter>;
 enum ColliderType {
 	PLR = 0,
 	PLT,
+	RESPAWN,
 	OTHER
 };
 

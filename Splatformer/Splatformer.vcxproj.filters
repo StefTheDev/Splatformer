@@ -102,6 +102,9 @@
     <ClCompile Include="JumpPlatform.cpp">
       <Filter>Source Files\Objects\Platforms</Filter>
     </ClCompile>
+    <ClCompile Include="RespawnPlatform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -150,6 +153,9 @@
       <Filter>Header Files\Objects\Platforms</Filter>
     </ClInclude>
     <ClInclude Include="TimePlatform.h">
+      <Filter>Header Files\Objects\Platforms</Filter>
+    </ClInclude>
+    <ClInclude Include="RespawnPlatform.h">
       <Filter>Header Files\Objects\Platforms</Filter>
     </ClInclude>
   </ItemGroup>
