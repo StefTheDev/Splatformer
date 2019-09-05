@@ -1,6 +1,7 @@
 #include "Utilities.h"
 #include "player.h"
 #include "Platform.h"
+#include "Coin.h"
 
 float deltaTime = 0.0f;
 
@@ -50,6 +51,49 @@ void PlatformingListener::PreSolve(b2Contact* contact, const b2Manifold* oldMani
 	}
 
 	//std::cout << "A: " << position.y - halfHeight << " |B: "<< (top - 3.0f * b2_linearSlop) << std::endl;
+}
+
+void PlatformingListener::BeginContact(b2Contact* contact) {
+	b2Fixture* fixtureA = contact->GetFixtureA();
+	b2Fixture* fixtureB = contact->GetFixtureB();
+
+	DataContainer* fixtureAData = static_cast<DataContainer*>(fixtureA->GetBody()->GetUserData());
+	DataContainer* fixtureBData = static_cast<DataContainer*>(fixtureB->GetBody()->GetUserData());
+
+	//If fixture A and B are the same type, return
+	if (fixtureAData->type == fixtureBData->type) return;
+
+	//If fixture A or B are unimportant types
+	if (fixtureAData->type == OTHER || fixtureBData->type == OTHER) {
+		return;
+	}
+
+	if ((fixtureAData->type == PLR || fixtureAData->type == ECOIN) && (fixtureBData->type == PLR || fixtureBData->type == ECOIN)) {
+
+		b2Vec2 position;
+		float32 top, halfHeight;
+		Player* player;
+		Coin* coin;
+
+		if (fixtureAData->type == PLR) {
+			player = static_cast<Player*>(fixtureAData->data);
+
+			coin = static_cast<Coin*>(fixtureBData->data);
+		}
+		else {
+			player = static_cast<Player*>(fixtureBData->data);
+
+			coin = static_cast<Coin*>(fixtureAData->data);
+		}
+
+		player->addCoin();
+
+		coin->Collected();
+
+		return;
+	}
+
+	std::cout << "Contact ended\n";
 }
 
 void PlatformingListener::EndContact(b2Contact* contact) {

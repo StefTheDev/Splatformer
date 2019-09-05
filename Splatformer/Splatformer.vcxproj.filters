@@ -105,6 +105,9 @@
     <ClCompile Include="RespawnPlatform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -157,6 +160,9 @@
     </ClInclude>
     <ClInclude Include="RespawnPlatform.h">
       <Filter>Header Files\Objects\Platforms</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
