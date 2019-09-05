@@ -15,21 +15,21 @@ void Input::Destroy() {
 
 bool Input::IsControllerButtonPressed(Controllers _controllerID, SDL_GameControllerButton _button)
 {
-	if (_controllerID < 0 || _controllerID > numGamepads) return false;
+	if (_controllerID < 0 || _controllerID >= numGamepads) return false;
 
 	return controllerInputs[_controllerID].buttons[_button] && !lastControllerInputs[_controllerID].buttons[_button];
 }
 
 bool Input::IsControllerButtonHeld(Controllers _controllerID, SDL_GameControllerButton _button)
 {
-	if (_controllerID < 0 || _controllerID > numGamepads) return false;
+	if (_controllerID < 0 || _controllerID >= numGamepads) return false;
 
 	return controllerInputs[_controllerID].buttons[_button] && lastControllerInputs[_controllerID].buttons[_button];
 }
 
 float Input::GetControllerAxis(Controllers _controllerID, SDL_GameControllerAxis _axis)
 {
-	if (_controllerID < 0 || _controllerID > numGamepads) return 0.0;
+	if (_controllerID < 0 || _controllerID >= numGamepads) return 0.0;
 
 	return controllerInputs[_controllerID].axis[_axis] / 32768.0f;
 }
