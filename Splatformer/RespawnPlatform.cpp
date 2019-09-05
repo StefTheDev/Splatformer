@@ -20,7 +20,7 @@ void RespawnPlatform::Initialise(b2World * _world, std::shared_ptr<Sprite> _plat
 	GetSprite()->Add("idle", SpriteAnimation{ 0, 1, 500 }); //Index, frames, speed
 
 	DataContainer info = {
-		ColliderType::PLT,
+		ColliderType::RESPAWN,
 		this
 	};
 
@@ -31,4 +31,9 @@ void RespawnPlatform::Initialise(b2World * _world, std::shared_ptr<Sprite> _plat
 	collider->SetCollisionMask(MASK_PLATFORM_COLLIDE);
 
 	SetPosition(collider->GetPosition());
+}
+
+void RespawnPlatform::Activate()
+{
+	std::cout << "ACTIVATE" << std::endl;
 }

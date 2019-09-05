@@ -2,6 +2,7 @@
 #include "player.h"
 #include "Platform.h"
 #include "Coin.h"
+#include "RespawnPlatform.h"
 
 float deltaTime = 0.0f;
 
@@ -89,6 +90,32 @@ void PlatformingListener::BeginContact(b2Contact* contact) {
 		player->addCoin();
 
 		coin->Collected();
+
+		return;
+	}
+
+	else if ((fixtureAData->type == PLR || fixtureAData->type == RESPAWN) && (fixtureBData->type == PLR || fixtureBData->type == RESPAWN)) 
+	{
+		Player* player;
+		RespawnPlatform* respawnPlatform;
+
+		if (fixtureAData->type == PLR) {
+			player = static_cast<Player*>(fixtureAData->data);
+
+			respawnPlatform = static_cast<RespawnPlatform*>(fixtureBData->data);
+		}
+		else {
+			player = static_cast<Player*>(fixtureBData->data);
+
+			respawnPlatform = static_cast<RespawnPlatform*>(fixtureAData->data);
+		}
+
+		if ((player->GetPosition().y + player->GetDimensions().y / 2) < (respawnPlatform->GetPosition().y - respawnPlatform->GetDimensions().y / 2))
+		{
+			respawnPlatform->Activate();
+		}
+		//std::cout << "CONTACT: " << contact->IsEnabled();
+		
 
 		return;
 	}

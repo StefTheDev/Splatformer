@@ -9,6 +9,7 @@ public:
 
 	void Update(Camera* gameCamera, float sceneTime) override;
 	virtual void Initialise(b2World* world, std::shared_ptr<Sprite> platformSprite) override;
+	void Activate();
 
 private:
 	// used to keep track of which checkpoint this is 
@@ -18,5 +19,6 @@ private:
 	int respawnNumber;
 
 	bool isActive = false;
+	
 	// bool hasBeenLandedOn = false;
 };
