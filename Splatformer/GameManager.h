@@ -2,6 +2,10 @@
 
 #include "Utilities.h"
 
+//Scenes
+#include "sceneTest.h"
+#include "MenuScene.h"
+
 enum GameState
 {
 	MENU,
@@ -9,8 +13,8 @@ enum GameState
 	EXIT
 };
 
-const int WINDOW_WIDTH = 640;
-const int WINDOW_HEIGHT = 480;
+const int WINDOW_WIDTH = 1920;
+const int WINDOW_HEIGHT = 1080;
 
 const int FPS = 60;
 const int FRAME_DELAY = 1000 / FPS;
@@ -21,7 +25,7 @@ public:
 	GameManager();
 	~GameManager();
 
-	void Initialise(std::string _title);
+	bool Initialise(std::string _title);
 
 	void Render();
 	void HandleEvents();
@@ -43,4 +47,9 @@ private:
 
 	Uint64 timeCurrentFrame = 0;
 	Uint64 timeLastFrame = 0;
-}; 
+
+	//Input inputManager;
+
+	std::unique_ptr<MenuScene> menuScene;
+	SceneTest testScene;
+};

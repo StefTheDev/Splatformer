@@ -1,22 +1,6 @@
 #include "Sprite.h"
 
-Sprite::Sprite()
-{
-
-}
-
-
-Sprite::~Sprite()
-{
-
-}
-
-void Sprite::Render(Camera _camera)
-{
-	//TODO: Offset non-UI sprites by _camera.position
-}
-
-void Sprite::Load(std::string fileName, SDL_Renderer * renderer, bool animated)
+Sprite::Sprite(std::string fileName, SDL_Renderer * renderer, bool animated)
 {
 	SDL_Surface* surface = IMG_Load(fileName.c_str());
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
@@ -24,6 +8,11 @@ void Sprite::Load(std::string fileName, SDL_Renderer * renderer, bool animated)
 
 	this->animated = animated;
 	this->texture = texture;
+}
+
+Sprite::~Sprite()
+{
+
 }
 
 void Sprite::Add(std::string name, SpriteAnimation animation)

@@ -1,22 +1,17 @@
 #include "Collider.h"
 
-Collider::Collider(Vector2 _position, Vector2 _dimensions) {
+Collider::Collider(Vector2 _position, DataContainer _colliderData, Vector2 _dimensions) {
 	position = _position;
 	dimensions = _dimensions;
+	colliderData = _colliderData;
 }
 
 void Collider::InitialiseStatic(b2World* _world, bool _isSensor) {
-	b2Vec2 b2Position;
-	b2Position.x = position.x / PPM;
-	b2Position.y = position.y / PPM;
-
-	b2Vec2 b2Dimensions;
-	b2Dimensions.x = dimensions.x / PPM;
-	b2Dimensions.y = dimensions.y / PPM;
+	b2Vec2 b2Dimensions = (dimensions/2.0f).AsBox2D();
 	
 	b2BodyDef bodyDef;
 
-	bodyDef.position = b2Position;
+	bodyDef.position = position.AsBox2D();
 
 	body = b2BodyPtr(_world->CreateBody(&bodyDef));
 
@@ -28,21 +23,16 @@ void Collider::InitialiseStatic(b2World* _world, bool _isSensor) {
 	fixtureDef.isSensor = _isSensor;
 
 	body->CreateFixture(&fixtureDef);
+	body->SetUserData(&colliderData);
 }
 
 void Collider::InitialiseDynamic(b2World* _world, float _density, float _friction, float _damping, bool _isSensor) {
-	b2Vec2 b2Position;
-	b2Position.x = position.x / PPM;
-	b2Position.y = position.y / PPM;
-
-	b2Vec2 b2Dimensions;
-	b2Dimensions.x = dimensions.x / PPM;
-	b2Dimensions.y = dimensions.y / PPM;
+	b2Vec2 b2Dimensions = (dimensions / 2.0f).AsBox2D();
 
 	b2BodyDef bodyDef;
 
 	bodyDef.type = b2_dynamicBody;
-	bodyDef.position = b2Position;
+	bodyDef.position = position.AsBox2D();
 	bodyDef.linearDamping = _damping;
 	bodyDef.fixedRotation = true;
 
@@ -58,21 +48,16 @@ void Collider::InitialiseDynamic(b2World* _world, float _density, float _frictio
 	fixtureDef.friction = _friction;
 
 	body->CreateFixture(&fixtureDef);
+	body->SetUserData(&colliderData);
 }
 
 void Collider::InitialiseKinematic(b2World* _world, bool _isSensor) {
-	b2Vec2 b2Position;
-	b2Position.x = position.x / PPM;
-	b2Position.y = position.y / PPM;
-
-	b2Vec2 b2Dimensions;
-	b2Dimensions.x = dimensions.x / PPM;
-	b2Dimensions.y = dimensions.y / PPM;
+	b2Vec2 b2Dimensions = dimensions.AsBox2D();
 	
 	b2BodyDef bodyDef;
 
 	bodyDef.type = b2_kinematicBody;
-	bodyDef.position = b2Position;
+	bodyDef.position = position.AsBox2D();
 
 	body = b2BodyPtr(_world->CreateBody(&bodyDef));
 
@@ -84,6 +69,7 @@ void Collider::InitialiseKinematic(b2World* _world, bool _isSensor) {
 	fixtureDef.isSensor = _isSensor;
 
 	body->CreateFixture(&fixtureDef);
+	body->SetUserData(&colliderData);
 }
 
 void Collider::SetCollisionCategory(int _category) {
@@ -104,4 +90,10 @@ void Collider::SetCollisionMask(int _mask) {
 	newFilter.maskBits = _mask;
 
 	fix->SetFilterData(newFilter);
+}
+
+Vector2 Collider::GetPosition() {
+	Vector2 offset = (dimensions / 2.0f);
+
+	return Vector2(body->GetPosition() - offset);
 }

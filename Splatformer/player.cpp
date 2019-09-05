@@ -1,43 +1,106 @@
 #include "player.h"
 
-const float playerWidth = 1.0f;
-const float playerHeight = 1.0f;
+int Player::currentJumps = 0;
 
-/*
-Player::Player(int _controller, b2World& _world) {
-	if (SDL_IsGameController(_controller)) {
-		controller = std::make_unique<SDL_GameController>(SDL_GameControllerOpen(_controller));
-	} else {
-		fprintf(stderr, "Could not open gamecontroller %i: %s\n", _controller, SDL_GetError());
+Uint32 resetGravScale(Uint32 _interval, void* _param) {
+	b2Body* body = static_cast<b2Body*>(_param);
+
+	body->SetGravityScale(1.0f);
+
+	return 0;
+}
+
+Player::Player(Vector2 _position, Controllers _playerNum) {
+	type = PLAYER;
+	playerIndex = _playerNum;
+
+	Entity::Initialise(_position, { width, height });
+}
+
+void Player::Initialise(b2World* _world, std::shared_ptr<Sprite> _playerSprite) {
+	if (!LoadSprite(_playerSprite)) return;
+
+	GetSprite()->Add("idle", SpriteAnimation{ 0, 1, 500 }); //Index, frames, speed
+
+	DataContainer info = {
+		ColliderType::PLR, 
+		this
+	};
+
+	collider = std::make_unique<Collider>(position, info, Vector2(width, height));
+
+	collider->InitialiseDynamic(_world, 1.0f, 0.3f, 0.5f);
+	collider->SetCollisionCategory(CATEGORY_PLAYER);
+	collider->SetCollisionMask(MASK_PLAYER_DEFAULT);
+
+	SetPosition(collider->GetPosition());
+}
+
+void Player::Update(Camera* _gameCamera) {
+	if (Input::GetInstance()->IsControllerButtonPressed(playerIndex, SDL_CONTROLLER_BUTTON_A)) {
+		Jump();
+
+	} else if (!(Input::GetInstance()->IsControllerButtonHeld(playerIndex, SDL_CONTROLLER_BUTTON_A))) {
+		FinishJump();
 	}
 
-	dispBody = std::make_unique<SDL_Rect>();
+	float stickPos = Input::GetInstance()->GetControllerAxis(playerIndex, SDL_CONTROLLER_AXIS_LEFTX);
 
-	dispBody->w = 1.0f * PPM;
-	dispBody->h = 1.0f * PPM;
-	b2BodyDef bodyDef;
-	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(0.0f, 0.0f);
+	if (abs(stickPos) > 0.3f) {
+		MoveHorizontal(stickPos);
+	}
 
-	body.reset(_world.CreateBody(&bodyDef));
+	SetPosition(collider->GetPosition() - _gameCamera->GetPosition());
 
-	shape = std::make_unique<b2PolygonShape>();
-	shape->SetAsBox(1.0f, 1.0f);
+	jumpedInAir = (jumpedInAir && !canJump);
 
-	b2FixtureDef fixtureDef;
-	fixtureDef.shape = shape.get();
-	fixtureDef.density = 1.0f;
-	fixtureDef.friction = 0.3f;
-
-	body->CreateFixture(&fixtureDef);
-}
-*/
-
-void Player::Render(SDL_Renderer* _renderer) {
-	SDL_RenderDrawRect(_renderer, dispBody.get());
+	GetSprite()->Play("idle");
+	Entity::Update();
 }
 
-void Player::Update() {
-	dispBody->x = body->GetPosition().x;
-	dispBody->y = body->GetPosition().y;
+void Player::Jump() {
+	if (canJump || !jumpedInAir) {
+		collider->body->SetGravityScale(0.4f);
+		if (!canJump) {
+			jumpedInAir = true;
+			collider->body->SetLinearVelocity({ collider->body->GetLinearVelocity().x, airJumpForce });
+			jumpTimer = SDL_AddTimer(maxAirJumpTime, resetGravScale, static_cast<void*>(collider->body.get()));
+		}else{
+			collider->body->SetLinearVelocity({ collider->body->GetLinearVelocity().x, jumpForce });
+			jumpTimer = SDL_AddTimer(maxJumpTime, resetGravScale, static_cast<void*>(collider->body.get()));
+		}
+		//Increment global jump count
+		currentJumps++;
+	}
+}
+
+void Player::FinishJump() {
+	SDL_RemoveTimer(jumpTimer);
+
+	collider->body->SetGravityScale(1.0f);
+}
+
+void Player::MoveHorizontal(float _scale) {
+	float xVel = collider->body->GetLinearVelocity().x;
+
+	//Signs of movement and joystick are different
+	if (((_scale > 0) - (0 > _scale)) != ((xVel > 0) - (0 > xVel))) {
+		collider->body->SetLinearVelocity({ collider->body->GetLinearVelocity().x/2.0f, collider->body->GetLinearVelocity().y });
+	}
+
+	collider->body->ApplyLinearImpulseToCenter({ _scale * (1 - (xVel/maxSpeed)) * incrementSpeed * deltaTime, 0.0f }, true);
+}
+
+void Player::SetCanJump(bool _newCanJump) {
+	canJump = _newCanJump;
+}
+
+Uint32 Player::jumpTimerCallback(Uint32 interval, void* param) {
+	collider->body->SetGravityScale(1.0f);
+
+	return 0;
+}
+
+int Player::GetJumps() {
+	return currentJumps;
 }

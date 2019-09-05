@@ -37,6 +37,30 @@
     <Filter Include="Header Files\Objects">
       <UniqueIdentifier>{f8dee286-1846-45cc-abd4-f558ec4aa1af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Entities">
+      <UniqueIdentifier>{b2355f70-b038-4bd2-bc5e-bb37cc505775}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities">
+      <UniqueIdentifier>{5b5360b3-6969-438d-83e9-69296a89f060}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\Platforms">
+      <UniqueIdentifier>{5bd46a9d-0f30-4c1a-99c9-638179f6a20b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Platforms">
+      <UniqueIdentifier>{a58a97f7-272b-4c0a-8f41-45dcc6d5b812}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\UI">
+      <UniqueIdentifier>{c264325a-f1b8-422a-b98d-58577f851702}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\UI">
+      <UniqueIdentifier>{53dd116b-30c2-41ae-a1af-95ddb55bd6b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Loaders">
+      <UniqueIdentifier>{25e833b6-098a-4d2d-8666-c1987c46d28c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Loaders">
+      <UniqueIdentifier>{357fa7bd-fb7b-4d20-9c30-4bf879e66123}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -57,17 +81,41 @@
     <ClCompile Include="scene.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="sceneTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Collider.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>Source Files\Entities\Platforms</Filter>
+    </ClCompile>
+    <ClCompile Include="TimePlatform.cpp">
+      <Filter>Source Files\Entities\Platforms</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpPlatform.cpp">
+      <Filter>Source Files\Entities\Platforms</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="TextLabel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelLoader.cpp">
+      <Filter>Source Files\Loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneTest.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuScene.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -89,14 +137,38 @@
     <ClInclude Include="scene.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="sceneTest.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform.h">
+      <Filter>Header Files\Entities\Platforms</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpPlatform.h">
+      <Filter>Header Files\Entities\Platforms</Filter>
+    </ClInclude>
+    <ClInclude Include="TimePlatform.h">
+      <Filter>Header Files\Entities\Platforms</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="TextLabel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelLoader.h">
+      <Filter>Header Files\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneTest.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuScene.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

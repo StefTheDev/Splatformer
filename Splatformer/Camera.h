@@ -1,9 +1,10 @@
 #pragma once
 #include "Utilities.h"
+#include <deque>
 
 class Camera {
 public:
-	Camera() = default;
+	Camera();
 	Camera(float width, float height);
 
 	void Update();
@@ -17,9 +18,12 @@ public:
 	void SetHeight(float newHeight);
 	float GetHeight();
 
+	void PushTargetBack(Vector2 newTarget);
+	void PushTargetFront(Vector2 newTarget);
 	void SetTargetPosition(Vector2 newTarget);
 	Vector2 GetTargetPosition();
 
+	//Set the number of pixels to move per second toward the target position
 	void SetMoveSpeed(float newMoveSpeed);
 	float GetMoveSpeed();
 
@@ -27,9 +31,10 @@ public:
 
 private:
 	float width, height;
-	Vector2 position = {0.0f, 0.0f};
+	Vector2 position;
 
-	Vector2 targetPosition = { 0.0f, 0.0f };
+	std::deque<Vector2> targetQueue;
+
 	//The number of pixels to move per second toward the target position
 	float moveSpeed = 0.0f;
 
