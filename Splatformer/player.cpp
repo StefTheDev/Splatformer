@@ -37,6 +37,8 @@ void Player::Initialise(b2World* _world, std::shared_ptr<Sprite> _playerSprite) 
 }
 
 void Player::Update(Camera* _gameCamera) {
+	if (isDead) return;
+
 	if (Input::GetInstance()->IsControllerButtonPressed(playerIndex, SDL_CONTROLLER_BUTTON_A)) {
 		Jump();
 
@@ -93,6 +95,22 @@ void Player::MoveHorizontal(float _scale) {
 
 void Player::SetCanJump(bool _newCanJump) {
 	canJump = _newCanJump;
+}
+
+void Player::Kill() {
+	isDead = true;
+
+	SDL_RemoveTimer(jumpTimer);
+	collider->body->SetGravityScale(0.0f);
+
+	std::cout << "Player Am Dead\n";
+}
+
+void Player::Respawn(Vector2 _respawnPosition) {
+	isDead = false;
+
+	collider->body->SetGravityScale(1.0f);
+	collider->body->SetTransform(_respawnPosition.AsBox2D(), 0.0f);
 }
 
 Uint32 Player::jumpTimerCallback(Uint32 interval, void* param) {

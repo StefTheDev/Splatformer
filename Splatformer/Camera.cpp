@@ -11,6 +11,21 @@ Camera::Camera(float _width, float _height) {
 	drawRect = { 0, 0, (int)width, (int)height };
 }
 
+void Camera::Initialise(b2World* _gameWorld) {
+	DataContainer info = {
+		ColliderType::CAM,
+		this
+	};
+
+	collider = std::make_unique<Collider>(position, info, Vector2(width, height));
+
+	collider->InitialiseKinematic(_gameWorld, true);
+	collider->SetCollisionCategory(CATEGORY_CAMERA);
+	collider->SetCollisionMask(MASK_CAMERA_DEFAULT);
+
+	SetPosition(collider->body->GetPosition());
+}
+
 void Camera::Update() {
 	if (!targetQueue.empty()) {
 		Vector2 difference(targetQueue.front() - position);
@@ -25,11 +40,17 @@ void Camera::Update() {
 		}
 
 		position += direction * (moveSpeed * deltaTime * scale);
+
+		collider->body->SetTransform((position + Vector2(width / 2.0f, height / 2.0f)).AsBox2D(), 0.0f);
+
+		std::cout << "Coll Pos: <" << collider->body->GetTransform().p.x * PPM << ", " << collider->body->GetTransform().p.y * PPM << ">\n";
+		std::cout << "SDL Pos: " << position + Vector2(width / 2.0f, height / 2.0f) << std::endl;
+		//std::cout << "Camera is at: " << collider->body->GetPosition().x *PPM << ", " << collider->body->GetPosition().y*PPM << std::endl;
 	}
 }
 
 void Camera::SetPosition(Vector2 _newPosition) {
-	position = _newPosition;
+	position = _newPosition - Vector2(width/2.0f, height/2.0f);
 }
 
 Vector2 Camera::GetPosition() {

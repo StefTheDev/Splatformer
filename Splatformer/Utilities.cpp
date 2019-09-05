@@ -67,22 +67,50 @@ void PlatformingListener::EndContact(b2Contact* contact) {
 		return;
 	}
 
-	b2Vec2 position;
-	float32 top, halfHeight;
-	Player* player;
-	Platform* platform;
+#pragma region Platform/Player De-Collisions
+	if ((fixtureAData->type == PLR || fixtureAData->type == PLT) && (fixtureBData->type == PLR || fixtureBData->type == PLT)) {
 
-	if (fixtureAData->type == PLR) {
-		player = static_cast<Player*>(fixtureAData->data);
+		b2Vec2 position;
+		float32 top, halfHeight;
+		Player* player;
+		Platform* platform;
 
-		platform = static_cast<Platform*>(fixtureBData->data);
-	} else {
-		player = static_cast<Player*>(fixtureBData->data);
+		if (fixtureAData->type == PLR) {
+			player = static_cast<Player*>(fixtureAData->data);
 
-		platform = static_cast<Platform*>(fixtureAData->data);
+			platform = static_cast<Platform*>(fixtureBData->data);
+		} else {
+			player = static_cast<Player*>(fixtureBData->data);
+
+			platform = static_cast<Platform*>(fixtureAData->data);
+		}
+
+		player->SetCanJump(false);
+		return;
 	}
+#pragma endregion
 
-	player->SetCanJump(false);
+#pragma region Player/Camera De-Collisions
+	else if ((fixtureAData->type == PLR || fixtureAData->type == CAM) && (fixtureBData->type == PLR || fixtureBData->type == CAM)) {
+		Player* player;
+		Camera* camera;
 
-	std::cout << "Contact ended\n";
+		std::cout << "Player should am dead\n";
+
+		if (fixtureAData->type == PLR) {
+			player = static_cast<Player*>(fixtureAData->data);
+			camera = static_cast<Camera*>(fixtureBData->data);
+		} else {
+			player = static_cast<Player*>(fixtureBData->data);
+			camera = static_cast<Camera*>(fixtureAData->data);
+		}
+
+		std::cout << "Camera Pos: " << camera->GetPosition() << std::endl;
+		std::cout << "Player Pos: " << player->GetPosition() << std::endl;
+
+
+		player->Kill();
+		return;
+	}
+#pragma endregion
 }

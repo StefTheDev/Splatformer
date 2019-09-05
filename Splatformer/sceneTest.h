@@ -20,6 +20,7 @@ private:
 	void RightTrigger(SDL_JoystickID gamepadID, float axisValue) override;
 	void LeftTrigger(SDL_JoystickID gamepadID, float axisValue) override;
 	void ControllerAdded(int deviceIndex) override;
+	void ControllerRemapped(SDL_JoystickID gamePad) override;
 
 	//std::map<SDL_JoystickID, Player> players;
 	std::unique_ptr<b2World> sceneWorld;
