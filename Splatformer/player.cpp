@@ -58,6 +58,17 @@ void Player::Update(Camera* _gameCamera) {
 	Entity::Update();
 }
 
+void Player::addCoin() {
+
+	coinsCollected += 1;
+
+}
+
+int Player::getCoins() {
+
+	return coinsCollected;
+}
+
 void Player::Jump() {
 	if (canJump || !jumpedInAir) {
 		collider->body->SetGravityScale(0.4f);

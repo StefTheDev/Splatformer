@@ -8,7 +8,8 @@
 
 enum EntityType {
 	PLAYER = 0,
-	PLATFORM
+	PLATFORM,
+	COIN,
 };
 
 class Entity
@@ -38,6 +39,8 @@ public:
 
 	EntityType GetType();
 
+	bool ShouldDelete();
+
 protected:
 	Vector2 position, dimension;
 	SDL_Rect source, destination;
@@ -47,6 +50,8 @@ protected:
 	std::shared_ptr<Sprite> sprite;
 
 	EntityType type;
+
+	bool shouldDelete = false;
 };
 
 #endif

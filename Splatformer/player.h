@@ -13,6 +13,9 @@ public:
 	void FinishJump();
 	void MoveHorizontal(float scale);
 
+	void addCoin();
+	int getCoins();
+
 	void SetCanJump(bool newCanJump);
 
 	Uint32 jumpTimerCallback(Uint32 interval, void* param);
@@ -44,4 +47,6 @@ private:
 	SDL_TimerID jumpTimer;
 
 	static int currentJumps;
+
+	int coinsCollected = 0;
 };
