@@ -2,7 +2,9 @@
 
 #include "Utilities.h"
 
+//Scenes
 #include "sceneTest.h"
+#include "MenuScene.h"
 
 enum GameState
 {
@@ -48,5 +50,6 @@ private:
 
 	//Input inputManager;
 
+	std::unique_ptr<MenuScene> menuScene;
 	SceneTest testScene;
 };

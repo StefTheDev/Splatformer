@@ -15,20 +15,26 @@ SceneTest::SceneTest() {
 }
 
 void SceneTest::Load(SDL_Renderer* _gameRenderer) {
+	
 	for (int i = 0; i < SDL_NumJoysticks(); ++i) {
 		if (SDL_IsGameController(i)) {
 			controllers.push_back(SDL_GameControllerOpen(i));
 		}
 	}
 
+	textLabel = std::make_shared<TextLabel>("Test Scene", TTF_OpenFont("Resources/Fonts/Helvetica.ttf", 254), 
+		SDL_Color{ 0, 255, 255},
+		SDL_Rect{ 700, 60, 540, 100}
+	);
+
 	playerSprite = std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false);
 	platformSprite = std::make_shared<Sprite>("Resources/Sprites/platform.png", _gameRenderer, false);
 
-	objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER1));
+	objects.push_back(std::make_unique<Player>(Vector2(100.0f, 0.0f), PLAYER1));
 
-	camera.PushTargetPosition(Vector2(1200.0f, 0.0f));
-	camera.PushTargetPosition(Vector2(0.0f, 0.0f));
-	camera.SetMoveSpeed(100.0f);
+	camera.PushTargetBack(Vector2(1200.0f, 0.0f));
+	camera.PushTargetBack(Vector2(0.0f, 0.0f));
+	camera.SetMoveSpeed(20.0f);
 
 	LevelLoader::LoadLevel("Resources/Levels/LevelOne.csv", objects);
 
@@ -59,6 +65,7 @@ void SceneTest::Update() {
 }
 
 void SceneTest::Render(SDL_Renderer* _gameRenderer) {
+	textLabel->Render(_gameRenderer);
 }
 
 void SceneTest::ButtonDown(SDL_JoystickID _gamepadID, Uint8 _button) {

@@ -32,10 +32,14 @@ bool GameManager::Initialise(std::string _title)
 
 		gameState = MENU;
 
+		//Check if TTF was initialised successfully
+		if (!TTF_WasInit() && TTF_Init() == -1) return false;
+
 		Input::GetInstance();
 		Input::GetInstance()->Initialise();
 
-		testScene.LoadScene(renderer);
+		menuScene->LoadScene(renderer);
+		//testScene.LoadScene(renderer);
 	}
 
 	return true;
@@ -45,7 +49,8 @@ void GameManager::Render()
 {
 	SDL_RenderClear(renderer);
 
-	testScene.RenderScene(renderer);
+	menuScene->RenderScene(renderer);
+	//testScene.RenderScene(renderer);
 
 	SDL_RenderPresent(renderer);
 }
@@ -63,7 +68,8 @@ void GameManager::HandleEvents()
 		default:
 			break;
 		}
-		testScene.HandleEvents(event);
+		menuScene->HandleEvents(event);
+		//testScene.HandleEvents(event);
 	}
 }
 
@@ -74,7 +80,8 @@ void GameManager::Process()
 
 	deltaTime = (float)((timeCurrentFrame - timeLastFrame) / (float)SDL_GetPerformanceFrequency());
 
-	testScene.UpdateScene();
+	menuScene->UpdateScene();
+	//testScene.UpdateScene();
 
 	Input::GetInstance()->Process();
 }
