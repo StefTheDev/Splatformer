@@ -49,6 +49,7 @@ enum ColliderType {
 	PLR = 0,
 	PLT,
 	ECOIN,
+	CBALL,
 	OTHER
 };
 

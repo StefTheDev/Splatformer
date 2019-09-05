@@ -5,6 +5,7 @@
 #include "JumpPlatform.h"
 #include "TimePlatform.h"
 #include "Coin.h"
+#include "Ball.h"
 
 std::vector<std::string> splitBy(std::string _sentence, std::string _delim) {
 	std::vector<std::string> words;
@@ -52,6 +53,9 @@ bool LevelLoader::LoadLevel(std::string _levelPath, std::vector<std::unique_ptr<
 					_sceneEntities.push_back(std::move(std::make_unique<TimePlatform>(Vector2(x, y), std::stof(args[1]), std::stof(args[2]))));
 				}else if (args[0] == "C") {
 					_sceneEntities.push_back(std::move(std::make_unique<Coin>(Vector2(x, y))));
+				}
+				else if (args[0] == "B") {
+					_sceneEntities.push_back(std::move(std::make_unique<Ball>(Vector2(x, y))));
 				}
 			} else {
 				//std::cout << " ";

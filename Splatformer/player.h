@@ -16,6 +16,9 @@ public:
 	void addCoin();
 	int getCoins();
 
+	void GainBall();
+	bool GetBall();
+
 	void SetCanJump(bool newCanJump);
 
 	Uint32 jumpTimerCallback(Uint32 interval, void* param);
@@ -49,4 +52,5 @@ private:
 	static int currentJumps;
 
 	int coinsCollected = 0;
+	bool haveBall = false;
 };

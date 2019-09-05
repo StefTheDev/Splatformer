@@ -2,6 +2,7 @@
 #include "player.h"
 #include "Platform.h"
 #include "Coin.h"
+#include "Ball.h"
 
 float deltaTime = 0.0f;
 
@@ -92,8 +93,30 @@ void PlatformingListener::BeginContact(b2Contact* contact) {
 
 		return;
 	}
+	if ((fixtureAData->type == PLR || fixtureAData->type == CBALL) && (fixtureBData->type == PLR || fixtureBData->type == CBALL)) {
 
-	std::cout << "Contact ended\n";
+		b2Vec2 position;
+		float32 top, halfHeight;
+		Player* player;
+		Ball* ball;
+
+		if (fixtureAData->type == PLR) {
+			player = static_cast<Player*>(fixtureAData->data);
+
+			ball = static_cast<Ball*>(fixtureBData->data);
+		}
+		else {
+			player = static_cast<Player*>(fixtureBData->data);
+
+			ball = static_cast<Ball*>(fixtureAData->data);
+		}
+
+		ball->Collected();
+
+		return;
+	}
+
+	std::cout << "Contact Begun\n";
 }
 
 void PlatformingListener::EndContact(b2Contact* contact) {

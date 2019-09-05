@@ -10,6 +10,7 @@ enum EntityType {
 	PLAYER = 0,
 	PLATFORM,
 	COIN,
+	BALL,
 };
 
 class Entity

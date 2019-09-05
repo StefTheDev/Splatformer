@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Platform.h"
 #include "Coin.h"
+#include "Ball.h"
 
 class SceneTest : public Scene {
 public:
@@ -29,6 +30,7 @@ private:
 	std::shared_ptr<Sprite> playerSprite;
 	std::shared_ptr<Sprite> platformSprite;
 	std::shared_ptr<Sprite> coinSprite;
+	std::shared_ptr<Sprite> ballSprite;
 
 	std::vector<SDL_GameController*> controllers;
 

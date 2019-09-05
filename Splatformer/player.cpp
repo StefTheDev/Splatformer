@@ -115,3 +115,13 @@ Uint32 Player::jumpTimerCallback(Uint32 interval, void* param) {
 int Player::GetJumps() {
 	return currentJumps;
 }
+
+void Player::GainBall() {
+
+	haveBall = true;
+
+}
+
+bool Player::GetBall() {
+	return haveBall;
+}
