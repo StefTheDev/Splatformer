@@ -54,6 +54,17 @@ void Player::Update(Camera* _gameCamera) {
 
 	SetPosition(collider->GetPosition() - _gameCamera->GetPosition());
 
+	//float gcX = _gameCamera->GetWidth() / 2.0f;
+	//float gcY = _gameCamera->GetHeight() / 2.0f;
+	//Vector2 gcP = _gameCamera->GetPosition() + Vector2(gcX, gcY);
+
+	////TODO: If I can't get the camera collider working, just use this
+	//if (abs(collider->GetPosition().x - gcP.x) >= gcX || abs(collider->GetPosition().y - gcP.y) >= gcY) {
+	//	std::cout << "Player out of bounds\n";
+	//	//Kill();
+	//	//return;
+	//}
+
 	jumpedInAir = (jumpedInAir && !canJump);
 
 	GetSprite()->Play("idle");

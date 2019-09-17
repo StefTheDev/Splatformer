@@ -31,11 +31,11 @@ public:
 
 	SDL_Rect* GetRect();
 
+
+	std::unique_ptr<Collider> collider;
 private:
 	float width, height;
 	Vector2 position;
-
-	std::unique_ptr<Collider> collider;
 
 	std::deque<Vector2> targetQueue;
 

@@ -48,8 +48,6 @@ void PlatformingListener::PreSolve(b2Contact* contact, const b2Manifold* oldMani
 	} else {
 		player->SetCanJump(true);
 	}
-
-	//std::cout << "A: " << position.y - halfHeight << " |B: "<< (top - 3.0f * b2_linearSlop) << std::endl;
 }
 
 void PlatformingListener::EndContact(b2Contact* contact) {
@@ -95,8 +93,6 @@ void PlatformingListener::EndContact(b2Contact* contact) {
 		Player* player;
 		Camera* camera;
 
-		std::cout << "Player should am dead\n";
-
 		if (fixtureAData->type == PLR) {
 			player = static_cast<Player*>(fixtureAData->data);
 			camera = static_cast<Camera*>(fixtureBData->data);
@@ -104,10 +100,6 @@ void PlatformingListener::EndContact(b2Contact* contact) {
 			player = static_cast<Player*>(fixtureBData->data);
 			camera = static_cast<Camera*>(fixtureAData->data);
 		}
-
-		std::cout << "Camera Pos: " << camera->GetPosition() << std::endl;
-		std::cout << "Player Pos: " << player->GetPosition() << std::endl;
-
 
 		player->Kill();
 		return;
