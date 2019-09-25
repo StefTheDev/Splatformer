@@ -12,6 +12,8 @@ public:
 	void SetCanCollide(bool canCollide);
 	bool CanCollide();
 
+	Collider* GetCollider() { return collider.get(); }
+
 protected:
 	std::unique_ptr<Collider> collider;
 

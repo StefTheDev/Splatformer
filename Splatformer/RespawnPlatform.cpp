@@ -35,5 +35,7 @@ void RespawnPlatform::Initialise(b2World * _world, std::shared_ptr<Sprite> _plat
 
 void RespawnPlatform::Activate()
 {
+	isActive = true;
+	// TODO: create visual feedback to show a new checkpoint has been reached
 	std::cout << "ACTIVATE" << std::endl;
 }

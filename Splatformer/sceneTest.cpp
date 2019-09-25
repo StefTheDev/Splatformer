@@ -36,10 +36,16 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 	for (auto& object : objects) {
 		switch (object->GetType()) {
 		case PLAYER: static_cast<Player*>(object.get())->Initialise(sceneWorld.get(), playerSprite); break;
-		case PLATFORM: static_cast<Platform*>(object.get())->Initialise(sceneWorld.get(), platformSprite); break;
+		case PLATFORM: static_cast<Platform*>(object.get())->Initialise(sceneWorld.get(), platformSprite);
+			if (static_cast<Platform*>(object.get())->GetCollider()->GetDataContainer().type == RESPAWN)
+			{
+				respawnPoints.push_back((static_cast<RespawnPlatform*>(object.get())));
+			}
+			break;
 		case COIN: static_cast<Coin*>(object.get())->Initialise(sceneWorld.get(), coinSprite); break;
 		}
 	}
+	std::cout << respawnPoints.size() << std::endl;
 }
 
 void SceneTest::Unload() {

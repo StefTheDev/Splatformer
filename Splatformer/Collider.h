@@ -37,6 +37,8 @@ public:
 
 	b2BodyPtr body;
 
+	DataContainer GetDataContainer() { return colliderData; }
+
 private:
 	Vector2 position;
 	Vector2 dimensions;

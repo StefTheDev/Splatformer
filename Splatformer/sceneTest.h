@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Platform.h"
 #include "Coin.h"
+#include "RespawnPlatform.h"
 
 class SceneTest : public Scene {
 public:
@@ -33,4 +34,6 @@ private:
 	std::vector<SDL_GameController*> controllers;
 
 	float timeElapsed;
+
+	std::vector<RespawnPlatform*> respawnPoints;
 };
