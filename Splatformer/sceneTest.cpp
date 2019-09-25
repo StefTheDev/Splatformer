@@ -45,7 +45,9 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 		case COIN: static_cast<Coin*>(object.get())->Initialise(sceneWorld.get(), coinSprite); break;
 		}
 	}
-	std::cout << respawnPoints.size() << std::endl;
+	//std::cout << respawnPoints.size() << std::endl;
+
+	std::sort(respawnPoints.begin(), respawnPoints.end(), RespawnPlatform::sortAscending);
 }
 
 void SceneTest::Unload() {
