@@ -132,3 +132,8 @@ Vector2 & operator/(Vector2 & v1, float scalar)
 
 	return outVec;
 }
+
+std::ostream& operator<<(std::ostream& _stream, Vector2 _vec) {
+	_stream << "<" << _vec.x << ", " << _vec.y << ">";
+	return _stream;
+}

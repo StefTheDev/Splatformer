@@ -1,12 +1,14 @@
 #pragma once
 #include "Utilities.h"
 #include <deque>
+#include "Collider.h"
 
 class Camera {
 public:
 	Camera();
 	Camera(float width, float height);
 
+	void Initialise(b2World* gameWorld);
 	void Update();
 
 	void SetPosition(Vector2 newPosition);
@@ -29,6 +31,8 @@ public:
 
 	SDL_Rect* GetRect();
 
+
+	std::unique_ptr<Collider> collider;
 private:
 	float width, height;
 	Vector2 position;

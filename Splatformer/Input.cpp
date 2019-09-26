@@ -144,7 +144,6 @@ void Input::HandleEvents(SDL_Event _event)
 		for (int i = 0; i < numGamepads; i++) {
 			if (_event.cbutton.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(connectedControllers[i]))) {
 				controllerInputs[i].axis[_event.caxis.axis] = _event.caxis.value;
-				//std::cout << "AXIS" << std::endl;
 			}
 		}
 		break;
