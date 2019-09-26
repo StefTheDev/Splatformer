@@ -37,5 +37,6 @@ void RespawnPlatform::Activate()
 {
 	isActive = true;
 	// TODO: create visual feedback to show a new checkpoint has been reached
+	// TODO: respawn players
 	std::cout << "ACTIVATE" << std::endl;
 }

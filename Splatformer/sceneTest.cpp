@@ -28,6 +28,10 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 	coinSprite = std::make_shared<Sprite>("Resources/Sprites/coin.png", _gameRenderer, false);
 
 	objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER1));
+	players.push_back((Player*)objects.back().get());
+	objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER2));
+	players.push_back((Player*)objects.back().get());
+	
 
 	camera.Initialise(sceneWorld.get());
 
@@ -52,6 +56,7 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 	//std::cout << respawnPoints.size() << std::endl;
 
 	std::sort(respawnPoints.begin(), respawnPoints.end(), RespawnPlatform::sortAscending);
+	respawnPoints[0]->Activate();
 }
 
 void SceneTest::Unload() {
@@ -76,6 +81,7 @@ void SceneTest::Update() {
 	}
 
 	camera.Update();
+	ProcessRespawn();
 }
 
 void SceneTest::Render(SDL_Renderer* _gameRenderer) {
@@ -103,4 +109,55 @@ void SceneTest::ControllerAdded(int deviceIndex) {
 
 void SceneTest::ControllerRemapped(SDL_JoystickID _gamePad) {
 	std::cout << "Controller Remapped: " << _gamePad << std::endl;
+}
+
+void SceneTest::ProcessRespawn()
+{
+	bool needToRespawn = true;
+	for (auto it = players.begin(); it != players.end(); it++)
+	{
+		if ((*it)->CheckIsAlive())
+		{
+			needToRespawn = false;
+			break;
+		}
+	}
+
+	if (needToRespawn == true)
+	{
+		RespawnPlayers();
+	}
+}
+
+void SceneTest::RespawnPlayers()
+{
+	RespawnPlatform* furthestPlatform = nullptr;
+
+	// find which respawnPlatform to respawn on
+	for (auto it = respawnPoints.begin(); it != respawnPoints.end(); it++)
+	{
+		if ((*it)->GetActive())
+		{
+			furthestPlatform = (*it);
+		}
+		else break;
+	}
+
+	if (furthestPlatform != nullptr)
+	{
+		// send camera to the platform
+		camera.SetPosition(Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition()));
+
+		Vector2 spawnPosition = Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition());
+		spawnPosition.y += 32.0f;
+
+		// respawn players
+		for (auto it = players.begin(); it != players.end(); it++)
+		{
+			if (!(*it)->CheckIsAlive())
+			{
+				(*it)->Respawn(spawnPosition);
+			}
+		}
+	}
 }

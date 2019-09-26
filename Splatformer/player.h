@@ -21,6 +21,8 @@ public:
 	void Kill();
 	void Respawn(Vector2 respawnPosition);
 
+	bool CheckIsAlive() { return !isDead; }
+
 	static int GetJumps();
 private:
 	Uint32 jumpTimerCallback(Uint32 interval, void* param);
