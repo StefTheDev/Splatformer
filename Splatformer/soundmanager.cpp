@@ -1,11 +1,7 @@
 #include "soundmanager.h"
-<<<<<<< Updated upstream
-=======
 
-/*
 #include <filesystem>
 #include <cstring>
->>>>>>> Stashed changes
 
 namespace fsys = std::experimental::filesystem;
 
@@ -17,6 +13,7 @@ std::map<std::string, FMOD::Sound*> SoundManager::sounds;
 FMOD_RESULT SoundManager::Initialise() {
 	FMOD_RESULT result;
 	result = FMOD::System_Create(&audioSystem);
+
 	if (result != FMOD_OK) {
 		return result;
 	}
@@ -35,10 +32,9 @@ FMOD_RESULT SoundManager::LoadSounds(std::string _defaultPath) {
 		std::string fileName;
 		std::string delimiter = "/";
 
-		std::string soundPath = (path.path().generic_string());
 		FMOD::Sound** newSound = new FMOD::Sound*;
 
-		result = audioSystem->createSound(soundPath.c_str(), FMOD_DEFAULT, 0, newSound);
+		result = audioSystem->createSound(pthStr.c_str(), FMOD_DEFAULT, 0, newSound);
 
 		size_t pos = 0;
 		std::string token;
@@ -65,12 +61,46 @@ FMOD_RESULT SoundManager::LoadSounds(std::string _defaultPath) {
 	return FMOD_OK;
 }
 
+FMOD_RESULT SoundManager::LoadSound(std::string _path) {
+	FMOD_RESULT result;
 
-void SoundManager::update() {
+	std::string fileName;
+	std::string delimiter = "/";
+
+	FMOD::Sound** newSound = new FMOD::Sound*;
+
+	result = audioSystem->createSound(_path.c_str(), FMOD_DEFAULT, 0, newSound);
+
+	size_t pos = 0;
+	std::string token;
+	while ((pos = _path.find(delimiter)) != std::string::npos) {
+		token = _path.substr(0, pos);
+		_path.erase(0, pos + delimiter.length());
+	}
+	fileName = _path;
+	fileName = fileName.substr(0, fileName.find("."));
+
+	if (result != FMOD_OK) {
+		return result;
+	}
+
+	sounds.insert(std::make_pair(
+		fileName,
+		*newSound
+	));
+
+	*newSound = nullptr;
+	newSound = nullptr;
+
+	return FMOD_OK;
+}
+
+
+void SoundManager::Update() {
 	audioSystem->update();
 }
 
-void SoundManager::playSound(std::string _sound) {
+void SoundManager::PlaySound(std::string _sound) {
 	FMOD_RESULT result;
 	FMOD_MODE sndType;
 	sounds[_sound]->getMode(&sndType);
@@ -82,7 +112,7 @@ void SoundManager::playSound(std::string _sound) {
 	}
 }
 
-void SoundManager::playSound(std::string _sound, FMOD_MODE _mode) {
+void SoundManager::PlaySound(std::string _sound, FMOD_MODE _mode) {
 	FMOD_RESULT result;
 	sounds[_sound]->setMode(_mode);
 
@@ -93,7 +123,7 @@ void SoundManager::playSound(std::string _sound, FMOD_MODE _mode) {
 	}
 }
 
-void SoundManager::setSound(std::string _sound, FMOD_MODE _mode) {
+void SoundManager::SetSound(std::string _sound, FMOD_MODE _mode) {
 	sounds[_sound]->setMode(_mode);
 }
 
@@ -115,5 +145,3 @@ void SoundManager::Release() {
 
 	audioSystem->release();
 }
-
-*/

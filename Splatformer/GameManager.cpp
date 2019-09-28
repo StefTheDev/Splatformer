@@ -1,5 +1,6 @@
 #include "GameManager.h"
 #include "Jumper.h"
+#include "SoundManager.h"
 
 GameManager::GameManager()
 {
@@ -41,6 +42,9 @@ bool GameManager::Initialise(std::string _title)
 
 	jumper = std::make_unique<Jumper>();
 	if (!jumper->Initialise(renderer)) return false;
+
+	SoundManager::Initialise();
+	SoundManager::LoadSounds("Resources/Sounds");
 
 	return true;
 }
