@@ -22,6 +22,74 @@ std::vector<std::string> splitBy(std::string _sentence, std::string _delim) {
 	return words;
 }
 
+TileInfo collateTiles(int _x, int _y, std::vector<std::vector<std::string>>& _tiles) {
+	int width = 1, height = 1;
+	std::string origVal = _tiles[_y][_x];
+	std::vector<std::string> args = splitBy(_tiles[_y][_x], ":");
+	_tiles[_y][_x] = "SKIP";
+
+	int lOffset = 1;
+	while ((_x - lOffset) > 0 && origVal == _tiles[_y][_x - lOffset]) {
+		width++;
+		_tiles[_y][_x - lOffset] = "SKIP";
+		lOffset++;
+	}
+	lOffset--;
+
+	int rOffset = 1;
+	while ((_x + rOffset) < _tiles[_y].size() && origVal == _tiles[_y][_x + rOffset]) {
+		width++;
+		_tiles[_y][_x + rOffset] = "SKIP";
+		rOffset++;
+	}
+	rOffset--;
+
+	int uOffset = 1;
+	while ((_y - uOffset) > 0) {
+		bool foundSomething = false;
+		for (int i = (_x - lOffset); i < (_x + rOffset); i++) {
+			if (origVal == _tiles[_y - uOffset][i]) {
+				_tiles[_y - uOffset][i] = "SKIP";
+				foundSomething = true;
+			}
+		}
+		if (foundSomething) {
+			height++;
+			uOffset++;
+		} else {
+			break;
+		}
+	}
+	uOffset--;
+
+	int dOffset = 1;
+	while ((_y + dOffset) < _tiles.size()) {
+		bool foundSomething = false;
+		for (int i = (_x - lOffset); i < (_x + rOffset + 1); i++) {
+			if (origVal == _tiles[_y + dOffset][i]) {
+				_tiles[_y + dOffset][i] = "SKIP";
+				foundSomething = true;
+			}
+		}
+		if (foundSomething) {
+			height++;
+			dOffset++;
+		} else {
+			break;
+		}
+	}
+	dOffset--;
+
+	float xOffset = ((float)rOffset - (float)lOffset) / 2.0f;
+	float yOffset = ((float)uOffset - (float)dOffset) / 2.0f;
+
+	TileInfo retInfo;
+	retInfo.dimensions = Vector2(width, height);
+	retInfo.position = Vector2((float)_x + xOffset, (float)_y + yOffset);
+
+	return retInfo;
+}
+
 bool LevelLoader::LoadLevel(std::string _levelPath, std::vector<std::unique_ptr<Entity>>& _sceneEntities) {
 	std::ifstream inFile;
 	std::vector<std::vector<std::string>> tiles;
@@ -43,18 +111,18 @@ bool LevelLoader::LoadLevel(std::string _levelPath, std::vector<std::unique_ptr<
 		for (int x = 0; x < tiles[y].size(); x++) {
 			if (tiles[y][x] != "") {
 				std::vector<std::string> args = splitBy(tiles[y][x], ":");
-				if (args[0] == "P") {
-					_sceneEntities.push_back(std::move(std::make_unique<Platform>(Vector2(x, y))));
+				if (args[0] == "SKIP") {
+					//Just don't do anything
+					continue;
+				}else if (args[0] == "P") {
+					_sceneEntities.push_back(std::move(std::make_unique<Platform>(collateTiles(x, y, tiles))));
 				}else if (args[0] == "J") {
-					_sceneEntities.push_back(std::move(std::make_unique<JumpPlatform>(Vector2(x, y), std::stoi(args[1]), std::stoi(args[2]))));
-				} else if (args[0] == "T") {
-					_sceneEntities.push_back(std::move(std::make_unique<TimePlatform>(Vector2(x, y), std::stof(args[1]), std::stof(args[2]))));
+					_sceneEntities.push_back(std::move(std::make_unique<JumpPlatform>(collateTiles(x, y, tiles), std::stoi(args[1]), std::stoi(args[2]))));
+				}else if (args[0] == "T") {
+					_sceneEntities.push_back(std::move(std::make_unique<TimePlatform>(collateTiles(x, y, tiles), std::stof(args[1]), std::stof(args[2]))));
 				}
-			} else {
-				//std::cout << " ";
 			}
 		}
-		std::cout << "\n";
 	}
 
 	return true;

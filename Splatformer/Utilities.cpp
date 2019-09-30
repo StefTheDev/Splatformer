@@ -19,7 +19,7 @@ void PlatformingListener::PreSolve(b2Contact* contact, const b2Manifold* oldMani
 		return;
 	}
 
-	b2Vec2 position;
+	Vector2 position;
 	float32 top, halfHeight;
 	Player* player;
 	Platform* platform;
@@ -34,16 +34,16 @@ void PlatformingListener::PreSolve(b2Contact* contact, const b2Manifold* oldMani
 		platform = static_cast<Platform*>(fixtureAData->data);
 	}
 
-	position = player->GetPosition().AsBox2D();
-	halfHeight = (player->GetDimensions() * 0.5f).AsBox2D().y;
+	position = player->GetPosition();
+	halfHeight = (player->GetDimensions() * 0.5f).y;
 
-	b2Vec2 platPos = platform->GetPosition().AsBox2D();
-	platPos -= (platform->GetDimensions() * 0.5f).AsBox2D();
+	Vector2 platPos = platform->GetPosition();
+	platPos -= (platform->GetDimensions() * 0.5f);
 
 	top = platPos.y;
 
 	//Top of platform plus player box dimension.y is lower than player box 
-	if (position.y + halfHeight > top + 0.15f) {
+	if (position.y + halfHeight > (top + (platform->GetDimensions() * 0.2f).y)) {
 		contact->SetEnabled(false);
 	} else {
 		player->SetCanJump(true);

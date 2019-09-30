@@ -79,6 +79,8 @@ void GameManager::HandleEvents()
 
 void GameManager::Process()
 {
+	SoundManager::Update();
+
 	timeLastFrame = timeCurrentFrame;
 	timeCurrentFrame = SDL_GetPerformanceCounter();
 
@@ -93,6 +95,8 @@ void GameManager::Process()
 
 void GameManager::Clean()
 {
+	SoundManager::ReleaseAll();
+
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();

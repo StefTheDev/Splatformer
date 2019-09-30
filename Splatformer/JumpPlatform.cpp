@@ -1,6 +1,6 @@
 #include "JumpPlatform.h"
 
-JumpPlatform::JumpPlatform(Vector2 _position, int _jumpsOn, int _jumpsOff) : Platform(_position) {
+JumpPlatform::JumpPlatform(TileInfo info, int _jumpsOn, int _jumpsOff) : Platform(info) {
 	jumpsOn = _jumpsOn;
 	jumpsOff = _jumpsOff;
 }

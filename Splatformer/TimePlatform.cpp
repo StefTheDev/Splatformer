@@ -1,6 +1,6 @@
 #include "TimePlatform.h"
 
-TimePlatform::TimePlatform(Vector2 _position, float _timeOn, float _timeOff) : Platform(_position) {
+TimePlatform::TimePlatform(TileInfo _info, float _timeOn, float _timeOff) : Platform(_info) {
 	timeOn = _timeOn;
 	timeOff = _timeOff;
 }
