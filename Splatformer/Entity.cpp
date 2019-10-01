@@ -26,16 +26,16 @@ bool Entity::Initialise(Vector2 _position, Vector2 _dimension)
 
 void Entity::Render(SDL_Renderer * renderer)
 {
+		SDL_RenderCopyEx(
+			renderer,
+			sprite->GetTexture(),
+			&source,
+			&destination,
+			angle,
+			NULL,
+			SDL_FLIP_NONE
+		);
 
-	SDL_RenderCopyEx(
-		renderer,
-		sprite->GetTexture(),
-		&source,
-		&destination,
-		angle,
-		NULL,
-		SDL_FLIP_NONE
-	);
 }
 
 void Entity::Update()

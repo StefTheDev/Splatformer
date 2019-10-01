@@ -20,7 +20,8 @@ Player::Player(Vector2 _position, Controllers _playerNum) {
 void Player::Initialise(b2World* _world, std::shared_ptr<Sprite> _playerSprite) {
 	if (!LoadSprite(_playerSprite)) return;
 
-	GetSprite()->Add("idle", SpriteAnimation{ 0, 1, 500 }); //Index, frames, speed
+	GetSprite()->Add("idle", SpriteAnimation{ 0, 1, 500 }
+	); //Index, frames, speed
 
 	DataContainer info = {
 		ColliderType::PLR, 
@@ -36,12 +37,20 @@ void Player::Initialise(b2World* _world, std::shared_ptr<Sprite> _playerSprite) 
 	SetPosition(collider->GetPosition());
 }
 
+void Player::Render(SDL_Renderer * _renderer){
+	//if(storedBall != nullptr) storedBall->Render(_renderer);
+	Entity::Render(_renderer);
+}
+
 void Player::Update(Camera* _gameCamera) {
 	if (Input::GetInstance()->IsControllerButtonPressed(playerIndex, SDL_CONTROLLER_BUTTON_A)) {
 		Jump();
 
 	} else if (!(Input::GetInstance()->IsControllerButtonHeld(playerIndex, SDL_CONTROLLER_BUTTON_A))) {
 		FinishJump();
+	}
+	if (Input::GetInstance()->IsControllerButtonPressed(playerIndex, SDL_CONTROLLER_BUTTON_B)) {
+		ThrowBall();
 	}
 
 	float stickPos = Input::GetInstance()->GetControllerAxis(playerIndex, SDL_CONTROLLER_AXIS_LEFTX);
@@ -51,6 +60,10 @@ void Player::Update(Camera* _gameCamera) {
 	}
 
 	SetPosition(collider->GetPosition() - _gameCamera->GetPosition());
+
+	if (storedBall != nullptr) {
+		storedBall->BindToPlayer(collider->GetPosition());
+	}
 
 	jumpedInAir = (jumpedInAir && !canJump);
 
@@ -85,6 +98,18 @@ void Player::Jump() {
 	}
 }
 
+void Player::ThrowBall() {
+
+	//Vector2{ 960.0f, -540.0 }
+
+	if (haveBall) {
+		storedBall->ThrowBall(Vector2{collider->GetPosition().x + 55.0f, -collider->GetPosition().y }); //position);
+		storedBall = nullptr;
+		haveBall = false;
+	}
+
+}
+
 void Player::FinishJump() {
 	SDL_RemoveTimer(jumpTimer);
 
@@ -116,10 +141,9 @@ int Player::GetJumps() {
 	return currentJumps;
 }
 
-void Player::GainBall() {
-
+void Player::GainBall(Ball* _ball) {
 	haveBall = true;
-
+	storedBall = _ball;
 }
 
 bool Player::GetBall() {

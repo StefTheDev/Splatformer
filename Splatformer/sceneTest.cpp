@@ -21,10 +21,10 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 		}
 	}
 
-	playerSprite = std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false);
+	playerSprite = std::make_shared<Sprite>("Resources/Sprites/Apple.png", _gameRenderer, false);
 	platformSprite = std::make_shared<Sprite>("Resources/Sprites/platform.png", _gameRenderer, false);
-	coinSprite = std::make_shared<Sprite>("Resources/Sprites/coin.png", _gameRenderer, false);
-	ballSprite = std::make_shared<Sprite>("Resources/Sprites/coin.png", _gameRenderer, false);
+	coinSprite = std::make_shared<Sprite>("Resources/Sprites/Carrot.png", _gameRenderer, false);
+	ballSprite = std::make_shared<Sprite>("Resources/Sprites/Onion.png", _gameRenderer, false);
 
 	objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER1));
 

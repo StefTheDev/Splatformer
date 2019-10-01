@@ -1,22 +1,26 @@
 #pragma once
 #include "Utilities.h"
 #include "Entity.h"
+#include "Ball.h"
 
 class Player : public Entity {
 public:
 	Player(Vector2 position, Controllers playerNum);
 
 	void Initialise(b2World* world, std::shared_ptr<Sprite> playSprite);
-	void Update(Camera* _gameCamera);
+	void Render(SDL_Renderer * renderer);
+	void Update(Camera* gameCamera);
 
 	void Jump();
 	void FinishJump();
 	void MoveHorizontal(float scale);
 
+	void ThrowBall();
+
 	void addCoin();
 	int getCoins();
 
-	void GainBall();
+	void GainBall(Ball* ball);
 	bool GetBall();
 
 	void SetCanJump(bool newCanJump);
@@ -28,6 +32,8 @@ private:
 	Controllers playerIndex;
 
 	std::unique_ptr<Collider> collider;
+
+	Ball* storedBall;
 
 	float width = 50.0f;
 	float height = 50.0f;

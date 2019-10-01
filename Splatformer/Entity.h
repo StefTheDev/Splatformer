@@ -53,6 +53,8 @@ protected:
 	EntityType type;
 
 	bool shouldDelete = false;
+	bool active = true;
+
 };
 
 #endif

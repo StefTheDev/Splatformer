@@ -20,37 +20,66 @@ void PlatformingListener::PreSolve(b2Contact* contact, const b2Manifold* oldMani
 	if (fixtureAData->type == OTHER || fixtureBData->type == OTHER) {
 		return;
 	}
+	if ((fixtureAData->type == PLR || fixtureAData->type == PLT) && (fixtureBData->type == PLR || fixtureBData->type == PLT)) {
 
-	b2Vec2 position;
-	float32 top, halfHeight;
-	Player* player;
-	Platform* platform;
+		b2Vec2 position;
+		float32 top, halfHeight;
+		Player* player;
+		Platform* platform;
 
-	if (fixtureAData->type == PLR) {
-		player = static_cast<Player*>(fixtureAData->data);
+		if (fixtureAData->type == PLR) {
+			player = static_cast<Player*>(fixtureAData->data);
 
-		platform = static_cast<Platform*>(fixtureBData->data);
-	} else {
-		player = static_cast<Player*>(fixtureBData->data);
+			platform = static_cast<Platform*>(fixtureBData->data);
+		}
+		else {
+			player = static_cast<Player*>(fixtureBData->data);
 
-		platform = static_cast<Platform*>(fixtureAData->data);
+			platform = static_cast<Platform*>(fixtureAData->data);
+		}
+
+		position = player->GetPosition().AsBox2D();
+		halfHeight = (player->GetDimensions() * 0.5f).AsBox2D().y;
+
+		b2Vec2 platPos = platform->GetPosition().AsBox2D();
+		platPos -= (platform->GetDimensions() * 0.5f).AsBox2D();
+
+		top = platPos.y;
+
+		//Top of platform plus player box dimension.y is lower than player box 
+		if (position.y + halfHeight > top + 0.15f) {
+			contact->SetEnabled(false);
+		}
+		else {
+			player->SetCanJump(true);
+		}
 	}
+	if ((fixtureAData->type == PLT || fixtureAData->type == CBALL) && (fixtureBData->type == PLT || fixtureBData->type == CBALL)) {
 
-	position = player->GetPosition().AsBox2D();
-	halfHeight = (player->GetDimensions() * 0.5f).AsBox2D().y;
+		b2Vec2 position;
+		float32 top, halfHeight;
+		Ball* ball;
+		Platform* platform;
 
-	b2Vec2 platPos = platform->GetPosition().AsBox2D();
-	platPos -= (platform->GetDimensions() * 0.5f).AsBox2D();
+		if (fixtureAData->type == PLT) {
+			platform = static_cast<Platform*>(fixtureAData->data);
 
-	top = platPos.y;
+			ball = static_cast<Ball*>(fixtureBData->data);
+		}
+		else {
+			platform = static_cast<Platform*>(fixtureBData->data);
 
-	//Top of platform plus player box dimension.y is lower than player box 
-	if (position.y + halfHeight > top + 0.15f) {
-		contact->SetEnabled(false);
-	} else {
-		player->SetCanJump(true);
+			ball = static_cast<Ball*>(fixtureAData->data);
+		}
+
+		position = ball->GetPosition().AsBox2D();
+		halfHeight = (ball->GetDimensions() * 0.5f).AsBox2D().y;
+
+		b2Vec2 platPos = platform->GetPosition().AsBox2D();
+		platPos -= (platform->GetDimensions() * 0.5f).AsBox2D();
+
+		top = platPos.y;
 	}
-
 	//std::cout << "A: " << position.y - halfHeight << " |B: "<< (top - 3.0f * b2_linearSlop) << std::endl;
 }
 
@@ -111,8 +140,11 @@ void PlatformingListener::BeginContact(b2Contact* contact) {
 			ball = static_cast<Ball*>(fixtureAData->data);
 		}
 
-		ball->Collected();
+		if (!ball->IsThrown()) {
 
+			ball->Collected();
+			player->GainBall(ball);
+		}
 		return;
 	}
 
