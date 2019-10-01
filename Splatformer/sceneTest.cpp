@@ -8,6 +8,8 @@ constexpr int posIterations = 3;
 SceneTest::SceneTest() {
 	b2Vec2 gravity(0.0f, -39.2f);
 
+	camera = Camera(1920.0f, 1080.0f);
+
 	contactListener = new PlatformingListener();
 
 	sceneWorld = std::make_unique<b2World>(gravity);
@@ -22,12 +24,14 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 	}
 
 	playerSprite = std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false);
-	platformSprite = std::make_shared<Sprite>("Resources/Sprites/platform.png", _gameRenderer, false);
+	platformSprite = std::make_shared<Sprite>("Resources/Sprites/platform_base.png", _gameRenderer, false);
 
 	objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER1));
 
-	camera.PushTargetPosition(Vector2(1200.0f, 0.0f));
-	camera.PushTargetPosition(Vector2(0.0f, 0.0f));
+	camera.Initialise(sceneWorld.get());
+
+	camera.PushTargetBack(Vector2(0.0f, 1200.0f));
+	camera.PushTargetBack(Vector2(0.0f, 0.0f));
 	camera.SetMoveSpeed(100.0f);
 
 	LevelLoader::LoadLevel("Resources/Levels/LevelOne.csv", objects);
@@ -79,4 +83,8 @@ void SceneTest::LeftTrigger(SDL_JoystickID gamepadID, float axisValue) {
 
 void SceneTest::ControllerAdded(int deviceIndex) {
 	std::cout << "Controller number " << deviceIndex << " added" << std::endl;
+}
+
+void SceneTest::ControllerRemapped(SDL_JoystickID _gamePad) {
+	std::cout << "Controller Remapped: " << _gamePad << std::endl;
 }
