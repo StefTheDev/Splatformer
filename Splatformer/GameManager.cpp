@@ -1,5 +1,6 @@
 #include "GameManager.h"
 #include "Jumper.h"
+#include "SoundManager.h"
 
 GameManager::GameManager()
 {
@@ -42,6 +43,9 @@ bool GameManager::Initialise(std::string _title)
 	jumper = std::make_unique<Jumper>();
 	if (!jumper->Initialise(renderer)) return false;
 
+	SoundManager::Initialise();
+	SoundManager::LoadSounds("Resources/Sounds");
+
 	return true;
 }
 
@@ -75,6 +79,8 @@ void GameManager::HandleEvents()
 
 void GameManager::Process()
 {
+	SoundManager::Update();
+
 	timeLastFrame = timeCurrentFrame;
 	timeCurrentFrame = SDL_GetPerformanceCounter();
 
@@ -89,6 +95,8 @@ void GameManager::Process()
 
 void GameManager::Clean()
 {
+	SoundManager::ReleaseAll();
+
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();

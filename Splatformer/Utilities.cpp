@@ -19,7 +19,7 @@ void PlatformingListener::PreSolve(b2Contact* contact, const b2Manifold* oldMani
 		return;
 	}
 
-	b2Vec2 position;
+	Vector2 position;
 	float32 top, halfHeight;
 	Player* player;
 	Platform* platform;
@@ -34,22 +34,20 @@ void PlatformingListener::PreSolve(b2Contact* contact, const b2Manifold* oldMani
 		platform = static_cast<Platform*>(fixtureAData->data);
 	}
 
-	position = player->GetPosition().AsBox2D();
-	halfHeight = (player->GetDimensions() * 0.5f).AsBox2D().y;
+	position = player->GetPosition();
+	halfHeight = (player->GetDimensions() * 0.5f).y;
 
-	b2Vec2 platPos = platform->GetPosition().AsBox2D();
-	platPos -= (platform->GetDimensions() * 0.5f).AsBox2D();
+	Vector2 platPos = platform->GetPosition();
+	platPos -= (platform->GetDimensions() * 0.5f);
 
 	top = platPos.y;
 
 	//Top of platform plus player box dimension.y is lower than player box 
-	if (position.y + halfHeight > top + 0.15f) {
+	if (position.y + halfHeight > (top + (platform->GetDimensions() * 0.2f).y)) {
 		contact->SetEnabled(false);
 	} else {
 		player->SetCanJump(true);
 	}
-
-	//std::cout << "A: " << position.y - halfHeight << " |B: "<< (top - 3.0f * b2_linearSlop) << std::endl;
 }
 
 void PlatformingListener::EndContact(b2Contact* contact) {
@@ -67,22 +65,44 @@ void PlatformingListener::EndContact(b2Contact* contact) {
 		return;
 	}
 
-	b2Vec2 position;
-	float32 top, halfHeight;
-	Player* player;
-	Platform* platform;
+#pragma region Platform/Player De-Collisions
+	if ((fixtureAData->type == PLR || fixtureAData->type == PLT) && (fixtureBData->type == PLR || fixtureBData->type == PLT)) {
 
-	if (fixtureAData->type == PLR) {
-		player = static_cast<Player*>(fixtureAData->data);
+		b2Vec2 position;
+		float32 top, halfHeight;
+		Player* player;
+		Platform* platform;
 
-		platform = static_cast<Platform*>(fixtureBData->data);
-	} else {
-		player = static_cast<Player*>(fixtureBData->data);
+		if (fixtureAData->type == PLR) {
+			player = static_cast<Player*>(fixtureAData->data);
 
-		platform = static_cast<Platform*>(fixtureAData->data);
+			platform = static_cast<Platform*>(fixtureBData->data);
+		} else {
+			player = static_cast<Player*>(fixtureBData->data);
+
+			platform = static_cast<Platform*>(fixtureAData->data);
+		}
+
+		player->SetCanJump(false);
+		return;
 	}
+#pragma endregion
 
-	player->SetCanJump(false);
+#pragma region Player/Camera De-Collisions
+	else if ((fixtureAData->type == PLR || fixtureAData->type == CAM) && (fixtureBData->type == PLR || fixtureBData->type == CAM)) {
+		Player* player;
+		Camera* camera;
 
-	std::cout << "Contact ended\n";
+		if (fixtureAData->type == PLR) {
+			player = static_cast<Player*>(fixtureAData->data);
+			camera = static_cast<Camera*>(fixtureBData->data);
+		} else {
+			player = static_cast<Player*>(fixtureBData->data);
+			camera = static_cast<Camera*>(fixtureAData->data);
+		}
+
+		player->Kill();
+		return;
+	}
+#pragma endregion
 }

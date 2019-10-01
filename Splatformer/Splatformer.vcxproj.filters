@@ -102,6 +102,9 @@
     <ClCompile Include="JumpPlatform.cpp">
       <Filter>Source Files\Objects\Platforms</Filter>
     </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -151,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="TimePlatform.h">
       <Filter>Header Files\Objects\Platforms</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>Header Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

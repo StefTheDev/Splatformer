@@ -52,7 +52,7 @@ void Collider::InitialiseDynamic(b2World* _world, float _density, float _frictio
 }
 
 void Collider::InitialiseKinematic(b2World* _world, bool _isSensor) {
-	b2Vec2 b2Dimensions = dimensions.AsBox2D();
+	b2Vec2 b2Dimensions = (dimensions / 2.0f).AsBox2D();
 	
 	b2BodyDef bodyDef;
 

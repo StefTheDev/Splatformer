@@ -36,5 +36,7 @@ public:
 	float x, y;
 };
 
+std::ostream& operator<<(std::ostream& _stream, Vector2 _vec);
+
 #endif
 
