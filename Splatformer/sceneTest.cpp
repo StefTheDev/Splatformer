@@ -75,6 +75,8 @@ void SceneTest::Update() {
 
 	timeElapsed += deltaTime;
 
+	ControllerCheck();
+
 	for (std::vector<std::unique_ptr<Entity>>::iterator entity = objects.begin(); entity != objects.end(); ++entity){
 		if ((*entity)->ShouldDelete()) {
 			entity = objects.erase(entity);
@@ -128,12 +130,25 @@ void SceneTest::ControllerRemapped(SDL_JoystickID _gamePad) {
 
 void SceneTest::LoadControllers()
 {
-	int numControllers = Input::GetInstance()->GetNumGamepads();
-	if (numControllers > 4) numControllers = 4; // just in case more than 4 controllers are plugged in
-	for (int i = 0; i < numControllers; i++)
+	for (int i = 0; i < Input::GetInstance()->GetNumGamepads(); i++)
 	{
 		objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), Controllers(i)));
 		players.push_back((Player*)objects.back().get());
+	}
+}
+
+void SceneTest::ControllerCheck()
+{
+	// TODO: Incomplete. Either move to lobby scene or scrap since we are no longer adding players while the game is running
+	if (Input::GetInstance()->GetNumGamepads() > players.size())
+	{
+		// add new players
+		for (int i = players.size(); i < Input::GetInstance()->GetNumGamepads(); i++)
+		{
+			objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), Controllers(i)));
+			players.push_back((Player*)objects.back().get());
+			players.back()->Initialise(sceneWorld.get(), playerSprite);
+		}
 	}
 }
 

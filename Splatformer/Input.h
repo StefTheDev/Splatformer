@@ -30,6 +30,7 @@ public:
 	void Process();
 	void HandleEvents(SDL_Event _event);
 	int GetNumGamepads() { return numGamepads; }
+	void AddController();
 
 private:
 	static Input* instance;

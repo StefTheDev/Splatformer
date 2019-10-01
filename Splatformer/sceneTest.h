@@ -36,6 +36,8 @@ private:
 	std::vector<SDL_GameController*> controllers;
 
 	void LoadControllers();
+	// compares the number of gamepads with number of players and takes the appropriate actions
+	void ControllerCheck();
 
 	float timeElapsed;
 	bool paused = false;

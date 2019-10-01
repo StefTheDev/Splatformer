@@ -52,6 +52,9 @@ void Input::Initialise()
 			numGamepads++;
 		}
 	}
+
+	// Limit it to four
+	if (numGamepads > 4) numGamepads = 4; // just in case more than 4 controllers are plugged in
 	
 	// if we have some controllers attached
 	if (numGamepads > 0)
@@ -114,6 +117,7 @@ void Input::HandleEvents(SDL_Event _event)
 		// when the game is running
 	case SDL_CONTROLLERDEVICEADDED:
 		std::cout << "DEVICEADDED cdevice.which = " << _event.cdevice.which << std::endl;
+		Initialise();
 		break;
 
 		// If a controller button is pressed
@@ -148,4 +152,8 @@ void Input::HandleEvents(SDL_Event _event)
 		}
 		break;
 	}
+}
+
+void Input::AddController()
+{
 }
