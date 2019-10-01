@@ -132,7 +132,8 @@ void Player::Respawn(Vector2 _respawnPosition) {
 	isDead = false;
 
 	collider->body->SetGravityScale(1.0f);
-	collider->body->SetTransform(_respawnPosition.AsBox2D(), 0.0f);
+	// HERE
+	collider->body->SetTransform((_respawnPosition).AsBox2D(), 0.0f);
 }
 
 Uint32 Player::jumpTimerCallback(Uint32 interval, void* param) {

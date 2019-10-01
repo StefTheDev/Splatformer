@@ -29,15 +29,15 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 
 	objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER1));
 	players.push_back((Player*)objects.back().get());
-	objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER2));
-	players.push_back((Player*)objects.back().get());
+	//objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER2));
+	//players.push_back((Player*)objects.back().get());
 	
 
 	camera.Initialise(sceneWorld.get());
 
-	camera.PushTargetBack(Vector2(1200.0f, 0.0f));
-	camera.PushTargetBack(Vector2(0.0f, 0.0f));
-	camera.SetMoveSpeed(100.0f);
+	/*camera.PushTargetBack(Vector2(1200.0f, 0.0f));
+	camera.PushTargetBack(Vector2(0.0f, 0.0f));*/
+	//camera.SetMoveSpeed(100.0f);
 
 	LevelLoader::LoadLevel("Resources/Levels/LevelOne.csv", objects);
 
@@ -79,9 +79,11 @@ void SceneTest::Update() {
 			}
 		}
 	}
-
-	camera.Update();
 	ProcessRespawn();
+	camera.Update();
+	
+
+
 }
 
 void SceneTest::Render(SDL_Renderer* _gameRenderer) {
@@ -147,8 +149,12 @@ void SceneTest::RespawnPlayers()
 	{
 		// send camera to the platform
 		camera.SetPosition(Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition()));
+		//collider->body->SetTransform((position + Vector2(width / 2.0f, height / 2.0f)).AsBox2D(), 0.0f);
 
-		Vector2 spawnPosition = Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition());
+		camera.collider.get()->body->SetTransform((camera.GetPosition() + Vector2(camera.GetWidth() / 2.0f, camera.GetHeight() / 2.0f)).AsBox2D(), 0.0f);
+		//camera.PushTargetFront(Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition()));
+
+		Vector2 spawnPosition = Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition()) - Vector2(0.0f, camera.GetHeight()/2.0f);
 		spawnPosition.y += 32.0f;
 
 		// respawn players
