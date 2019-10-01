@@ -119,14 +119,14 @@ bool LevelLoader::LoadLevel(std::string _levelPath, std::vector<std::unique_ptr<
 				}else if (args[0] == "P") {
 					_sceneEntities.push_back(std::move(std::make_unique<Platform>(collateTiles(x, y, tiles))));
 				}else if (args[0] == "J") {
-					_sceneEntities.push_back(std::move(std::make_unique<JumpPlatform>(Vector2(x, y), std::stoi(args[1]), std::stoi(args[2]))));
+					_sceneEntities.push_back(std::move(std::make_unique<JumpPlatform>(collateTiles(x, y, tiles), std::stoi(args[1]), std::stoi(args[2]))));
 				} else if (args[0] == "T") {
-					_sceneEntities.push_back(std::move(std::make_unique<TimePlatform>(Vector2(x, y), std::stof(args[1]), std::stof(args[2]))));
+					_sceneEntities.push_back(std::move(std::make_unique<TimePlatform>(collateTiles(x, y, tiles), std::stof(args[1]), std::stof(args[2]))));
 				}else if (args[0] == "C") {
 					_sceneEntities.push_back(std::move(std::make_unique<Coin>(Vector2(x, y))));
 				}
 				else if (args[0] == "R") {
-					_sceneEntities.push_back(std::move(std::make_unique<RespawnPlatform>(Vector2(x, y), std::stoi(args[1]))));
+					_sceneEntities.push_back(std::move(std::make_unique<RespawnPlatform>(collateTiles(x, y, tiles), std::stoi(args[1]))));
 				}
 			} else {
 				//std::cout << " ";

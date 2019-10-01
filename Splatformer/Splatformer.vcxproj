@@ -153,7 +153,6 @@
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="player.cpp" />
-    <ClCompile Include="Jumper.cpp" />
     <ClCompile Include="RespawnPlatform.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="sceneTest.cpp" />
