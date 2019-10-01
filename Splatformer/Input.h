@@ -29,6 +29,7 @@ public:
 	void Initialise();
 	void Process();
 	void HandleEvents(SDL_Event _event);
+	int GetNumGamepads() { return numGamepads; }
 
 private:
 	static Input* instance;

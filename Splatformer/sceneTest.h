@@ -35,6 +35,8 @@ private:
 
 	std::vector<SDL_GameController*> controllers;
 
+	void LoadControllers();
+
 	float timeElapsed;
 	bool paused = false;
 

@@ -28,8 +28,9 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 	coinSprite = std::make_shared<Sprite>("Resources/Sprites/coin.png", _gameRenderer, false);
 	buttonSprite = std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false);
 
-	objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER1));
-	players.push_back((Player*)objects.back().get());
+	LoadControllers();
+	/*objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER1));
+	players.push_back((Player*)objects.back().get());*/
 	//objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER2));
 	//players.push_back((Player*)objects.back().get());
 	
@@ -123,6 +124,17 @@ void SceneTest::ControllerAdded(int deviceIndex) {
 
 void SceneTest::ControllerRemapped(SDL_JoystickID _gamePad) {
 	std::cout << "Controller Remapped: " << _gamePad << std::endl;
+}
+
+void SceneTest::LoadControllers()
+{
+	int numControllers = Input::GetInstance()->GetNumGamepads();
+	if (numControllers > 4) numControllers = 4; // just in case more than 4 controllers are plugged in
+	for (int i = 0; i < numControllers; i++)
+	{
+		objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), Controllers(i)));
+		players.push_back((Player*)objects.back().get());
+	}
 }
 
 void SceneTest::ProcessRespawn()
