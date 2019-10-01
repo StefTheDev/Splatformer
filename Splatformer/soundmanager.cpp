@@ -1,6 +1,7 @@
 #include "soundmanager.h"
 
-#include <filesystem>
+#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
+#include <experimental/filesystem>
 #include <cstring>
 
 namespace fsys = std::experimental::filesystem;

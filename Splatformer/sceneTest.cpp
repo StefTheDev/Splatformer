@@ -24,13 +24,21 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 	}
 
 	playerSprite = std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false);
-	platformSprite = std::make_shared<Sprite>("Resources/Sprites/platform_base.png", _gameRenderer, false);
+	platformSprite = std::make_shared<Sprite>("Resources/Sprites/platform.png", _gameRenderer, false);
+	buttonSprite = std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false);
 
 	objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER1));
+	std::unique_ptr<UIButton> button = std::make_unique<UIButton>();
+	button->LoadSprite(buttonSprite);
+	button->Initialise(Vector2(10.0f, 10.0f), "<- Menu", _gameRenderer, [this] {
+		SDL_Delay(75);
+	});
+
+	objects.push_back(std::move(button));
 
 	camera.Initialise(sceneWorld.get());
 
-	camera.PushTargetBack(Vector2(0.0f, 1200.0f));
+	camera.PushTargetBack(Vector2(1200.0f, 0.0f));
 	camera.PushTargetBack(Vector2(0.0f, 0.0f));
 	camera.SetMoveSpeed(100.0f);
 
@@ -63,6 +71,11 @@ void SceneTest::Update() {
 }
 
 void SceneTest::Render(SDL_Renderer* _gameRenderer) {
+}
+
+bool SceneTest::IsPaused() const
+{
+	return paused;
 }
 
 void SceneTest::ButtonDown(SDL_JoystickID _gamepadID, Uint8 _button) {

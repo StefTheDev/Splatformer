@@ -2,6 +2,7 @@
 #include "Utilities.h"
 #include "Vector2.h"
 #include "Entity.h"
+#include "UIButton.h"
 #include "Camera.h"
 
 class Scene {
