@@ -3,6 +3,8 @@
 
 #include "Player.h"
 #include "Platform.h"
+#include "Coin.h"
+#include "RespawnPlatform.h"
 #include "UIButton.h"
 
 class SceneTest : public Scene {
@@ -29,10 +31,17 @@ private:
 	std::unique_ptr<b2World> sceneWorld;
 	PlatformingListener* contactListener;
 
-	std::shared_ptr<Sprite> playerSprite, platformSprite, buttonSprite;
+	std::shared_ptr<Sprite> playerSprite, platformSprite, buttonSprite, coinSprite;
 
 	std::vector<SDL_GameController*> controllers;
 
 	float timeElapsed;
 	bool paused = false;
+
+	std::vector<RespawnPlatform*> respawnPoints;
+
+	std::vector<Player*> players;
+	// check if players need to be respawned
+	void ProcessRespawn();
+	void RespawnPlayers();
 };

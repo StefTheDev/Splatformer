@@ -25,9 +25,14 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 
 	playerSprite = std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false);
 	platformSprite = std::make_shared<Sprite>("Resources/Sprites/platform.png", _gameRenderer, false);
+	coinSprite = std::make_shared<Sprite>("Resources/Sprites/coin.png", _gameRenderer, false);
 	buttonSprite = std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false);
 
 	objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER1));
+	players.push_back((Player*)objects.back().get());
+	//objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER2));
+	//players.push_back((Player*)objects.back().get());
+	
 	std::unique_ptr<UIButton> button = std::make_unique<UIButton>();
 	button->LoadSprite(buttonSprite);
 	button->Initialise(Vector2(10.0f, 10.0f), "<- Menu", _gameRenderer, [this] {
@@ -47,9 +52,18 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 	for (auto& object : objects) {
 		switch (object->GetType()) {
 		case PLAYER: static_cast<Player*>(object.get())->Initialise(sceneWorld.get(), playerSprite); break;
-		case PLATFORM: static_cast<Platform*>(object.get())->Initialise(sceneWorld.get(), platformSprite); break;
+		case PLATFORM: static_cast<Platform*>(object.get())->Initialise(sceneWorld.get(), platformSprite);
+			if (static_cast<Platform*>(object.get())->GetCollider()->GetDataContainer().type == RESPAWN)
+			{
+				respawnPoints.push_back((static_cast<RespawnPlatform*>(object.get())));
+			}
+			break;
+		case COIN: static_cast<Coin*>(object.get())->Initialise(sceneWorld.get(), coinSprite); break;
 		}
 	}
+
+	std::sort(respawnPoints.begin(), respawnPoints.end(), RespawnPlatform::sortAscending);
+	respawnPoints[0]->Activate();
 }
 
 void SceneTest::Unload() {
@@ -60,14 +74,23 @@ void SceneTest::Update() {
 
 	timeElapsed += deltaTime;
 
-	for (auto& entity : objects) {
-		switch (entity->GetType()) {
-		case PLAYER: static_cast<Player*>(entity.get())->Update(&camera); break;
-		case PLATFORM: static_cast<Platform*>(entity.get())->Update(&camera, timeElapsed); break;
+	for (std::vector<std::unique_ptr<Entity>>::iterator entity = objects.begin(); entity != objects.end(); ++entity){
+		if ((*entity)->ShouldDelete()) {
+			entity = objects.erase(entity);
+		}
+		else {
+			switch ((*entity)->GetType()) {
+			case PLAYER: static_cast<Player*>((*entity).get())->Update(&camera); break;
+			case PLATFORM: static_cast<Platform*>((*entity).get())->Update(&camera, timeElapsed); break;
+			case COIN: static_cast<Coin*>((*entity).get())->Update(&camera); break;
+			}
 		}
 	}
-
+	ProcessRespawn();
 	camera.Update();
+	
+
+
 }
 
 void SceneTest::Render(SDL_Renderer* _gameRenderer) {
@@ -100,4 +123,55 @@ void SceneTest::ControllerAdded(int deviceIndex) {
 
 void SceneTest::ControllerRemapped(SDL_JoystickID _gamePad) {
 	std::cout << "Controller Remapped: " << _gamePad << std::endl;
+}
+
+void SceneTest::ProcessRespawn()
+{
+	bool needToRespawn = true;
+	for (auto it = players.begin(); it != players.end(); it++)
+	{
+		if ((*it)->CheckIsAlive())
+		{
+			needToRespawn = false;
+			break;
+		}
+	}
+
+	if (needToRespawn == true)
+	{
+		RespawnPlayers();
+	}
+}
+
+void SceneTest::RespawnPlayers()
+{
+	RespawnPlatform* furthestPlatform = nullptr;
+
+	// find which respawnPlatform to respawn on
+	for (auto it = respawnPoints.begin(); it != respawnPoints.end(); it++)
+	{
+		if ((*it)->GetActive())
+		{
+			furthestPlatform = (*it);
+		}
+		else break;
+	}
+
+	if (furthestPlatform != nullptr)
+	{
+		// send camera to the platform
+		camera.SetPosition(Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition()));
+
+		Vector2 spawnPosition = Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition()) - Vector2(0.0f, camera.GetHeight()/2.0f);
+		spawnPosition.y += 32.0f;
+
+		// respawn players
+		for (auto it = players.begin(); it != players.end(); it++)
+		{
+			if (!(*it)->CheckIsAlive())
+			{
+				(*it)->Respawn(spawnPosition);
+			}
+		}
+	}
 }

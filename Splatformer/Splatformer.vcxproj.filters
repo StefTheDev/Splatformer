@@ -90,6 +90,12 @@
     <ClCompile Include="JumpPlatform.cpp">
       <Filter>Source Files\Objects\Platforms</Filter>
     </ClCompile>
+    <ClCompile Include="RespawnPlatform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="SoundManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
@@ -142,6 +148,12 @@
     </ClInclude>
     <ClInclude Include="TimePlatform.h">
       <Filter>Header Files\Objects\Platforms</Filter>
+    </ClInclude>
+    <ClInclude Include="RespawnPlatform.h">
+      <Filter>Header Files\Objects\Platforms</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>Header Files\Managers</Filter>

@@ -14,6 +14,7 @@
 #include <string>
 #include <functional>
 #include <vector>
+#include <algorithm>
 
 //Dependency Includes
 #include <SDL.h>
@@ -51,6 +52,8 @@ enum ColliderType {
 	PLR = 0,
 	PLT,
 	CAM,
+	RESPAWN,
+	ECOIN,
 	OTHER
 };
 
@@ -61,6 +64,7 @@ struct DataContainer {
 
 class PlatformingListener : public b2ContactListener {
 	void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
+	void BeginContact(b2Contact* contact);
 	void EndContact(b2Contact* contact);
 };
 #endif

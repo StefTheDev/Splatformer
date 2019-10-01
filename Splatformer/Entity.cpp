@@ -94,3 +94,8 @@ Vector2 Entity::GetDimensions() {
 EntityType Entity::GetType() {
 	return type;
 }
+
+bool Entity::ShouldDelete()
+{
+	return shouldDelete;
+}
