@@ -3,7 +3,7 @@
 
 class TimePlatform : public Platform {
 public:
-	TimePlatform(Vector2 position, float timeOn, float timeOff);
+	TimePlatform(TileInfo info, float timeOn, float timeOff);
 
 	void Update(Camera* gameCamera, float sceneTime) override;
 

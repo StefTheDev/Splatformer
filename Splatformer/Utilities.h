@@ -12,6 +12,7 @@
 #include <memory>
 #include <iostream>
 #include <string>
+#include <functional>
 #include <vector>
 #include <algorithm>
 
@@ -19,6 +20,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <stdio.h>
+#include <SDL_ttf.h>
 #include <Box2D/Box2D.h>
 
 //Local Includes

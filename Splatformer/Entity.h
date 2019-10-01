@@ -10,6 +10,8 @@ enum EntityType {
 	PLAYER = 0,
 	PLATFORM,
 	COIN,
+	PLATFORM,
+	BUTTON
 };
 
 class Entity
@@ -20,7 +22,8 @@ public:
 
 	//General
 	bool Initialise(Vector2 _position, Vector2 dimension);
-	void Render(SDL_Renderer * renderer);
+	virtual void Render(SDL_Renderer * renderer);
+	virtual void Listen(SDL_Event event) {}
 	void Update();
 
 	//Sprite

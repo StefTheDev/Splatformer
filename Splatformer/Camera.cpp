@@ -17,7 +17,7 @@ void Camera::Initialise(b2World* _gameWorld) {
 		this
 	};
 
-	collider = std::make_unique<Collider>(position, info, Vector2(width/2.0f, height/2.0f));
+	collider = std::make_unique<Collider>(position, info, Vector2(width, height));
 
 	collider->InitialiseKinematic(_gameWorld, true);
 	collider->SetCollisionCategory(CATEGORY_CAMERA);
@@ -41,7 +41,7 @@ void Camera::Update() {
 
 		position += direction * (moveSpeed * deltaTime * scale);
 
-		collider->body->SetTransform((position + Vector2(width / 2.0f, height / 2.0f)).AsBox2D(), 0.0f);
+		collider->body->SetTransform((Vector2(position.x, -position.y) + Vector2(width / 2.0f, height / -2.0f)).AsBox2D(), 0.0f);
 	}
 
 	//collider->body->SetTransform((position + Vector2(width / 2.0f, height / 2.0f) - Vector2(0.0f, 810.0f)).AsBox2D(), 0.0f);

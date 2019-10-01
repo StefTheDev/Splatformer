@@ -1,14 +1,15 @@
 #include "Platform.h"
 
-Platform::Platform(Vector2 _position) {
+Platform::Platform(TileInfo _info) {
 	type = PLATFORM;
+	thisInfo = _info;
 
-	_position.y *= -1.0f;
+	_info.position.y *= -1.0f;
 
-	_position.x *= width;
-	_position.y *= height;
+	_info.position.x *= width;
+	_info.position.y *= height;
 
-	Entity::Initialise(_position, { width, height });
+	Entity::Initialise(_info.position, { thisInfo.dimensions.x * width, thisInfo.dimensions.y * height });
 }
 
 void Platform::Initialise(b2World* _world, std::shared_ptr<Sprite> _platformSprite) {
@@ -21,7 +22,11 @@ void Platform::Initialise(b2World* _world, std::shared_ptr<Sprite> _platformSpri
 		this
 	};
 
-	collider = std::make_unique<Collider>(position, info, Vector2(width, height));
+	collider = std::make_unique<Collider>(position, info, 
+		Vector2(
+			thisInfo.dimensions.x * width, 
+			thisInfo.dimensions.y * height
+		));
 	
 	collider->InitialiseStatic(_world);
 	collider->SetCollisionCategory(CATEGORY_PLATFORM);

@@ -4,7 +4,7 @@
 
 class JumpPlatform : public Platform{
 public:
-	JumpPlatform(Vector2 _position, int jumpsOn, int jumpsOff);
+	JumpPlatform(TileInfo info, int jumpsOn, int jumpsOff);
 
 	void Update(Camera* gameCamera, float sceneTime) override;
 

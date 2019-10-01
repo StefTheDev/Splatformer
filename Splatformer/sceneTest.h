@@ -5,6 +5,7 @@
 #include "Platform.h"
 #include "Coin.h"
 #include "RespawnPlatform.h"
+#include "UIButton.h"
 
 class SceneTest : public Scene {
 public:
@@ -12,6 +13,8 @@ public:
 
 	void Update() override;
 	void Render(SDL_Renderer* gameRenderer) override;
+
+	bool IsPaused() const;
 
 private:
 	void Load(SDL_Renderer* _gameRenderer) override;
@@ -28,13 +31,12 @@ private:
 	std::unique_ptr<b2World> sceneWorld;
 	PlatformingListener* contactListener;
 
-	std::shared_ptr<Sprite> playerSprite;
-	std::shared_ptr<Sprite> platformSprite;
-	std::shared_ptr<Sprite> coinSprite;
+	std::shared_ptr<Sprite> playerSprite, platformSprite, buttonSprite;
 
 	std::vector<SDL_GameController*> controllers;
 
 	float timeElapsed;
+	bool paused = false;
 
 	std::vector<RespawnPlatform*> respawnPoints;
 

@@ -1,4 +1,5 @@
 #include "player.h"
+#include "SoundManager.h"
 
 int Player::currentJumps = 0;
 
@@ -89,9 +90,11 @@ void Player::Jump() {
 			jumpedInAir = true;
 			collider->body->SetLinearVelocity({ collider->body->GetLinearVelocity().x, airJumpForce });
 			jumpTimer = SDL_AddTimer(maxAirJumpTime, resetGravScale, static_cast<void*>(collider->body.get()));
+			SoundManager::PlaySound("Jump");
 		}else{
 			collider->body->SetLinearVelocity({ collider->body->GetLinearVelocity().x, jumpForce });
 			jumpTimer = SDL_AddTimer(maxJumpTime, resetGravScale, static_cast<void*>(collider->body.get()));
+			SoundManager::PlaySound("Jump");
 		}
 		//Increment global jump count
 		currentJumps++;
