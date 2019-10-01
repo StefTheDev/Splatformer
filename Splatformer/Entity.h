@@ -10,7 +10,6 @@ enum EntityType {
 	PLAYER = 0,
 	PLATFORM,
 	COIN,
-	PLATFORM,
 	BUTTON
 };
 

@@ -31,7 +31,7 @@ private:
 	std::unique_ptr<b2World> sceneWorld;
 	PlatformingListener* contactListener;
 
-	std::shared_ptr<Sprite> playerSprite, platformSprite, buttonSprite;
+	std::shared_ptr<Sprite> playerSprite, platformSprite, buttonSprite, coinSprite;
 
 	std::vector<SDL_GameController*> controllers;
 

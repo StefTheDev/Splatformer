@@ -34,9 +34,7 @@ void Scene::RenderScene(SDL_Renderer* _gameRenderer) {
 		case PLAYER: static_cast<Player*>(entity.get())->Render(_gameRenderer); break;
 		case PLATFORM: static_cast<Platform*>(entity.get())->Render(_gameRenderer); break;
 		case COIN: static_cast<Coin*>(entity.get())->Render(_gameRenderer); break;
-			case PLAYER: static_cast<Player*>(entity.get())->Render(_gameRenderer); break;
-			case PLATFORM: static_cast<Platform*>(entity.get())->Render(_gameRenderer); break;
-			case BUTTON: static_cast<UIButton*>(entity.get())->Render(_gameRenderer); break;
+		case BUTTON: static_cast<UIButton*>(entity.get())->Render(_gameRenderer); break;
 		}
 	}
 

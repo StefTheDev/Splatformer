@@ -5,7 +5,8 @@
 //Respawn Platforms act as checkpoints and should be activated when a player lands on it.
 class RespawnPlatform : public Platform {
 public:
-	RespawnPlatform(Vector2 _position, int _respawnNumber);
+	//RespawnPlatform(Vector2 _position, int _respawnNumber);
+	RespawnPlatform(TileInfo info, int _respawnNumber);
 
 	void Update(Camera* gameCamera, float sceneTime) override;
 	virtual void Initialise(b2World* world, std::shared_ptr<Sprite> platformSprite) override;

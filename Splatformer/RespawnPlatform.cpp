@@ -1,6 +1,11 @@
 #include "RespawnPlatform.h"
 
-RespawnPlatform::RespawnPlatform(Vector2 _position, int _respawnNumber) : Platform(_position)
+//RespawnPlatform::RespawnPlatform(Vector2 _position, int _respawnNumber) : Platform(_position)
+//{
+//	respawnNumber = _respawnNumber;
+//}
+
+RespawnPlatform::RespawnPlatform(TileInfo info, int _respawnNumber) : Platform(info)
 {
 	respawnNumber = _respawnNumber;
 }
