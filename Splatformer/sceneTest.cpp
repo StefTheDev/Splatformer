@@ -23,9 +23,10 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 		}
 	}
 
-	playerSprite = std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false);
+	playerSprite = std::make_shared<Sprite>("Resources/Sprites/Apple.png", _gameRenderer, false);
 	platformSprite = std::make_shared<Sprite>("Resources/Sprites/platform.png", _gameRenderer, false);
-	coinSprite = std::make_shared<Sprite>("Resources/Sprites/coin.png", _gameRenderer, false);
+	coinSprite = std::make_shared<Sprite>("Resources/Sprites/Carrot.png", _gameRenderer, false);
+	ballSprite = std::make_shared<Sprite>("Resources/Sprites/Onion.png", _gameRenderer, false);
 	buttonSprite = std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false);
 
 	LoadControllers();
@@ -60,6 +61,7 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 			}
 			break;
 		case COIN: static_cast<Coin*>(object.get())->Initialise(sceneWorld.get(), coinSprite); break;
+		case BALL: static_cast<Ball*>(object.get())->Initialise(sceneWorld.get(), ballSprite); break;
 		}
 	}
 
@@ -86,6 +88,7 @@ void SceneTest::Update() {
 			case PLAYER: static_cast<Player*>((*entity).get())->Update(&camera); break;
 			case PLATFORM: static_cast<Platform*>((*entity).get())->Update(&camera, timeElapsed); break;
 			case COIN: static_cast<Coin*>((*entity).get())->Update(&camera); break;
+			case BALL: static_cast<Coin*>((*entity).get())->Update(&camera); break;
 			}
 		}
 	}

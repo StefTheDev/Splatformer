@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Platform.h"
 #include "Coin.h"
+#include "Ball.h"
 #include "RespawnPlatform.h"
 #include "UIButton.h"
 
@@ -31,7 +32,7 @@ private:
 	std::unique_ptr<b2World> sceneWorld;
 	PlatformingListener* contactListener;
 
-	std::shared_ptr<Sprite> playerSprite, platformSprite, buttonSprite, coinSprite;
+	std::shared_ptr<Sprite> playerSprite, platformSprite, buttonSprite, coinSprite, ballSprite;
 
 	std::vector<SDL_GameController*> controllers;
 

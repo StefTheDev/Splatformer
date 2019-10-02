@@ -54,6 +54,7 @@ enum ColliderType {
 	CAM,
 	RESPAWN,
 	ECOIN,
+	CBALL,
 	OTHER
 };
 

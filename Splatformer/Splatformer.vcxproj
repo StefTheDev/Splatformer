@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Collider.cpp" />
@@ -151,6 +152,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="JumpPlatform.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
+    <ClCompile Include="Lobby.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="RespawnPlatform.cpp" />
@@ -165,6 +167,7 @@
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ball.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Collider.h" />
@@ -173,6 +176,7 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="JumpPlatform.h" />
     <ClInclude Include="LevelLoader.h" />
+    <ClInclude Include="Lobby.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="Jumper.h" />

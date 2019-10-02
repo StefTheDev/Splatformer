@@ -6,6 +6,7 @@
 #include "TimePlatform.h"
 #include "RespawnPlatform.h"
 #include "Coin.h"
+#include "Ball.h"
 
 std::vector<std::string> splitBy(std::string _sentence, std::string _delim) {
 	std::vector<std::string> words;
@@ -124,12 +125,11 @@ bool LevelLoader::LoadLevel(std::string _levelPath, std::vector<std::unique_ptr<
 					_sceneEntities.push_back(std::move(std::make_unique<TimePlatform>(collateTiles(x, y, tiles), std::stof(args[1]), std::stof(args[2]))));
 				}else if (args[0] == "C") {
 					_sceneEntities.push_back(std::move(std::make_unique<Coin>(Vector2(x, y))));
-				}
-				else if (args[0] == "R") {
+				}else if (args[0] == "B") {
+					_sceneEntities.push_back(std::move(std::make_unique<Ball>(Vector2(x, y))));
+				}else if (args[0] == "R") {
 					_sceneEntities.push_back(std::move(std::make_unique<RespawnPlatform>(collateTiles(x, y, tiles), std::stoi(args[1]))));
 				}
-			} else {
-				//std::cout << " ";
 			}
 		}
 	}

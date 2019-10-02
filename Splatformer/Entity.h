@@ -10,6 +10,7 @@ enum EntityType {
 	PLAYER = 0,
 	PLATFORM,
 	COIN,
+	BALL,
 	BUTTON
 };
 
@@ -54,6 +55,8 @@ protected:
 	EntityType type;
 
 	bool shouldDelete = false;
+	bool active = true;
+
 };
 
 #endif

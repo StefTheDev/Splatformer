@@ -1,24 +1,28 @@
 #pragma once
 #include "Utilities.h"
 
-constexpr int CATEGORY_PLATFORM			= 0b000010;
-constexpr int CATEGORY_PLAYER			= 0b000100;
-constexpr int CATEGORY_CAMERA			= 0b001000;
-constexpr int CATEGORY_SENSOR			= 0b010000;
-constexpr int CATEGORY_COIN				= 0b100000;
+constexpr int CATEGORY_PLATFORM			= 0b0000010;
+constexpr int CATEGORY_PLAYER			= 0b0000100;
 
+constexpr int CATEGORY_CAMERA			= 0b0001000;
+constexpr int CATEGORY_SENSOR			= 0b0010000;
+constexpr int CATEGORY_COIN				= 0b0100000;
+constexpr int CATEGORY_BALL				= 0b1000000;
 
-constexpr int MASK_PLATFORM_COLLIDE		= 0b000100;
-constexpr int MASK_PLATFORM_NOCOLLIDE	= 0b000000;
+constexpr int MASK_PLATFORM_COLLIDE		= 0b0100100;
+constexpr int MASK_PLATFORM_NOCOLLIDE	= 0b0000000;
 
-constexpr int MASK_PLAYER_DEFAULT		= 0b101010;
+constexpr int MASK_PLAYER_DEFAULT		= 0b1111010;
 
-constexpr int MASK_COIN_DEFAULT			= 0b000100;
+constexpr int MASK_COIN_DEFAULT			= 0b0000100;
 
-constexpr int MASK_SENSOR_PLAYER		= 0b000010;
-constexpr int MASK_SENSOR_PLATFORM		= 0b001000;
+constexpr int MASK_BALL_DEFAULT			= 0b0000110;
+constexpr int MASK_BALL_NOCOLLIDE		= 0b0000000;
 
-constexpr int MASK_CAMERA_DEFAULT		= 0b000100;
+constexpr int MASK_SENSOR_PLAYER		= 0b0000010;
+constexpr int MASK_SENSOR_PLATFORM		= 0b0001000;
+
+constexpr int MASK_CAMERA_DEFAULT		= 0b0000100;
 
 class Collider {
 public:

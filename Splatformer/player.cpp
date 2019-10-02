@@ -21,7 +21,8 @@ Player::Player(Vector2 _position, Controllers _playerNum) {
 void Player::Initialise(b2World* _world, std::shared_ptr<Sprite> _playerSprite) {
 	if (!LoadSprite(_playerSprite)) return;
 
-	GetSprite()->Add("idle", SpriteAnimation{ 0, 1, 500 }); //Index, frames, speed
+	GetSprite()->Add("idle", SpriteAnimation{ 0, 1, 500 }
+	); //Index, frames, speed
 
 	DataContainer info = {
 		ColliderType::PLR, 
@@ -37,6 +38,11 @@ void Player::Initialise(b2World* _world, std::shared_ptr<Sprite> _playerSprite) 
 	SetPosition(collider->GetPosition());
 }
 
+void Player::Render(SDL_Renderer * _renderer){
+	//if(storedBall != nullptr) storedBall->Render(_renderer);
+	Entity::Render(_renderer);
+}
+
 void Player::Update(Camera* _gameCamera) {
 	if (isDead) return;
 
@@ -45,6 +51,9 @@ void Player::Update(Camera* _gameCamera) {
 
 	} else if (!(Input::GetInstance()->IsControllerButtonHeld(playerIndex, SDL_CONTROLLER_BUTTON_A))) {
 		FinishJump();
+	}
+	if (Input::GetInstance()->IsControllerButtonPressed(playerIndex, SDL_CONTROLLER_BUTTON_B)) {
+		ThrowBall();
 	}
 
 	float stickPos = Input::GetInstance()->GetControllerAxis(playerIndex, SDL_CONTROLLER_AXIS_LEFTX);
@@ -55,16 +64,10 @@ void Player::Update(Camera* _gameCamera) {
 
 	SetPosition(collider->GetPosition() - _gameCamera->GetPosition());
 
-	//float gcX = _gameCamera->GetWidth() / 2.0f;
-	//float gcY = _gameCamera->GetHeight() / 2.0f;
-	//Vector2 gcP = _gameCamera->GetPosition() + Vector2(gcX, gcY);
+	if (storedBall != nullptr) {
+		storedBall->BindToPlayer(collider->GetPosition());
+	}
 
-	////TODO: If I can't get the camera collider working, just use this
-	//if (abs(collider->GetPosition().x - gcP.x) >= gcX || abs(collider->GetPosition().y - gcP.y) >= gcY) {
-	//	std::cout << "Player out of bounds\n";
-	//	//Kill();
-	//	//return;
-	//}
 
 	jumpedInAir = (jumpedInAir && !canJump);
 
@@ -99,6 +102,18 @@ void Player::Jump() {
 		//Increment global jump count
 		currentJumps++;
 	}
+}
+
+void Player::ThrowBall() {
+
+	//Vector2{ 960.0f, -540.0 }
+
+	if (haveBall) {
+		storedBall->ThrowBall(Vector2{collider->GetPosition().x + 55.0f, -collider->GetPosition().y }); //position);
+		storedBall = nullptr;
+		haveBall = false;
+	}
+
 }
 
 void Player::FinishJump() {
@@ -146,4 +161,13 @@ Uint32 Player::jumpTimerCallback(Uint32 interval, void* param) {
 
 int Player::GetJumps() {
 	return currentJumps;
+}
+
+void Player::GainBall(Ball* _ball) {
+	haveBall = true;
+	storedBall = _ball;
+}
+
+bool Player::GetBall() {
+	return haveBall;
 }

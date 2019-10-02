@@ -2,6 +2,7 @@
 #include "player.h"
 #include "Platform.h"
 #include "Coin.h"
+#include "Ball.h"
 #include "RespawnPlatform.h"
 
 float deltaTime = 0.0f;
@@ -20,36 +21,95 @@ void PlatformingListener::PreSolve(b2Contact* contact, const b2Manifold* oldMani
 	if (fixtureAData->type == OTHER || fixtureBData->type == OTHER) {
 		return;
 	}
+	if ((fixtureAData->type == PLR || fixtureAData->type == PLT) && (fixtureBData->type == PLR || fixtureBData->type == PLT)) {
 
-	Vector2 position;
-	float32 top, halfHeight;
-	Player* player;
-	Platform* platform;
+		Vector2 position;
+		float32 top, halfHeight;
+		Player* player;
+		Platform* platform;
 
-	if (fixtureAData->type == PLR) {
-		player = static_cast<Player*>(fixtureAData->data);
+		if (fixtureAData->type == PLR) {
+			player = static_cast<Player*>(fixtureAData->data);
 
-		platform = static_cast<Platform*>(fixtureBData->data);
-	} else {
-		player = static_cast<Player*>(fixtureBData->data);
+			platform = static_cast<Platform*>(fixtureBData->data);
+		}
+		else {
+			player = static_cast<Player*>(fixtureBData->data);
 
-		platform = static_cast<Platform*>(fixtureAData->data);
+			platform = static_cast<Platform*>(fixtureAData->data);
+		}
+
+		position = player->GetPosition();
+		halfHeight = (player->GetDimensions() * 0.5f).y;
+
+		Vector2 platPos = platform->GetPosition();
+		platPos -= (platform->GetDimensions() * 0.5f);
+
+		top = platPos.y;
+
+		//Top of platform plus player box dimension.y is lower than player box 
+		if (position.y + halfHeight > top + 0.15f) {
+			contact->SetEnabled(false);
+		}
+		else {
+			player->SetCanJump(true);
+		}
+	}else if ((fixtureAData->type == PLR || fixtureAData->type == RESPAWN) && (fixtureBData->type == PLR || fixtureBData->type == RESPAWN)) {
+
+		Vector2 position;
+		float32 top, halfHeight;
+		Player* player;
+		Platform* platform;
+
+		if (fixtureAData->type == PLR) {
+			player = static_cast<Player*>(fixtureAData->data);
+
+			platform = static_cast<RespawnPlatform*>(fixtureBData->data);
+		} else {
+			player = static_cast<Player*>(fixtureBData->data);
+
+			platform = static_cast<RespawnPlatform*>(fixtureAData->data);
+		}
+
+		position = player->GetPosition();
+		halfHeight = (player->GetDimensions() * 0.5f).y;
+
+		Vector2 platPos = platform->GetPosition();
+		platPos -= (platform->GetDimensions() * 0.5f);
+
+		top = platPos.y;
+
+		//Top of platform plus player box dimension.y is lower than player box 
+		if (!(position.y + halfHeight > top + 0.15f)) {
+			player->SetCanJump(true);
+		}
+	} else if ((fixtureAData->type == PLT || fixtureAData->type == CBALL) && (fixtureBData->type == PLT || fixtureBData->type == CBALL)) {
+
+		b2Vec2 position;
+		float32 top, halfHeight;
+		Ball* ball;
+		Platform* platform;
+
+		if (fixtureAData->type == PLT) {
+			platform = static_cast<Platform*>(fixtureAData->data);
+
+			ball = static_cast<Ball*>(fixtureBData->data);
+		}
+		else {
+			platform = static_cast<Platform*>(fixtureBData->data);
+
+			ball = static_cast<Ball*>(fixtureAData->data);
+		}
+
+		position = ball->GetPosition().AsBox2D();
+		halfHeight = (ball->GetDimensions() * 0.5f).AsBox2D().y;
+
+		b2Vec2 platPos = platform->GetPosition().AsBox2D();
+		platPos -= (platform->GetDimensions() * 0.5f).AsBox2D();
+
+		top = platPos.y;
 	}
-
-	position = player->GetPosition();
-	halfHeight = (player->GetDimensions() * 0.5f).y;
-
-	Vector2 platPos = platform->GetPosition();
-	platPos -= (platform->GetDimensions() * 0.5f);
-
-	top = platPos.y;
-
-	//Top of platform plus player box dimension.y is lower than player box 
-	if (position.y + halfHeight > (top + (platform->GetDimensions() * 0.2f).y)) {
-		contact->SetEnabled(false);
-	} else {
-		player->SetCanJump(true);
-	}
+	//std::cout << "A: " << position.y - halfHeight << " |B: "<< (top - 3.0f * b2_linearSlop) << std::endl;
 }
 
 void PlatformingListener::BeginContact(b2Contact* contact) {
@@ -91,9 +151,28 @@ void PlatformingListener::BeginContact(b2Contact* contact) {
 
 		return;
 	}
+	else if ((fixtureAData->type == PLR || fixtureAData->type == CBALL) && (fixtureBData->type == PLR || fixtureBData->type == CBALL)) {
+		b2Vec2 position;
+		float32 top, halfHeight;
+		Player* player;
+		Ball* ball;
 
-	else if ((fixtureAData->type == PLR || fixtureAData->type == RESPAWN) && (fixtureBData->type == PLR || fixtureBData->type == RESPAWN)) 
-	{
+		if (fixtureAData->type == PLR) {
+			player = static_cast<Player*>(fixtureAData->data);
+			ball = static_cast<Ball*>(fixtureBData->data);
+		}
+		else {
+			player = static_cast<Player*>(fixtureBData->data);
+			ball = static_cast<Ball*>(fixtureAData->data);
+		}
+
+		if (!ball->IsThrown()) {
+
+			ball->Collected();
+			player->GainBall(ball);
+		}
+		return;
+	} else if ((fixtureAData->type == PLR || fixtureAData->type == RESPAWN) && (fixtureBData->type == PLR || fixtureBData->type == RESPAWN)) {
 		Player* player;
 		RespawnPlatform* respawnPlatform;
 
@@ -101,24 +180,22 @@ void PlatformingListener::BeginContact(b2Contact* contact) {
 			player = static_cast<Player*>(fixtureAData->data);
 
 			respawnPlatform = static_cast<RespawnPlatform*>(fixtureBData->data);
-		}
-		else {
+		} else {
 			player = static_cast<Player*>(fixtureBData->data);
 
 			respawnPlatform = static_cast<RespawnPlatform*>(fixtureAData->data);
 		}
 
-		if ((player->GetPosition().y + player->GetDimensions().y / 2) < (respawnPlatform->GetPosition().y - respawnPlatform->GetDimensions().y / 2))
-		{
+		if ((player->GetPosition().y + player->GetDimensions().y / 2) < (respawnPlatform->GetPosition().y - respawnPlatform->GetDimensions().y / 2)) {
 			respawnPlatform->Activate();
 		}
 		//std::cout << "CONTACT: " << contact->IsEnabled();
-		
+
 
 		return;
 	}
 
-	std::cout << "Contact ended\n";
+	std::cout << "Contact Begun\n";
 }
 
 void PlatformingListener::EndContact(b2Contact* contact) {
@@ -158,6 +235,27 @@ void PlatformingListener::EndContact(b2Contact* contact) {
 		return;
 	}
 #pragma endregion
+
+	if ((fixtureAData->type == PLR || fixtureAData->type == RESPAWN) && (fixtureBData->type == PLR || fixtureBData->type == RESPAWN)) {
+
+		b2Vec2 position;
+		float32 top, halfHeight;
+		Player* player;
+		Platform* platform;
+
+		if (fixtureAData->type == PLR) {
+			player = static_cast<Player*>(fixtureAData->data);
+
+			platform = static_cast<RespawnPlatform*>(fixtureBData->data);
+		} else {
+			player = static_cast<Player*>(fixtureBData->data);
+
+			platform = static_cast<RespawnPlatform*>(fixtureAData->data);
+		}
+
+		player->SetCanJump(false);
+		return;
+	}
 
 #pragma region Player/Camera De-Collisions
 	else if ((fixtureAData->type == PLR || fixtureAData->type == CAM) && (fixtureBData->type == PLR || fixtureBData->type == CAM)) {
