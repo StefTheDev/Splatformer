@@ -105,6 +105,9 @@
     <ClCompile Include="UIButton.cpp">
       <Filter>Source Files\Objects\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Lobby.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -157,6 +160,9 @@
     </ClInclude>
     <ClInclude Include="UIButton.h">
       <Filter>Header Files\Objects\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Lobby.h">
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

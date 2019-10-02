@@ -150,6 +150,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="JumpPlatform.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
+    <ClCompile Include="Lobby.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="scene.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="JumpPlatform.h" />
     <ClInclude Include="LevelLoader.h" />
+    <ClInclude Include="Lobby.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="scene.h" />
