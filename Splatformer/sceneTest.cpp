@@ -155,12 +155,34 @@ void SceneTest::ControllerCheck()
 void SceneTest::ProcessRespawn()
 {
 	bool needToRespawn = true;
-	for (auto it = players.begin(); it != players.end(); it++)
+	
+	// find if a new platform has been activated
+	for (auto it = respawnPoints.begin(); it != respawnPoints.end(); it++)
 	{
-		if ((*it)->CheckIsAlive())
+		if ((*it)->GetActive())
 		{
-			needToRespawn = false;
-			break;
+			furthestPlatform = (*it);
+		}
+		else break;
+	}
+
+	// a new RespawnPlatform has been activated
+	if (furthestPlatform->respawnNumber > latestRespawn)
+	{
+		latestRespawn = furthestPlatform->respawnNumber;
+	}
+	// have NOT reached a new checkpoint yet
+	else 
+	{
+		// check if all players are dead
+		for (auto it = players.begin(); it != players.end(); it++)
+		{
+			// if any player is alive
+			if ((*it)->CheckIsAlive())
+			{
+				needToRespawn = false;
+				break;
+			}
 		}
 	}
 
@@ -172,17 +194,17 @@ void SceneTest::ProcessRespawn()
 
 void SceneTest::RespawnPlayers()
 {
-	RespawnPlatform* furthestPlatform = nullptr;
+	//RespawnPlatform* furthestPlatform = nullptr;
 
-	// find which respawnPlatform to respawn on
-	for (auto it = respawnPoints.begin(); it != respawnPoints.end(); it++)
-	{
-		if ((*it)->GetActive())
-		{
-			furthestPlatform = (*it);
-		}
-		else break;
-	}
+	//// find which respawnPlatform to respawn on
+	//for (auto it = respawnPoints.begin(); it != respawnPoints.end(); it++)
+	//{
+	//	if ((*it)->GetActive())
+	//	{
+	//		furthestPlatform = (*it);
+	//	}
+	//	else break;
+	//}
 
 	if (furthestPlatform != nullptr)
 	{
