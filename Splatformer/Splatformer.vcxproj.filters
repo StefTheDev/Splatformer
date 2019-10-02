@@ -37,17 +37,35 @@
     <Filter Include="Header Files\Objects">
       <UniqueIdentifier>{f8dee286-1846-45cc-abd4-f558ec4aa1af}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Objects\Platforms">
+    <Filter Include="Header Files\Entities">
+      <UniqueIdentifier>{b2355f70-b038-4bd2-bc5e-bb37cc505775}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities">
+      <UniqueIdentifier>{5b5360b3-6969-438d-83e9-69296a89f060}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\Platforms">
       <UniqueIdentifier>{5bd46a9d-0f30-4c1a-99c9-638179f6a20b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Objects\Platforms">
+    <Filter Include="Source Files\Entities\Platforms">
       <UniqueIdentifier>{a58a97f7-272b-4c0a-8f41-45dcc6d5b812}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Objects\UI">
-      <UniqueIdentifier>{b8a7936c-8f3c-477c-a8c8-e453397eb5e9}</UniqueIdentifier>
+    <Filter Include="Source Files\Entities\UI">
+      <UniqueIdentifier>{c264325a-f1b8-422a-b98d-58577f851702}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Objects\UI">
-      <UniqueIdentifier>{0c503674-88b7-48fc-98ea-ed88bbe64b2f}</UniqueIdentifier>
+    <Filter Include="Header Files\Entities\UI">
+      <UniqueIdentifier>{53dd116b-30c2-41ae-a1af-95ddb55bd6b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Loaders">
+      <UniqueIdentifier>{25e833b6-098a-4d2d-8666-c1987c46d28c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Loaders">
+      <UniqueIdentifier>{357fa7bd-fb7b-4d20-9c30-4bf879e66123}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\Collectables">
+      <UniqueIdentifier>{6c85587d-f1fc-41d6-9f9e-d04ac3dcb06c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Collectables">
+      <UniqueIdentifier>{ec743850-8d1f-475f-8e46-6c0c6f07635e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -60,6 +78,12 @@
     <ClCompile Include="Vector2.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
     <ClCompile Include="scene.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
@@ -69,53 +93,47 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>Source Files\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="LevelLoader.cpp">
-      <Filter>Source Files\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="Utilities.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="Platform.cpp">
-      <Filter>Source Files\Objects\Platforms</Filter>
+      <Filter>Source Files\Entities\Platforms</Filter>
     </ClCompile>
     <ClCompile Include="TimePlatform.cpp">
-      <Filter>Source Files\Objects\Platforms</Filter>
+      <Filter>Source Files\Entities\Platforms</Filter>
     </ClCompile>
-    <ClCompile Include="JumpPlatform.cpp">
-      <Filter>Source Files\Objects\Platforms</Filter>
+    <ClCompile Include="player.cpp">
+      <Filter>Source Files\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="RespawnPlatform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Coin.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Ball.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SoundManager.cpp">
-      <Filter>Source Files\Managers</Filter>
+    <ClCompile Include="LevelLoader.cpp">
+      <Filter>Source Files\Loaders</Filter>
     </ClCompile>
     <ClCompile Include="sceneTest.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>Source Files\Utilities</Filter>
+    <ClCompile Include="JumpPlatform.cpp">
+      <Filter>Source Files\Entities\Platforms</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Source Files\Utilities</Filter>
+    <ClCompile Include="Ball.cpp">
+      <Filter>Source Files\Entities\Collectables</Filter>
     </ClCompile>
-    <ClCompile Include="UIButton.cpp">
-      <Filter>Source Files\Objects\UI</Filter>
+    <ClCompile Include="Coin.cpp">
+      <Filter>Source Files\Entities\Collectables</Filter>
     </ClCompile>
     <ClCompile Include="Lobby.cpp">
       <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="RespawnPlatform.cpp">
+      <Filter>Source Files\Entities\Platforms</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="UIButton.cpp">
+      <Filter>Source Files\Entities\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +142,12 @@
     </ClInclude>
     <ClInclude Include="Vector2.h">
       <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Utilities.h">
       <Filter>Header Files\Utilities</Filter>
@@ -140,47 +164,41 @@
     <ClInclude Include="Camera.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="player.h">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelLoader.h">
-      <Filter>Header Files\Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="Platform.h">
-      <Filter>Header Files\Objects\Platforms</Filter>
+      <Filter>Header Files\Entities\Platforms</Filter>
     </ClInclude>
     <ClInclude Include="JumpPlatform.h">
-      <Filter>Header Files\Objects\Platforms</Filter>
+      <Filter>Header Files\Entities\Platforms</Filter>
     </ClInclude>
     <ClInclude Include="TimePlatform.h">
-      <Filter>Header Files\Objects\Platforms</Filter>
+      <Filter>Header Files\Entities\Platforms</Filter>
     </ClInclude>
-    <ClInclude Include="RespawnPlatform.h">
-      <Filter>Header Files\Objects\Platforms</Filter>
+    <ClInclude Include="player.h">
+      <Filter>Header Files\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="Coin.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Ball.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SoundManager.h">
-      <Filter>Header Files\Managers</Filter>
+    <ClInclude Include="LevelLoader.h">
+      <Filter>Header Files\Loaders</Filter>
     </ClInclude>
     <ClInclude Include="sceneTest.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>Header Files\Utilities</Filter>
+    <ClInclude Include="Ball.h">
+      <Filter>Header Files\Entities\Collectables</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Header Files\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="UIButton.h">
-      <Filter>Header Files\Objects\UI</Filter>
+    <ClInclude Include="Coin.h">
+      <Filter>Header Files\Entities\Collectables</Filter>
     </ClInclude>
     <ClInclude Include="Lobby.h">
       <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="UIButton.h">
+      <Filter>Header Files\Entities\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="RespawnPlatform.h">
+      <Filter>Header Files\Entities\Platforms</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
