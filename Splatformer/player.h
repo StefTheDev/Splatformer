@@ -25,10 +25,15 @@ public:
 
 	void SetCanJump(bool newCanJump);
 
-	Uint32 jumpTimerCallback(Uint32 interval, void* param);
+	void Kill();
+	void Respawn(Vector2 respawnPosition);
+
+	bool CheckIsAlive() { return !isDead; }
 
 	static int GetJumps();
 private:
+	Uint32 jumpTimerCallback(Uint32 interval, void* param);
+
 	Controllers playerIndex;
 
 	std::unique_ptr<Collider> collider;
@@ -37,6 +42,8 @@ private:
 
 	float width = 50.0f;
 	float height = 50.0f;
+
+	bool isDead = false;
 
 	//Jumping variables
 	bool canJump = false;

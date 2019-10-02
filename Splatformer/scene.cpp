@@ -36,6 +36,7 @@ void Scene::RenderScene(SDL_Renderer* _gameRenderer) {
 		case PLATFORM: static_cast<Platform*>(entity.get())->Render(_gameRenderer); break;
 		case COIN: static_cast<Coin*>(entity.get())->Render(_gameRenderer); break;
 		case BALL: static_cast<Ball*>(entity.get())->Render(_gameRenderer); break;
+		case BUTTON: static_cast<UIButton*>(entity.get())->Render(_gameRenderer); break;
 		}
 	}
 
@@ -43,6 +44,15 @@ void Scene::RenderScene(SDL_Renderer* _gameRenderer) {
 }
 
 void Scene::HandleEvents(SDL_Event _sdlEvent) {
+	for (auto& entity : objects) {
+		switch (entity->GetType()) {
+			case PLAYER: static_cast<Player*>(entity.get())->Listen(_sdlEvent); break;
+			case PLATFORM: static_cast<Platform*>(entity.get())->Listen(_sdlEvent); break;
+			case BUTTON: static_cast<UIButton*>(entity.get())->Listen(_sdlEvent); break;
+		}
+	}
+
+
 	switch (_sdlEvent.type) {
 	case SDL_CONTROLLERBUTTONDOWN: {
 		ButtonDown(_sdlEvent.cbutton.which, _sdlEvent.cbutton.button);

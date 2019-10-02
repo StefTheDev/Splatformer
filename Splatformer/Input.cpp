@@ -15,21 +15,21 @@ void Input::Destroy() {
 
 bool Input::IsControllerButtonPressed(Controllers _controllerID, SDL_GameControllerButton _button)
 {
-	if (_controllerID < 0 || _controllerID > numGamepads) return false;
+	if (_controllerID < 0 || _controllerID >= numGamepads) return false;
 
 	return controllerInputs[_controllerID].buttons[_button] && !lastControllerInputs[_controllerID].buttons[_button];
 }
 
 bool Input::IsControllerButtonHeld(Controllers _controllerID, SDL_GameControllerButton _button)
 {
-	if (_controllerID < 0 || _controllerID > numGamepads) return false;
+	if (_controllerID < 0 || _controllerID >= numGamepads) return false;
 
 	return controllerInputs[_controllerID].buttons[_button] && lastControllerInputs[_controllerID].buttons[_button];
 }
 
 float Input::GetControllerAxis(Controllers _controllerID, SDL_GameControllerAxis _axis)
 {
-	if (_controllerID < 0 || _controllerID > numGamepads) return 0.0;
+	if (_controllerID < 0 || _controllerID >= numGamepads) return 0.0;
 
 	return controllerInputs[_controllerID].axis[_axis] / 32768.0f;
 }
@@ -124,7 +124,7 @@ void Input::HandleEvents(SDL_Event _event)
 			if (_event.cbutton.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(connectedControllers[i]))) {
 				// So the relevant state can be updated
 				controllerInputs[i].buttons[_event.cbutton.button] = true;
-				std::cout << "BUTTON DOWN" << std::endl;
+				//std::cout << "BUTTON DOWN" << std::endl;
 			}
 		}
 		break;
@@ -134,7 +134,7 @@ void Input::HandleEvents(SDL_Event _event)
 		for (int i = 0; i < numGamepads; i++) {
 			if (_event.cbutton.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(connectedControllers[i]))) {
 				controllerInputs[i].buttons[_event.cbutton.button] = false;
-				std::cout << "BUTTON UP" << std::endl;
+				//std::cout << "BUTTON UP" << std::endl;
 			}
 		}
 		break;
@@ -144,7 +144,6 @@ void Input::HandleEvents(SDL_Event _event)
 		for (int i = 0; i < numGamepads; i++) {
 			if (_event.cbutton.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(connectedControllers[i]))) {
 				controllerInputs[i].axis[_event.caxis.axis] = _event.caxis.value;
-				std::cout << "AXIS" << std::endl;
 			}
 		}
 		break;

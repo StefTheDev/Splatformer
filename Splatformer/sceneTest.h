@@ -5,6 +5,8 @@
 #include "Platform.h"
 #include "Coin.h"
 #include "Ball.h"
+#include "RespawnPlatform.h"
+#include "UIButton.h"
 
 class SceneTest : public Scene {
 public:
@@ -12,6 +14,8 @@ public:
 
 	void Update() override;
 	void Render(SDL_Renderer* gameRenderer) override;
+
+	bool IsPaused() const;
 
 private:
 	void Load(SDL_Renderer* _gameRenderer) override;
@@ -22,17 +26,23 @@ private:
 	void RightTrigger(SDL_JoystickID gamepadID, float axisValue) override;
 	void LeftTrigger(SDL_JoystickID gamepadID, float axisValue) override;
 	void ControllerAdded(int deviceIndex) override;
+	void ControllerRemapped(SDL_JoystickID gamePad) override;
 
 	//std::map<SDL_JoystickID, Player> players;
 	std::unique_ptr<b2World> sceneWorld;
 	PlatformingListener* contactListener;
 
-	std::shared_ptr<Sprite> playerSprite;
-	std::shared_ptr<Sprite> platformSprite;
-	std::shared_ptr<Sprite> coinSprite;
-	std::shared_ptr<Sprite> ballSprite;
+	std::shared_ptr<Sprite> playerSprite, platformSprite, buttonSprite, coinSprite, ballSprite;
 
 	std::vector<SDL_GameController*> controllers;
 
 	float timeElapsed;
+	bool paused = false;
+
+	std::vector<RespawnPlatform*> respawnPoints;
+
+	std::vector<Player*> players;
+	// check if players need to be respawned
+	void ProcessRespawn();
+	void RespawnPlayers();
 };

@@ -12,12 +12,15 @@
 #include <memory>
 #include <iostream>
 #include <string>
+#include <functional>
 #include <vector>
+#include <algorithm>
 
 //Dependency Includes
 #include <SDL.h>
 #include <SDL_image.h>
 #include <stdio.h>
+#include <SDL_ttf.h>
 #include <Box2D/Box2D.h>
 
 //Local Includes
@@ -48,6 +51,8 @@ using b2BodyPtr = std::unique_ptr<b2Body, b2BodyDeleter>;
 enum ColliderType {
 	PLR = 0,
 	PLT,
+	CAM,
+	RESPAWN,
 	ECOIN,
 	CBALL,
 	OTHER

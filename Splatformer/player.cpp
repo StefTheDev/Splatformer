@@ -1,4 +1,5 @@
 #include "player.h"
+#include "SoundManager.h"
 
 int Player::currentJumps = 0;
 
@@ -43,6 +44,8 @@ void Player::Render(SDL_Renderer * _renderer){
 }
 
 void Player::Update(Camera* _gameCamera) {
+	if (isDead) return;
+
 	if (Input::GetInstance()->IsControllerButtonPressed(playerIndex, SDL_CONTROLLER_BUTTON_A)) {
 		Jump();
 
@@ -64,6 +67,7 @@ void Player::Update(Camera* _gameCamera) {
 	if (storedBall != nullptr) {
 		storedBall->BindToPlayer(collider->GetPosition());
 	}
+
 
 	jumpedInAir = (jumpedInAir && !canJump);
 
@@ -89,9 +93,11 @@ void Player::Jump() {
 			jumpedInAir = true;
 			collider->body->SetLinearVelocity({ collider->body->GetLinearVelocity().x, airJumpForce });
 			jumpTimer = SDL_AddTimer(maxAirJumpTime, resetGravScale, static_cast<void*>(collider->body.get()));
+			SoundManager::PlaySound("Jump");
 		}else{
 			collider->body->SetLinearVelocity({ collider->body->GetLinearVelocity().x, jumpForce });
 			jumpTimer = SDL_AddTimer(maxJumpTime, resetGravScale, static_cast<void*>(collider->body.get()));
+			SoundManager::PlaySound("Jump");
 		}
 		//Increment global jump count
 		currentJumps++;
@@ -129,6 +135,22 @@ void Player::MoveHorizontal(float _scale) {
 
 void Player::SetCanJump(bool _newCanJump) {
 	canJump = _newCanJump;
+}
+
+void Player::Kill() {
+	isDead = true;
+
+	SDL_RemoveTimer(jumpTimer);
+	collider->body->SetGravityScale(0.0f);
+
+	std::cout << "Player Am Dead\n";
+}
+
+void Player::Respawn(Vector2 _respawnPosition) {
+	isDead = false;
+
+	collider->body->SetGravityScale(1.0f);
+	collider->body->SetTransform((_respawnPosition).AsBox2D(), 0.0f);
 }
 
 Uint32 Player::jumpTimerCallback(Uint32 interval, void* param) {

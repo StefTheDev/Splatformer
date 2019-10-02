@@ -22,32 +22,32 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{B8AC1D27-3D9D-442E-9469-5135D264F8FB}</ProjectGuid>
     <RootNamespace>Splatformer</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -70,20 +70,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)\Dependencies\SDL\include;$(ProjectDir)\Dependencies\;$(ProjectDir)\Dependencies\Box2D;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\Dependencies\SDL\lib;$(ProjectDir)\Dependencies\;$(ProjectDir)\Dependencies\Box2D;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\Dependencies\SDL\include;$(ProjectDir)\Dependencies\;$(ProjectDir)\Dependencies\Box2D;$(ProjectDir)\Dependencies\fmod;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\Dependencies\SDL\lib;$(ProjectDir)\Dependencies\;$(ProjectDir)\Dependencies\Box2D;$(ProjectDir)\Dependencies\fmod;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(ProjectDir)\Dependencies\SDL\include;$(ProjectDir)\Dependencies\;$(ProjectDir)\Dependencies\Box2D;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\Dependencies\SDL\lib;$(ProjectDir)\Dependencies\;$(ProjectDir)\Dependencies\Box2D;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\Dependencies\SDL\include;$(ProjectDir)\Dependencies\;$(ProjectDir)\Dependencies\Box2D;$(ProjectDir)\Dependencies\fmod;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\Dependencies\SDL\lib;$(ProjectDir)\Dependencies\;$(ProjectDir)\Dependencies\Box2D;$(ProjectDir)\Dependencies\fmod;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)\Dependencies\SDL\include;$(ProjectDir)\Dependencies\;$(ProjectDir)\Dependencies\Box2D;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\Dependencies\SDL\lib;$(ProjectDir)\Dependencies\;$(ProjectDir)\Dependencies\Box2D;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\Dependencies\SDL\include;$(ProjectDir)\Dependencies\;$(ProjectDir)\Dependencies\Box2D;$(ProjectDir)\Dependencies\fmod;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\Dependencies\SDL\lib;$(ProjectDir)\Dependencies\;$(ProjectDir)\Dependencies\Box2D;$(ProjectDir)\Dependencies\fmod;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)\Dependencies\SDL\include;$(ProjectDir)\Dependencies\;$(ProjectDir)\Dependencies\Box2D;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\Dependencies\SDL\lib;$(ProjectDir)\Dependencies\;$(ProjectDir)\Dependencies\Box2D;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\Dependencies\SDL\include;$(ProjectDir)\Dependencies\;$(ProjectDir)\Dependencies\Box2D;$(ProjectDir)\Dependencies\fmod;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\Dependencies\SDL\lib;$(ProjectDir)\Dependencies\;$(ProjectDir)\Dependencies\Box2D;$(ProjectDir)\Dependencies\fmod;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -93,7 +93,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;Box2D_Debug.lib;Box2D_Release.lib;fmod64_vc.lib;fmodL64_vc.lib</AdditionalDependencies>
       <SubSystem>NotSet</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -105,7 +105,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;Box2D_Debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;Box2D_Debug.lib;Box2D_Release.lib;fmod64_vc.lib;fmodL64_vc.lib</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -121,7 +121,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;Box2D_Debug.lib;Box2D_Release.lib;fmod64_vc.lib;fmodL64_vc.lib</AdditionalDependencies>
       <SubSystem>NotSet</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -138,7 +138,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;Box2D_Release.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;Box2D_Debug.lib;Box2D_Release.lib;fmod64_vc.lib;fmodL64_vc.lib</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -152,14 +152,17 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="JumpPlatform.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
+    <ClCompile Include="Lobby.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="player.cpp" />
-    <ClCompile Include="Jumper.cpp" />
+    <ClCompile Include="RespawnPlatform.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="sceneTest.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TimePlatform.cpp" />
+    <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
@@ -173,13 +176,17 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="JumpPlatform.h" />
     <ClInclude Include="LevelLoader.h" />
+    <ClInclude Include="Lobby.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="Jumper.h" />
+    <ClInclude Include="RespawnPlatform.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="sceneTest.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TimePlatform.h" />
+    <ClInclude Include="UIButton.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Vector2.h" />
   </ItemGroup>

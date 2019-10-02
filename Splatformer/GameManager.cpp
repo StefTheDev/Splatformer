@@ -1,5 +1,5 @@
 #include "GameManager.h"
-#include "Jumper.h"
+#include "SoundManager.h"
 
 GameManager::GameManager()
 {
@@ -31,6 +31,8 @@ bool GameManager::Initialise(std::string _title)
 
 		timeCurrentFrame = SDL_GetPerformanceCounter();
 
+		if (TTF_Init() == -1) return false;
+
 		gameState = MENU;
 
 		Input::GetInstance();
@@ -39,8 +41,9 @@ bool GameManager::Initialise(std::string _title)
 		testScene.LoadScene(renderer);
 	}
 
-	jumper = std::make_unique<Jumper>();
-	if (!jumper->Initialise(renderer)) return false;
+
+	SoundManager::Initialise();
+	SoundManager::LoadSounds("Resources/Sounds");
 
 	return true;
 }
@@ -51,7 +54,6 @@ void GameManager::Render()
 
 	//Render things...
 	testScene.RenderScene(renderer);
-	jumper->Render(renderer);
 
 	SDL_RenderPresent(renderer);
 }
@@ -75,13 +77,15 @@ void GameManager::HandleEvents()
 
 void GameManager::Process()
 {
+	SoundManager::Update();
+
+
 	timeLastFrame = timeCurrentFrame;
 	timeCurrentFrame = SDL_GetPerformanceCounter();
 
 	deltaTime = (float)((timeCurrentFrame - timeLastFrame) / (float)SDL_GetPerformanceFrequency());
 
 	testScene.UpdateScene();
-	jumper->Update();
 	//std::cout << "A is held: " << inputManager.IsControllerButtonHeld(PLAYER1, SDL_CONTROLLER_BUTTON_A) << std::endl;
 	// call this last
 	Input::GetInstance()->Process();
@@ -89,6 +93,8 @@ void GameManager::Process()
 
 void GameManager::Clean()
 {
+	SoundManager::ReleaseAll();
+
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
@@ -97,6 +103,11 @@ void GameManager::Clean()
 GameState GameManager::GetState()
 {
 	return gameState;
+}
+
+bool GameManager::IsPaused() const
+{
+	return testScene.IsPaused();
 }
 
 SDL_Window * GameManager::GetWindow()

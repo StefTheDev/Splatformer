@@ -3,7 +3,6 @@
 #include "Utilities.h"
 
 #include "sceneTest.h"
-class Jumper;
 
 enum GameState
 {
@@ -37,6 +36,8 @@ public:
 
 	GameState GetState();
 
+	bool IsPaused() const;
+
 private:
 	SDL_Window * window;
 	SDL_Renderer * renderer;
@@ -50,5 +51,4 @@ private:
 	//Input inputManager;
 
 	SceneTest testScene;
-	std::unique_ptr<Jumper> jumper;
 };
