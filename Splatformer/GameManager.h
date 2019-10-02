@@ -3,6 +3,7 @@
 #include "Utilities.h"
 
 #include "sceneTest.h"
+#include "MenuScene.h"
 
 enum GameState
 {
@@ -10,9 +11,6 @@ enum GameState
 	INGAME,
 	EXIT
 };
-
-const int WINDOW_WIDTH = 1920;
-const int WINDOW_HEIGHT = 1080;
 
 const int FPS = 60;
 const int FRAME_DELAY = 1000 / FPS;
@@ -51,4 +49,5 @@ private:
 	//Input inputManager;
 
 	SceneTest testScene;
+	MenuScene menuScene;
 };

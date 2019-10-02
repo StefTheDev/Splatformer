@@ -11,7 +11,8 @@ enum EntityType {
 	PLATFORM,
 	COIN,
 	BALL,
-	BUTTON
+	BUTTON,
+	TEXT
 };
 
 class Entity
@@ -27,7 +28,7 @@ public:
 	void Update();
 
 	//Sprite
-	bool LoadSprite(std::shared_ptr<Sprite> _sprite);
+	virtual bool LoadSprite(std::shared_ptr<Sprite> _sprite);
 	std::shared_ptr<Sprite> GetSprite();
 
 	//Manipulation
