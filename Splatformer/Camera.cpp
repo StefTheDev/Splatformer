@@ -41,8 +41,11 @@ void Camera::Update() {
 
 		position += direction * (moveSpeed * deltaTime * scale);
 
-		collider->body->SetTransform((Vector2(position.x, -position.y) + Vector2(width / 2.0f, height / -2.0f)).AsBox2D(), 0.0f);
+		//collider->body->SetTransform((Vector2(position.x, -position.y) + Vector2(width / 2.0f, height / -2.0f)).AsBox2D(), 0.0f);
 	}
+
+	// Always update the collider
+	collider->body->SetTransform((Vector2(position.x, -position.y) + Vector2(width / 2.0f, height / -2.0f)).AsBox2D(), 0.0f);
 }
 
 void Camera::SetPosition(Vector2 _newPosition) {

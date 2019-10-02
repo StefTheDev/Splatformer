@@ -13,10 +13,15 @@ public:
 	void FinishJump();
 	void MoveHorizontal(float scale);
 
+	void addCoin();
+	int getCoins();
+
 	void SetCanJump(bool newCanJump);
 
 	void Kill();
 	void Respawn(Vector2 respawnPosition);
+
+	bool CheckIsAlive() { return !isDead; }
 
 	static int GetJumps();
 private:
@@ -49,4 +54,6 @@ private:
 	SDL_TimerID jumpTimer;
 
 	static int currentJumps;
+
+	int coinsCollected = 0;
 };

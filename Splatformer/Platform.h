@@ -11,11 +11,13 @@ class Platform : public Entity {
 public:
 	Platform(TileInfo info);
 
-	void Initialise(b2World* world, std::shared_ptr<Sprite> platformSprite);
+	virtual void Initialise(b2World* world, std::shared_ptr<Sprite> platformSprite);
 	virtual void Update(Camera* gameCamera, float _sceneTime);
 
 	void SetCanCollide(bool canCollide);
 	bool CanCollide();
+
+	Collider* GetCollider() { return collider.get(); }
 
 protected:
 	TileInfo thisInfo;

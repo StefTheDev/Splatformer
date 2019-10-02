@@ -37,6 +37,6 @@ private:
 	std::vector<SDL_GameController*> connectedControllers;
 	std::vector<GamePad> controllerInputs;
 	std::vector<GamePad> lastControllerInputs;
-	int numGamepads;
+	int numGamepads = 0;
 };
 
