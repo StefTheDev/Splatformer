@@ -6,6 +6,8 @@
 #include "Coin.h"
 #include "Ball.h"
 #include "RespawnPlatform.h"
+
+//UI Entities
 #include "UIButton.h"
 
 class SceneTest : public Scene {
@@ -51,4 +53,6 @@ private:
 	// check if players need to be respawned
 	void ProcessRespawn();
 	void RespawnPlayers();
+
+	bool gameOver = false;
 };

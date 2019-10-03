@@ -51,4 +51,6 @@ private:
 	// check if players need to be respawned
 	void ProcessRespawn();
 	void RespawnPlayers();
+
+	bool gameOver = false;
 };

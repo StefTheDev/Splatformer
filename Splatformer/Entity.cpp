@@ -48,7 +48,6 @@ void Entity::Update()
 
 		source.y = sprite->GetIndex() * source.h;
 	}
-
 	destination.x = static_cast<int>(position.x);
 	destination.y = static_cast<int>(position.y);
 	destination.w = dimension.x * static_cast<int>(scale);
