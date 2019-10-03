@@ -38,7 +38,7 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 	
 	std::unique_ptr<UIButton> button = std::make_unique<UIButton>();
 	button->LoadSprite(buttonSprite);
-	button->Initialise(Vector2(10.0f, 10.0f), "<- Menu", _gameRenderer, [this] {
+	button->Initialise(Vector2(10.0f, 10.0f), "Menu", 32, _gameRenderer, [this] {
 		SDL_Delay(75);
 	});
 

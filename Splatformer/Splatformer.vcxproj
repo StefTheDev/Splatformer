@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{B8AC1D27-3D9D-442E-9469-5135D264F8FB}</ProjectGuid>
     <RootNamespace>Splatformer</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -41,13 +41,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -153,6 +153,7 @@
     <ClCompile Include="JumpPlatform.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="Lobby.cpp" />
+    <ClCompile Include="MenuScene.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="RespawnPlatform.cpp" />
@@ -163,6 +164,7 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TimePlatform.cpp" />
     <ClCompile Include="UIButton.cpp" />
+    <ClCompile Include="UIText.cpp" />
     <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
@@ -177,9 +179,9 @@
     <ClInclude Include="JumpPlatform.h" />
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="Lobby.h" />
+    <ClInclude Include="MenuScene.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="player.h" />
-    <ClInclude Include="Jumper.h" />
     <ClInclude Include="RespawnPlatform.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="sceneTest.h" />
@@ -187,6 +189,7 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TimePlatform.h" />
     <ClInclude Include="UIButton.h" />
+    <ClInclude Include="UIText.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Vector2.h" />
   </ItemGroup>
