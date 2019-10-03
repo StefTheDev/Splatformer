@@ -4,6 +4,7 @@
 
 #include "sceneTest.h"
 #include "MenuScene.h"
+#include "Lobby.h"
 
 enum GameState
 {
@@ -50,4 +51,5 @@ private:
 
 	SceneTest testScene;
 	MenuScene menuScene;
+	Lobby lobbyScene;
 };
