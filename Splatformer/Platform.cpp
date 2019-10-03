@@ -13,7 +13,8 @@ Platform::Platform(TileInfo _info) {
 }
 
 void Platform::Initialise(b2World* _world, std::shared_ptr<Sprite> _platformSprite) {
-	if (!LoadSprite(_platformSprite)) return;
+	std::cout << "Platform Init Called\n";
+	if (!LoadSprite(_platformSprite)) std::cout << "ERROR: Couldn't load sprite\n";
 
 	GetSprite()->Add("idle", SpriteAnimation{ 0, 1, 500 }); //Index, frames, speed
 

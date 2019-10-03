@@ -2,17 +2,16 @@
 
 #include "Utilities.h"
 
-#include "sceneTest.h"
+class MenuScene;
+class GameScene;
+class Scene;
 
 enum GameState
 {
-	MENU,
+	MENU = 0,
 	INGAME,
 	EXIT
 };
-
-const int WINDOW_WIDTH = 1920;
-const int WINDOW_HEIGHT = 1080;
 
 const int FPS = 60;
 const int FRAME_DELAY = 1000 / FPS;
@@ -29,6 +28,7 @@ public:
 	void HandleEvents();
 	void Process();
 	void Clean();
+	void Switch(GameState gameState);
 
 	SDL_Window * GetWindow();
 	SDL_Renderer* GetRenderer();
@@ -36,19 +36,20 @@ public:
 
 	GameState GetState();
 
-	bool IsPaused() const;
+	static GameManager* GetInstance();
 
 private:
 	SDL_Window * window;
 	SDL_Renderer * renderer;
 	SDL_Surface * surface;
 
-	GameState gameState;
+	GameState gameState = MENU;
 
 	Uint64 timeCurrentFrame = 0;
 	Uint64 timeLastFrame = 0;
 
 	//Input inputManager;
+	std::vector<std::unique_ptr<Scene>> scenes;
 
-	SceneTest testScene;
+	static GameManager* gameManager;
 };

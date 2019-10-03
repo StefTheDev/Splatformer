@@ -42,6 +42,8 @@ constexpr float PLAYER_HEIGHT = 50.0f;
 
 //Time since last frame in seconds
 extern float deltaTime;
+extern int WINDOW_WIDTH;
+extern int WINDOW_HEIGHT;
 
 struct b2BodyDeleter {
 	void operator()(b2Body* _body) const {

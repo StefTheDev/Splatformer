@@ -4,6 +4,8 @@
 #include "Platform.h"
 #include "Coin.h"
 #include "Ball.h"
+#include "UIText.h"
+#include "UIButton.h"
 
 //Map a value, x, that exists between lower and upper, to a value between min and max
 float MapBetween(float x, float lower, float upper, float min, float max) {
@@ -12,12 +14,15 @@ float MapBetween(float x, float lower, float upper, float min, float max) {
 
 void Scene::LoadScene(SDL_Renderer* _gameRenderer) {
 	//Do something each time any scene is loaded
+	if (!objects.empty()) objects.clear();
 	Load(_gameRenderer);
+	loaded = true;
 }
 
-void Scene::UnloadScene() {
+void Scene::UnloadScene()
+{
 	//Do something each time any scene is unloaded
-	if (GetCamera() == nullptr) return;
+	if (!objects.empty()) objects.clear();
 	camera.SetPosition({ 0.0f, 0.0f });
 	Unload();
 }
@@ -33,11 +38,12 @@ void Scene::UpdateScene() {
 void Scene::RenderScene(SDL_Renderer* _gameRenderer) {
 	for (auto& entity : objects) {
 		switch (entity->GetType()) {
-		case PLAYER: static_cast<Player*>(entity.get())->Render(_gameRenderer); break;
-		case PLATFORM: static_cast<Platform*>(entity.get())->Render(_gameRenderer); break;
-		case COIN: static_cast<Coin*>(entity.get())->Render(_gameRenderer); break;
-		case BALL: static_cast<Ball*>(entity.get())->Render(_gameRenderer); break;
-		case BUTTON: static_cast<UIButton*>(entity.get())->Render(_gameRenderer); break;
+			case PLAYER: static_cast<Player*>(entity.get())->Render(_gameRenderer); break;
+			case PLATFORM: static_cast<Platform*>(entity.get())->Render(_gameRenderer); break;
+			case COIN: static_cast<Coin*>(entity.get())->Render(_gameRenderer); break;
+			case BALL: static_cast<Ball*>(entity.get())->Render(_gameRenderer); break;
+			case BUTTON: static_cast<UIButton*>(entity.get())->Render(_gameRenderer); break;
+			case TEXT: static_cast<UIText*>(entity.get())->Render(_gameRenderer); break;
 		}
 	}
 

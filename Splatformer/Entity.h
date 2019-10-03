@@ -11,7 +11,8 @@ enum EntityType {
 	PLATFORM,
 	COIN,
 	BALL,
-	BUTTON
+	BUTTON,
+	TEXT
 };
 
 class Entity

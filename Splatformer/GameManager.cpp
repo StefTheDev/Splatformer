@@ -1,6 +1,12 @@
 #include "GameManager.h"
 #include "SoundManager.h"
 
+#include "MenuScene.h"
+#include "GameScene.h"
+
+
+GameManager* GameManager::gameManager = nullptr;
+
 GameManager::GameManager()
 {
 
@@ -33,17 +39,20 @@ bool GameManager::Initialise(std::string _title)
 
 		if (TTF_Init() == -1) return false;
 
-		gameState = MENU;
+		scenes.push_back(std::make_unique<MenuScene>());
+		scenes.push_back(std::make_unique<GameScene>());
+
+		scenes[MENU]->LoadScene(renderer);
 
 		Input::GetInstance();
 		Input::GetInstance()->Initialise();
-
-		testScene.LoadScene(renderer);
 	}
 
 
 	SoundManager::Initialise();
 	SoundManager::LoadSounds("Resources/Sounds");
+
+	Switch(MENU);
 
 	return true;
 }
@@ -52,8 +61,7 @@ void GameManager::Render()
 {
 	SDL_RenderClear(renderer);
 
-	//Render things...
-	testScene.RenderScene(renderer);
+	scenes[gameState]->RenderScene(renderer);
 
 	SDL_RenderPresent(renderer);
 }
@@ -71,7 +79,8 @@ void GameManager::HandleEvents()
 		default:
 			break;
 		}
-		testScene.HandleEvents(event);
+
+		scenes[gameState]->HandleEvents(event);
 	}
 }
 
@@ -85,9 +94,7 @@ void GameManager::Process()
 
 	deltaTime = (float)((timeCurrentFrame - timeLastFrame) / (float)SDL_GetPerformanceFrequency());
 
-	testScene.UpdateScene();
-	//std::cout << "A is held: " << inputManager.IsControllerButtonHeld(PLAYER1, SDL_CONTROLLER_BUTTON_A) << std::endl;
-	// call this last
+	scenes[gameState]->UpdateScene();
 	Input::GetInstance()->Process();
 }
 
@@ -100,14 +107,24 @@ void GameManager::Clean()
 	SDL_Quit();
 }
 
+void GameManager::Switch(GameState _gameState)
+{
+	if(scenes[gameState]->loaded) scenes[gameState]->UnloadScene();
+
+	gameState = _gameState;
+
+	scenes[gameState]->LoadScene(renderer);
+}
+
+GameManager* GameManager::GetInstance()
+{
+	if (gameManager == nullptr) gameManager = new GameManager();
+	return gameManager;
+}
+
 GameState GameManager::GetState()
 {
 	return gameState;
-}
-
-bool GameManager::IsPaused() const
-{
-	return testScene.IsPaused();
 }
 
 SDL_Window * GameManager::GetWindow()

@@ -26,6 +26,8 @@ bool Entity::Initialise(Vector2 _position, Vector2 _dimension)
 
 void Entity::Render(SDL_Renderer * renderer)
 {
+	if (sprite == nullptr) return;
+
 		SDL_RenderCopyEx(
 			renderer,
 			sprite->GetTexture(),
@@ -40,12 +42,11 @@ void Entity::Render(SDL_Renderer * renderer)
 
 void Entity::Update()
 {
-	if (sprite != nullptr)
+	if (sprite != nullptr) 
 	{
 		if (sprite->IsAnimated()) source.x = source.w * static_cast<int>((SDL_GetTicks() / sprite->GetSpeed()) % sprite->GetFrames());
 
 		source.y = sprite->GetIndex() * source.h;
-
 	}
 	destination.x = static_cast<int>(position.x);
 	destination.y = static_cast<int>(position.y);
@@ -55,6 +56,11 @@ void Entity::Update()
 
 bool Entity::LoadSprite(std::shared_ptr<Sprite> _sprite)
 {
+	if (_sprite == nullptr) 
+	{
+		sprite = nullptr;
+		return false;
+	}
 	if (_sprite->GetTexture() == nullptr) return false;
 
 	sprite = _sprite;
@@ -69,7 +75,7 @@ std::shared_ptr<Sprite> Entity::GetSprite()
 
 void Entity::Transform(Vector2 position)
 {
-	this->position += position;
+	this->position += (position * deltaTime);
 }
 
 void Entity::Rotate(float angle)
