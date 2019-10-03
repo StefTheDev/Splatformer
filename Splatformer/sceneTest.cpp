@@ -85,25 +85,45 @@ void SceneTest::Update() {
 
 	timeElapsed += deltaTime;
 
-	ControllerCheck();
+	if (!gameOver)
+	{
+		ControllerCheck();
 
-	for (std::vector<std::unique_ptr<Entity>>::iterator entity = objects.begin(); entity != objects.end(); ++entity){
-		if ((*entity)->ShouldDelete()) {
-			entity = objects.erase(entity);
-		}
-		else {
-			switch ((*entity)->GetType()) {
-			case PLAYER: static_cast<Player*>((*entity).get())->Update(&camera); break;
-			case PLATFORM: static_cast<Platform*>((*entity).get())->Update(&camera, timeElapsed); break;
-			case COIN: static_cast<Coin*>((*entity).get())->Update(&camera); break;
-			case BALL: static_cast<Coin*>((*entity).get())->Update(&camera); break;
+		for (std::vector<std::unique_ptr<Entity>>::iterator entity = objects.begin(); entity != objects.end(); ++entity) {
+			if ((*entity)->ShouldDelete()) {
+				entity = objects.erase(entity);
+			}
+			else {
+				switch ((*entity)->GetType()) {
+				case PLAYER: static_cast<Player*>((*entity).get())->Update(&camera); break;
+				case PLATFORM: static_cast<Platform*>((*entity).get())->Update(&camera, timeElapsed); break;
+				case COIN: static_cast<Coin*>((*entity).get())->Update(&camera); break;
+				case BALL: static_cast<Coin*>((*entity).get())->Update(&camera); break;
+				}
 			}
 		}
-	}
-	ProcessRespawn();
-	camera.Update();
-	
+		ProcessRespawn();
+		camera.Update();
 
+		// the final checkpoint has been reached
+		if (respawnPoints.back()->GetActive())
+		{
+			gameOver = true;
+			int winner = 0;
+			int highestScore = INT_MIN;
+			// check who won 
+			for (int i = 0; i < players.size(); i++)
+			{
+				if (players[i]->getCoins() + players[i]->GetDeaths() > highestScore)
+				{
+					winner = i;
+				}
+			}
+
+			// TODO: Add winner text
+			std::cout << "The winner is Player: " << winner + 1 << std::endl;
+		}
+	}
 
 }
 

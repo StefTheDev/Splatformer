@@ -24,10 +24,10 @@ public:
 	bool Initialise(Vector2 _position, Vector2 dimension);
 	virtual void Render(SDL_Renderer * renderer);
 	virtual void Listen(SDL_Event event) {}
-	void Update();
+	virtual void Update();
 
 	//Sprite
-	bool LoadSprite(std::shared_ptr<Sprite> _sprite);
+	virtual bool LoadSprite(std::shared_ptr<Sprite> _sprite);
 	std::shared_ptr<Sprite> GetSprite();
 
 	//Manipulation

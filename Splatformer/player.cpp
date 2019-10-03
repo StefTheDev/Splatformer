@@ -145,6 +145,7 @@ void Player::Kill() {
 
 	SDL_RemoveTimer(jumpTimer);
 	collider->body->SetGravityScale(0.0f);
+	deaths++;
 
 	std::cout << "Player Am Dead\n";
 }

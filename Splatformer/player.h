@@ -19,6 +19,7 @@ public:
 
 	void addCoin();
 	int getCoins();
+	int GetDeaths() { return deaths; }
 
 	void GainBall(Ball* ball);
 	bool GetBall();
@@ -44,6 +45,7 @@ private:
 	float height = 50.0f;
 
 	bool isDead = false;
+	int deaths = 0;
 
 	//Jumping variables
 	bool canJump = false;

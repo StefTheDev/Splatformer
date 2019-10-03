@@ -17,6 +17,7 @@ void Scene::LoadScene(SDL_Renderer* _gameRenderer) {
 
 void Scene::UnloadScene() {
 	//Do something each time any scene is unloaded
+	if (GetCamera() == nullptr) return;
 	camera.SetPosition({ 0.0f, 0.0f });
 	Unload();
 }
