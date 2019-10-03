@@ -38,8 +38,8 @@ bool GameManager::Initialise(std::string _title)
 		Input::GetInstance();
 		Input::GetInstance()->Initialise();
 
-		menuScene.LoadScene(renderer);
-		//testScene.LoadScene(renderer);
+		//menuScene.LoadScene(renderer);
+		testScene.LoadScene(renderer);
 	}
 
 
@@ -54,8 +54,8 @@ void GameManager::Render()
 	SDL_RenderClear(renderer);
 
 	//Render things...
-	menuScene.RenderScene(renderer);
-	//testScene.RenderScene(renderer);
+	//menuScene.RenderScene(renderer);
+	testScene.RenderScene(renderer);
 
 	SDL_RenderPresent(renderer);
 }
@@ -73,8 +73,8 @@ void GameManager::HandleEvents()
 		default:
 			break;
 		}
-		//testScene.HandleEvents(event);
-		menuScene.HandleEvents(event);
+		testScene.HandleEvents(event);
+		//menuScene.HandleEvents(event);
 	}
 }
 
@@ -88,8 +88,8 @@ void GameManager::Process()
 
 	deltaTime = (float)((timeCurrentFrame - timeLastFrame) / (float)SDL_GetPerformanceFrequency());
 
-	menuScene.UpdateScene();
-	//testScene.UpdateScene();
+	//menuScene.UpdateScene();
+	testScene.UpdateScene();
 	//std::cout << "A is held: " << inputManager.IsControllerButtonHeld(PLAYER1, SDL_CONTROLLER_BUTTON_A) << std::endl;
 	// call this last
 	Input::GetInstance()->Process();
