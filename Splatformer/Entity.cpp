@@ -57,9 +57,9 @@ void Entity::Update()
 
 bool Entity::LoadSprite(std::shared_ptr<Sprite> _sprite)
 {
-	if (sprite == nullptr) 
+	if (_sprite == nullptr) 
 	{
-		_sprite = nullptr;
+		sprite = nullptr;
 		return false;
 	}
 	if (_sprite->GetTexture() == nullptr) return false;

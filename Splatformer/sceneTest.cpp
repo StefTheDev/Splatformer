@@ -25,7 +25,7 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 	}
 
 	playerSprite = std::make_shared<Sprite>("Resources/Sprites/Apple.png", _gameRenderer, false);
-	platformSprite = std::make_shared<Sprite>("Resources/Sprites/platform.png", _gameRenderer, false);
+	platformSprite = std::make_shared<Sprite>("Resources/Sprites/platform_base.png", _gameRenderer, false);
 	coinSprite = std::make_shared<Sprite>("Resources/Sprites/Carrot.png", _gameRenderer, false);
 	ballSprite = std::make_shared<Sprite>("Resources/Sprites/Onion.png", _gameRenderer, false);
 	buttonSprite = std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false);
@@ -38,7 +38,7 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 	
 	std::unique_ptr<UIButton> button = std::make_unique<UIButton>();
 	button->LoadSprite(buttonSprite);
-	button->Initialise(Vector2(10.0f, 10.0f), "Menu", 32, _gameRenderer, [this] {
+	button->Initialise(Vector2(0.0f, 500.0f), "Menu", 32, _gameRenderer, [this] {
 		SDL_Delay(75);
 	});
 
@@ -50,7 +50,7 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 	camera.PushTargetBack(Vector2(0.0f, 0.0f));
 	camera.SetMoveSpeed(100.0f);*/
 
-	LevelLoader::LoadLevel("Resources/Levels/LevelOne.csv", objects, respawnPoints);
+	LevelLoader::LoadLevel("Resources/Levels/LevelTwo.csv", objects, respawnPoints);
 
 
 

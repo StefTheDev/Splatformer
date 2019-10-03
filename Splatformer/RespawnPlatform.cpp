@@ -29,7 +29,11 @@ void RespawnPlatform::Initialise(b2World * _world, std::shared_ptr<Sprite> _plat
 		this
 	};
 
-	collider = std::make_unique<Collider>(position, info, Vector2(width, height));
+	collider = std::make_unique<Collider>(position, info,
+		Vector2(
+			thisInfo.dimensions.x * width,
+			thisInfo.dimensions.y * height
+		));
 
 	collider->InitialiseStatic(_world);
 	collider->SetCollisionCategory(CATEGORY_PLATFORM);
