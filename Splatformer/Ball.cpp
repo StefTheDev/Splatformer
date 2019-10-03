@@ -57,12 +57,12 @@ void Ball::Collected() {
 
 }
 
-void Ball::ThrowBall(Vector2 _position) {
+void Ball::ThrowBall(Vector2 _position, int _button) {
 	// apply to ball
 
 	thrown = true;
 	collider->body->SetTransform(_position.AsBox2D(), 0.0f);
-	collider->body->SetLinearVelocity({ 75.0f, 0.0f });
+	collider->body->SetLinearVelocity({ (75.0f * _button), 0.0f });
 	this->collider->body->GetFixtureList()[0].SetSensor(false);
 
 }

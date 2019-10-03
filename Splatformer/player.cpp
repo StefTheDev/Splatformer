@@ -52,8 +52,11 @@ void Player::Update(Camera* _gameCamera) {
 	} else if (!(Input::GetInstance()->IsControllerButtonHeld(playerIndex, SDL_CONTROLLER_BUTTON_A))) {
 		FinishJump();
 	}
-	if (Input::GetInstance()->IsControllerButtonPressed(playerIndex, SDL_CONTROLLER_BUTTON_B)) {
-		ThrowBall();
+	if (Input::GetInstance()->IsControllerButtonPressed(playerIndex, SDL_CONTROLLER_BUTTON_LEFTSHOULDER)) {
+		ThrowBall(-1);
+	}
+	if (Input::GetInstance()->IsControllerButtonPressed(playerIndex, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)) {
+		ThrowBall(1);
 	}
 
 	float stickPos = Input::GetInstance()->GetControllerAxis(playerIndex, SDL_CONTROLLER_AXIS_LEFTX);
@@ -104,12 +107,12 @@ void Player::Jump() {
 	}
 }
 
-void Player::ThrowBall() {
+void Player::ThrowBall(int _button) {
 
 	//Vector2{ 960.0f, -540.0 }
 
 	if (haveBall) {
-		storedBall->ThrowBall(Vector2{collider->GetPosition().x + 55.0f, -collider->GetPosition().y }); //position);
+		storedBall->ThrowBall(Vector2{collider->GetPosition().x + (55.0f * _button), -collider->GetPosition().y }, _button); //position);
 		storedBall = nullptr;
 		haveBall = false;
 	}
@@ -151,6 +154,8 @@ void Player::Respawn(Vector2 _respawnPosition) {
 
 	collider->body->SetGravityScale(1.0f);
 	collider->body->SetTransform((_respawnPosition).AsBox2D(), 0.0f);
+	collider->body->SetLinearVelocity({ 0,0 });
+	std::cout << "RESPAWN" << std::endl;
 }
 
 Uint32 Player::jumpTimerCallback(Uint32 interval, void* param) {

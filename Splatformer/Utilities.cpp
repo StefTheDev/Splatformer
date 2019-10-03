@@ -80,7 +80,9 @@ void PlatformingListener::PreSolve(b2Contact* contact, const b2Manifold* oldMani
 		top = platPos.y;
 
 		//Top of platform plus player box dimension.y is lower than player box 
-		if (!(position.y + halfHeight > top + 0.15f)) {
+		if (position.y + halfHeight > top + 0.15f) {
+			contact->SetEnabled(false);
+		} else {
 			player->SetCanJump(true);
 		}
 	} else if ((fixtureAData->type == PLT || fixtureAData->type == CBALL) && (fixtureBData->type == PLT || fixtureBData->type == CBALL)) {
@@ -108,8 +110,11 @@ void PlatformingListener::PreSolve(b2Contact* contact, const b2Manifold* oldMani
 		platPos -= (platform->GetDimensions() * 0.5f).AsBox2D();
 
 		top = platPos.y;
+
+		if (position.y + halfHeight > top + 0.15f) {
+			contact->SetEnabled(false);
+		}
 	}
-	//std::cout << "A: " << position.y - halfHeight << " |B: "<< (top - 3.0f * b2_linearSlop) << std::endl;
 }
 
 void PlatformingListener::BeginContact(b2Contact* contact) {

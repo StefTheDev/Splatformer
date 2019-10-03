@@ -15,7 +15,7 @@ public:
 	void FinishJump();
 	void MoveHorizontal(float scale);
 
-	void ThrowBall();
+	void ThrowBall(int button);
 
 	void addCoin();
 	int getCoins();

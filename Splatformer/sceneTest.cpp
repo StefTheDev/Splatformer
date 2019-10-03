@@ -14,6 +14,7 @@ SceneTest::SceneTest() {
 
 	sceneWorld = std::make_unique<b2World>(gravity);
 	sceneWorld->SetContactListener(contactListener);
+	sceneWorld->SetAllowSleeping(false);
 }
 
 void SceneTest::Load(SDL_Renderer* _gameRenderer) {
@@ -29,7 +30,7 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 	ballSprite = std::make_shared<Sprite>("Resources/Sprites/Onion.png", _gameRenderer, false);
 	buttonSprite = std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false);
 
-	LoadControllers();
+
 	/*objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER1));
 	players.push_back((Player*)objects.back().get());*/
 	//objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER2));
@@ -45,28 +46,35 @@ void SceneTest::Load(SDL_Renderer* _gameRenderer) {
 
 	camera.Initialise(sceneWorld.get());
 
-	camera.PushTargetBack(Vector2(1200.0f, 0.0f));
+	/*camera.PushTargetBack(Vector2(1200.0f, 0.0f));
 	camera.PushTargetBack(Vector2(0.0f, 0.0f));
-	camera.SetMoveSpeed(100.0f);
+	camera.SetMoveSpeed(100.0f);*/
 
-	LevelLoader::LoadLevel("Resources/Levels/LevelOne.csv", objects);
+	LevelLoader::LoadLevel("Resources/Levels/LevelOne.csv", objects, respawnPoints);
 
+
+
+	std::sort(respawnPoints.begin(), respawnPoints.end(), RespawnPlatform::sortAscending);
+
+	
+
+	LoadControllers();
 	for (auto& object : objects) {
 		switch (object->GetType()) {
 		case PLAYER: static_cast<Player*>(object.get())->Initialise(sceneWorld.get(), playerSprite); break;
-		case PLATFORM: static_cast<Platform*>(object.get())->Initialise(sceneWorld.get(), platformSprite);
-			if (static_cast<Platform*>(object.get())->GetCollider()->GetDataContainer().type == RESPAWN)
-			{
-				respawnPoints.push_back((static_cast<RespawnPlatform*>(object.get())));
-			}
-			break;
+		case PLATFORM: static_cast<Platform*>(object.get())->Initialise(sceneWorld.get(), platformSprite); break;
 		case COIN: static_cast<Coin*>(object.get())->Initialise(sceneWorld.get(), coinSprite); break;
 		case BALL: static_cast<Ball*>(object.get())->Initialise(sceneWorld.get(), ballSprite); break;
 		}
 	}
 
-	std::sort(respawnPoints.begin(), respawnPoints.end(), RespawnPlatform::sortAscending);
 	respawnPoints[0]->Activate();
+
+	camera.SetPosition(respawnPoints[0]->GetPosition());
+	for (auto it = respawnPoints.begin(); it != respawnPoints.end(); it++) {
+		camera.PushTargetBack((*it)->GetPosition());
+	}
+	camera.SetMoveSpeed(100.0f);
 }
 
 void SceneTest::Unload() {
@@ -135,7 +143,11 @@ void SceneTest::LoadControllers()
 {
 	for (int i = 0; i < Input::GetInstance()->GetNumGamepads(); i++)
 	{
-		objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), Controllers(i)));
+
+		Vector2 _test = respawnPoints[0]->GetPosition() + Vector2(0.0f, PLAYER_HEIGHT);
+		objects.push_back(std::make_unique<Player>(
+			_test , 
+			Controllers(i)));
 		players.push_back((Player*)objects.back().get());
 	}
 }
@@ -166,13 +178,19 @@ void SceneTest::ProcessRespawn()
 		{
 			furthestPlatform = (*it);
 		}
-		else break;
 	}
 
 	// a new RespawnPlatform has been activated
 	if (furthestPlatform->respawnNumber > latestRespawn)
 	{
 		latestRespawn = furthestPlatform->respawnNumber;
+		//check if any player is dead
+		for (auto it = players.begin(); it != players.end(); it++) {
+			if (!(*it)->CheckIsAlive()) {
+				needToRespawn = true;
+				break;
+			} else needToRespawn = false;
+		}
 	}
 	// have NOT reached a new checkpoint yet
 	else 
@@ -189,7 +207,7 @@ void SceneTest::ProcessRespawn()
 		}
 	}
 
-	if (needToRespawn == true)
+	if (needToRespawn)
 	{
 		RespawnPlayers();
 	}
@@ -212,7 +230,9 @@ void SceneTest::RespawnPlayers()
 	if (furthestPlatform != nullptr)
 	{
 		// send camera to the platform
-		camera.SetPosition(Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition()));
+		camera.PushTargetFront(Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition()));
+		camera.SetMoveSpeed(500.0f);
+		//camera.SetPosition(Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition()));
 
 		Vector2 spawnPosition = Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition()) - Vector2(0.0f, camera.GetHeight()/2.0f);
 		spawnPosition.y += 32.0f;
@@ -223,6 +243,7 @@ void SceneTest::RespawnPlayers()
 			if (!(*it)->CheckIsAlive())
 			{
 				(*it)->Respawn(spawnPosition);
+			
 			}
 		}
 	}

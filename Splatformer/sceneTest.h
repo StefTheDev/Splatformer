@@ -45,7 +45,7 @@ private:
 
 	std::vector<RespawnPlatform*> respawnPoints;
 	RespawnPlatform* furthestPlatform = nullptr;
-	int latestRespawn = 0;
+	int latestRespawn = -5;
 
 	std::vector<Player*> players;
 	// check if players need to be respawned

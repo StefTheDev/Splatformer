@@ -15,7 +15,7 @@ public:
 
 	void Collected();
 
-	void ThrowBall(Vector2 position);
+	void ThrowBall(Vector2 position, int button);
 	bool IsThrown();
 
 private:

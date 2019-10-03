@@ -27,6 +27,7 @@
 #include "Vector2.h"
 #include "input.h"
 
+
 //Constant expressions
 
 //Into Box2D: Divide values by PPM
@@ -36,6 +37,8 @@
 constexpr float PPM = 32.0f;
 
 //Global Variables
+constexpr float PLAYER_WIDTH = 50.0f;
+constexpr float PLAYER_HEIGHT = 50.0f;
 
 //Time since last frame in seconds
 extern float deltaTime;

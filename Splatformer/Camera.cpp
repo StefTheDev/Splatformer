@@ -37,6 +37,7 @@ void Camera::Update() {
 			scale = 1.0f;
 		} else {
 			targetQueue.pop_front();
+			moveSpeed = 100.0f;
 		}
 
 		position += direction * (moveSpeed * deltaTime * scale);

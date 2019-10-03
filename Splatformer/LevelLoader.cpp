@@ -93,7 +93,7 @@ TileInfo collateTiles(int _x, int _y, std::vector<std::vector<std::string>>& _ti
 	return retInfo;
 }
 
-bool LevelLoader::LoadLevel(std::string _levelPath, std::vector<std::unique_ptr<Entity>>& _sceneEntities) {
+bool LevelLoader::LoadLevel(std::string _levelPath, std::vector<std::unique_ptr<Entity>>& _sceneEntities, std::vector<RespawnPlatform*>& _sceneRespawns) {
 	std::ifstream inFile;
 	std::vector<std::vector<std::string>> tiles;
 
@@ -129,6 +129,7 @@ bool LevelLoader::LoadLevel(std::string _levelPath, std::vector<std::unique_ptr<
 					_sceneEntities.push_back(std::move(std::make_unique<Ball>(Vector2(x, y))));
 				}else if (args[0] == "R") {
 					_sceneEntities.push_back(std::move(std::make_unique<RespawnPlatform>(collateTiles(x, y, tiles), std::stoi(args[1]))));
+					_sceneRespawns.push_back(static_cast<RespawnPlatform*>(_sceneEntities.back().get()));
 				}
 			}
 		}
