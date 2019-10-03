@@ -104,11 +104,10 @@ bool LevelLoader::LoadLevel(std::string _levelPath, std::vector<std::unique_ptr<
 		while (std::getline(inFile, line)) {
 			tiles.push_back(splitBy(line, ","));
 		}
-
+		inFile.close();
 	} else {
 		return false;
 	}
-
 
 	for (int y = 0; y < tiles.size(); y++) {
 		for (int x = 0; x < tiles[y].size(); x++) {
@@ -134,6 +133,5 @@ bool LevelLoader::LoadLevel(std::string _levelPath, std::vector<std::unique_ptr<
 			}
 		}
 	}
-
 	return true;
 }

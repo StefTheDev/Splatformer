@@ -1,6 +1,7 @@
 #include "GameScene.h"
 
 #include "LevelLoader.h"
+#include "GameManager.h"
 
 constexpr int velIterations = 8;
 constexpr int posIterations = 3;
@@ -37,8 +38,8 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 
 	std::unique_ptr<UIButton> button = std::make_unique<UIButton>();
 	button->LoadSprite(buttonSprite);
-	button->Initialise(Vector2(10.0f, 10.0f), "Menu", 32, _gameRenderer, [this] {
-		SDL_Delay(75);
+	button->Initialise(Vector2(0.0f, 500.0f), "Menu", 32, _gameRenderer, [this] {
+		GameManager::GetInstance()->Switch(MENU);
 	});
 
 	objects.push_back(std::move(button));
@@ -50,7 +51,6 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	camera.SetMoveSpeed(100.0f);*/
 
 	LevelLoader::LoadLevel("Resources/Levels/LevelOne.csv", objects, respawnPoints);
-
 
 
 	std::sort(respawnPoints.begin(), respawnPoints.end(), RespawnPlatform::sortAscending);
@@ -77,6 +77,8 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 }
 
 void GameScene::Unload() {
+
+	controllers.clear();
 }
 
 void GameScene::Update() {

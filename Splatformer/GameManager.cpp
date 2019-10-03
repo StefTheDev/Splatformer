@@ -42,7 +42,7 @@ bool GameManager::Initialise(std::string _title)
 		scenes.push_back(std::make_unique<MenuScene>());
 		scenes.push_back(std::make_unique<GameScene>());
 
-		scenes[INGAME]->LoadScene(renderer);
+		scenes[MENU]->LoadScene(renderer);
 
 		Input::GetInstance();
 		Input::GetInstance()->Initialise();
@@ -52,7 +52,7 @@ bool GameManager::Initialise(std::string _title)
 	SoundManager::Initialise();
 	SoundManager::LoadSounds("Resources/Sounds");
 
-	Switch(INGAME);
+	Switch(MENU);
 
 	return true;
 }
@@ -110,7 +110,9 @@ void GameManager::Clean()
 void GameManager::Switch(GameState _gameState)
 {
 	if(scenes[gameState]->loaded) scenes[gameState]->UnloadScene();
+
 	gameState = _gameState;
+
 	scenes[gameState]->LoadScene(renderer);
 }
 

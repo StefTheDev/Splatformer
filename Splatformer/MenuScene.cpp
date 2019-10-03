@@ -57,5 +57,5 @@ void MenuScene::Load(SDL_Renderer* _gameRenderer)
 
 void MenuScene::Unload()
 {
-	objects.clear();
+
 }
