@@ -43,12 +43,17 @@ void UIText::Update()
 	SDL_FreeSurface(fontSurface);
 
 	int width, height;
+
 	SDL_QueryTexture(textTexture, NULL, NULL, &width, &height);
 	
 	destination.x = ((WINDOW_WIDTH - width) / 2) + position.x;
 	destination.y = ((WINDOW_HEIGHT - height) / 2) + position.y;
 	destination.w = width;
 	destination.h = height;
+}
+
+void UIText::SetText(std::string _text) {
+	text = _text;
 }
 
 bool UIText::LoadSprite(std::shared_ptr<Sprite> _sprite)

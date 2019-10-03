@@ -2,12 +2,18 @@
 #include "scene.h"
 #include "player.h"
 
+//UI Entities
+#include "UIButton.h"
+#include "UIText.h"
+
 class Lobby : public Scene {
 public:
 	Lobby();
 
 	void Update() override;
 	void Render(SDL_Renderer* gameRenderer) override;
+
+	void ButtonDown(SDL_JoystickID gamepadID, Uint8 button) override;
 
 private:
 	void Load(SDL_Renderer* gameRenderer) override;
