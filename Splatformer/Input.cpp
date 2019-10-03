@@ -120,6 +120,11 @@ void Input::HandleEvents(SDL_Event _event)
 		Initialise();
 		break;
 
+	case SDL_CONTROLLERDEVICEREMOVED:
+		std::cout << "DEVICEREMOVED cdevice.which = " << _event.cdevice.which << std::endl;
+		Initialise();
+		break;
+
 		// If a controller button is pressed
 	case SDL_CONTROLLERBUTTONDOWN:
 		// Cycle through the controllers
