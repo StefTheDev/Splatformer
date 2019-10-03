@@ -5,6 +5,8 @@
 #include "UIButton.h"
 #include "UIText.h"
 
+#include "GameManager.h"
+
 class MenuScene : public Scene {
 public:
 	MenuScene();

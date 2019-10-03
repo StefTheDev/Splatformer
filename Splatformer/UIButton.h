@@ -22,5 +22,6 @@ private:
 	bool IsHover(int x, int y);
 
 	void click();
+	bool hovering = false;
 };
 

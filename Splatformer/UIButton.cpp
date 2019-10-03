@@ -1,4 +1,5 @@
 #include "UIButton.h"
+#include "soundmanager.h"
 
 UIButton::UIButton() :Entity()
 {
@@ -35,10 +36,16 @@ void UIButton::Listen(SDL_Event event)
 	{
 		case SDL_MOUSEMOTION: {
 			if (IsHover(event.motion.x, event.motion.y)) {
-				SDL_SetTextureColorMod(textTexture, 80, 80, 80);
+				SDL_SetTextureColorMod(textTexture, 255, 0, 255);
+				if (hovering == false)
+				{
+					SoundManager::PlaySound("Menu");
+					hovering = true;
+				}
 			}
 			else {
 				SDL_SetTextureColorMod(textTexture, 250, 250, 250);
+				if(hovering == true) hovering = false;
 			}
 			break;
 		}

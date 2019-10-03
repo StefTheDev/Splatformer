@@ -1,10 +1,9 @@
 #include "GameManager.h"
 
 
-std::unique_ptr<GameManager> gameManager;
 
 int main(int argc, char* argv[]) {
-	gameManager = std::make_unique<GameManager>();
+	GameManager* gameManager = GameManager::GetInstance();
 	if (!gameManager->Initialise("Splatformer")) return 0;
 
 	Uint32 startFrame, timeFrame;
@@ -19,14 +18,11 @@ int main(int argc, char* argv[]) {
 
 		timeFrame = SDL_GetTicks() - startFrame;
 
-		if (gameManager->IsPaused()) {
-			SDL_Delay(0);
-		}
-		else {
-			if (FRAME_DELAY > timeFrame) SDL_Delay(FRAME_DELAY - timeFrame);
-		}
+		if (FRAME_DELAY > timeFrame) SDL_Delay(FRAME_DELAY - timeFrame);
 	}
 
 	gameManager->Clean();
+
+	delete gameManager;
 	return 0;
 }

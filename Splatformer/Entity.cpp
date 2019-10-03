@@ -76,7 +76,7 @@ std::shared_ptr<Sprite> Entity::GetSprite()
 
 void Entity::Transform(Vector2 position)
 {
-	this->position += position;
+	this->position += (position * deltaTime);
 }
 
 void Entity::Rotate(float angle)

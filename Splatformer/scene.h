@@ -41,12 +41,15 @@ public:
 	//Return a pointer to this scene's camera object
 	Camera* GetCamera();
 
+	bool loaded = false;
+
 protected:
 	virtual void Load(SDL_Renderer* gameRenderer) = 0;
 	virtual void Unload() = 0;
 
 	virtual void Update() = 0;
 	virtual void Render(SDL_Renderer* gameRenderer) = 0;
+
 
 	std::vector<std::unique_ptr<Entity>> objects;
 	Camera camera;

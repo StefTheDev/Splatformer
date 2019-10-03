@@ -29,7 +29,7 @@ void MenuScene::Load(SDL_Renderer* _gameRenderer)
 	play->LoadSprite(nullptr);
 	play->Initialise(Vector2(0.0f, -80.0f), "PLAY", 64, _gameRenderer, [this] 
 	{
-		std::cout << "Testing" << std::endl;
+		GameManager::GetInstance()->Switch(INGAME);
 	});
 
 	objects.push_back(std::move(play));
@@ -57,4 +57,5 @@ void MenuScene::Load(SDL_Renderer* _gameRenderer)
 
 void MenuScene::Unload()
 {
+	objects.clear();
 }
