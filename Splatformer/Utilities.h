@@ -44,6 +44,7 @@ constexpr float PLAYER_HEIGHT = 50.0f;
 extern float deltaTime;
 extern int WINDOW_WIDTH;
 extern int WINDOW_HEIGHT;
+extern int controllersAtStartOfGame;
 
 struct b2BodyDeleter {
 	void operator()(b2Body* _body) const {
