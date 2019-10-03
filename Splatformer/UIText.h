@@ -13,6 +13,8 @@ public:
 	void Render(SDL_Renderer* renderer) override;
 	void Update() override;
 
+	void SetText(std::string text);
+
 	bool LoadSprite(std::shared_ptr<Sprite> _sprite) override;
 
 	SDL_Texture* GetTexture();

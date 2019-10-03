@@ -51,6 +51,11 @@ void UIText::Update()
 	destination.h = height;
 }
 
+void UIText::SetText(std::string _text)
+{
+	text = _text;
+}
+
 bool UIText::LoadSprite(std::shared_ptr<Sprite> _sprite)
 {
 	return true;

@@ -38,11 +38,16 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 
 	std::unique_ptr<UIButton> button = std::make_unique<UIButton>();
 	button->LoadSprite(buttonSprite);
-	button->Initialise(Vector2(0.0f, 500.0f), "Menu", 32, _gameRenderer, [this] {
+	button->Initialise(Vector2((-WINDOW_WIDTH/2) + 100, -500.0f), "Menu", 32, _gameRenderer, [this] {
 		GameManager::GetInstance()->Switch(MENU);
 	});
 
 	objects.push_back(std::move(button));
+
+	winText = std::make_unique<UIText>();
+
+	winText->LoadSprite(nullptr);
+	winText->Initialise(Vector2(0.0f, -500.0f), "Test", 64, SDL_Color{ 255, 255, 255 }, _gameRenderer);
 
 	camera.Initialise(sceneWorld.get());
 
@@ -74,6 +79,16 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 		camera.PushTargetBack((*it)->GetPosition());
 	}
 	camera.SetMoveSpeed(100.0f);
+
+
+	for (int i = 0; i < players.size(); i++)
+	{
+		std::unique_ptr<UIText> score = std::make_unique<UIText>();
+		score->LoadSprite(nullptr);
+		score->Initialise(Vector2(i * 100, 400.0f), "Test", 16, SDL_Color{ 255, 255, 255 }, _gameRenderer);
+
+		scores.push_back(std::move(score));
+	}
 }
 
 void GameScene::Unload() {
@@ -85,6 +100,14 @@ void GameScene::Update() {
 	sceneWorld->Step(deltaTime, velIterations, posIterations);
 
 	timeElapsed += deltaTime;
+
+	winText->Update();
+
+	for (int i = 0; i < players.size(); i++)
+	{
+		scores[i]->Update();
+		scores[i]->SetText("Player " + std::to_string(i + 1) + ": " + std::to_string(players[i]->getCoins() - players[i]->GetDeaths()));
+	}
 
 	if (!gameOver)
 	{
@@ -99,10 +122,12 @@ void GameScene::Update() {
 				case PLAYER: static_cast<Player*>((*entity).get())->Update(&camera); break;
 				case PLATFORM: static_cast<Platform*>((*entity).get())->Update(&camera, timeElapsed); break;
 				case COIN: static_cast<Coin*>((*entity).get())->Update(&camera); break;
-				case BALL: static_cast<Coin*>((*entity).get())->Update(&camera); break;
+				case BALL: static_cast<Ball*>((*entity).get())->Update(&camera); break;
 				}
 			}
 		}
+
+
 		ProcessRespawn();
 		camera.Update();
 
@@ -115,20 +140,28 @@ void GameScene::Update() {
 			// check who won 
 			for (int i = 0; i < players.size(); i++)
 			{
-				if (players[i]->getCoins() + players[i]->GetDeaths() > highestScore)
+				if ((players[i]->getCoins() - players[i]->GetDeaths()) > highestScore)
 				{
 					winner = i;
+					highestScore = (players[i]->getCoins() - players[i]->GetDeaths());
 				}
 			}
 
 			// TODO: Add winner text
 			std::cout << "The winner is Player: " << winner + 1 << std::endl;
+			winText->SetText("Winner " + std::to_string(winner + 1));
 		}
 	}
-
 }
 
 void GameScene::Render(SDL_Renderer* _gameRenderer) {
+	winText->Render(_gameRenderer);
+
+	for (int i = 0; i < players.size(); i++)
+	{
+		scores[i]->Render(_gameRenderer);
+	}
+
 }
 
 bool GameScene::IsPaused() const
