@@ -84,7 +84,6 @@ void GameManager::Process()
 {
 	SoundManager::Update();
 
-
 	timeLastFrame = timeCurrentFrame;
 	timeCurrentFrame = SDL_GetPerformanceCounter();
 

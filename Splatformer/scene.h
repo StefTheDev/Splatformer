@@ -52,6 +52,7 @@ protected:
 	virtual void Update() = 0;
 	virtual void Render(SDL_Renderer* gameRenderer) = 0;
 
+
 	std::vector<std::unique_ptr<Entity>> objects;
 	Camera camera;
 };
