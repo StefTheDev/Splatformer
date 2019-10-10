@@ -38,16 +38,15 @@ bool GameManager::Initialise(std::string _title)
 		timeCurrentFrame = SDL_GetPerformanceCounter();
 
 		if (TTF_Init() == -1) return false;
-
-		scenes.push_back(std::make_unique<MenuScene>());
-		scenes.push_back(std::make_unique<GameScene>());
-
-		scenes[MENU]->LoadScene(renderer);
-
-		Input::GetInstance();
-		Input::GetInstance()->Initialise();
+	} else {
+		return false;
 	}
 
+	scenes.push_back(std::make_unique<MenuScene>());
+	scenes.push_back(std::make_unique<GameScene>());
+
+	Input::GetInstance();
+	Input::GetInstance()->Initialise();
 
 	SoundManager::Initialise();
 	SoundManager::LoadSounds("Resources/Sounds");
@@ -87,7 +86,6 @@ void GameManager::HandleEvents()
 void GameManager::Process()
 {
 	SoundManager::Update();
-
 
 	timeLastFrame = timeCurrentFrame;
 	timeCurrentFrame = SDL_GetPerformanceCounter();

@@ -60,10 +60,10 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	LoadControllers();
 	for (auto& object : objects) {
 		switch (object->GetType()) {
-		case PLAYER: static_cast<Player*>(object.get())->Initialise(sceneWorld.get(), playerSprite); break;
-		case PLATFORM: static_cast<Platform*>(object.get())->Initialise(sceneWorld.get(), platformSprite); break;
-		case COIN: static_cast<Coin*>(object.get())->Initialise(sceneWorld.get(), coinSprite); break;
-		case BALL: static_cast<Ball*>(object.get())->Initialise(sceneWorld.get(), ballSprite); break;
+			case PLAYER: static_cast<Player*>(object.get())->Initialise(sceneWorld.get(), playerSprite); break;
+			case PLATFORM: static_cast<Platform*>(object.get())->Initialise(sceneWorld.get(), platformSprite); break;
+			case COIN: static_cast<Coin*>(object.get())->Initialise(sceneWorld.get(), coinSprite); break;
+			case BALL: static_cast<Ball*>(object.get())->Initialise(sceneWorld.get(), ballSprite); break;
 		}
 	}
 
@@ -76,8 +76,8 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	camera.SetMoveSpeed(100.0f);
 }
 
-void GameScene::Unload() {
-
+void GameScene::Unload()
+{
 	controllers.clear();
 }
 
@@ -96,10 +96,10 @@ void GameScene::Update() {
 			}
 			else {
 				switch ((*entity)->GetType()) {
-				case PLAYER: static_cast<Player*>((*entity).get())->Update(&camera); break;
-				case PLATFORM: static_cast<Platform*>((*entity).get())->Update(&camera, timeElapsed); break;
-				case COIN: static_cast<Coin*>((*entity).get())->Update(&camera); break;
-				case BALL: static_cast<Coin*>((*entity).get())->Update(&camera); break;
+					case PLAYER: static_cast<Player*>((*entity).get())->Update(&camera); break;
+					case PLATFORM: static_cast<Platform*>((*entity).get())->Update(&camera, timeElapsed); break;
+					case COIN: static_cast<Coin*>((*entity).get())->Update(&camera); break;
+					case BALL: static_cast<Coin*>((*entity).get())->Update(&camera); break;
 				}
 			}
 		}

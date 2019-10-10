@@ -14,7 +14,6 @@ float MapBetween(float x, float lower, float upper, float min, float max) {
 
 void Scene::LoadScene(SDL_Renderer* _gameRenderer) {
 	//Do something each time any scene is loaded
-	if (!objects.empty()) objects.clear();
 	Load(_gameRenderer);
 	loaded = true;
 }
@@ -22,7 +21,6 @@ void Scene::LoadScene(SDL_Renderer* _gameRenderer) {
 void Scene::UnloadScene()
 {
 	//Do something each time any scene is unloaded
-	if (!objects.empty()) objects.clear();
 	camera.SetPosition({ 0.0f, 0.0f });
 	Unload();
 }
