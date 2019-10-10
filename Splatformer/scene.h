@@ -6,6 +6,8 @@
 
 class Scene {
 public:
+	virtual ~Scene();
+
 	void LoadScene(SDL_Renderer* gameRenderer);
 	void UnloadScene();
 
@@ -40,6 +42,8 @@ public:
 
 	//Return a pointer to this scene's camera object
 	Camera* GetCamera();
+
+	bool loaded = false;
 
 protected:
 	virtual void Load(SDL_Renderer* gameRenderer) = 0;

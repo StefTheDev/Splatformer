@@ -19,7 +19,7 @@ class Entity
 {
 public:
 	Entity();
-	~Entity();
+	virtual ~Entity();
 
 	//General
 	bool Initialise(Vector2 _position, Vector2 dimension);

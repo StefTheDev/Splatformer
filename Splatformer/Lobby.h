@@ -9,6 +9,7 @@
 class Lobby : public Scene {
 public:
 	Lobby();
+	virtual ~Lobby() override;
 
 	void Update() override;
 	void Render(SDL_Renderer* gameRenderer) override;

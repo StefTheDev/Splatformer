@@ -141,6 +141,9 @@
     <ClCompile Include="UIText.cpp">
       <Filter>Source Files\Entities\UI</Filter>
     </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -211,6 +214,12 @@
     </ClInclude>
     <ClInclude Include="UIText.h">
       <Filter>Header Files\Entities\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneStorage.h">
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

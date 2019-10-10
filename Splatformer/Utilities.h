@@ -1,9 +1,5 @@
 #pragma once
 
-//#ifndef _DEBUG
-//#define _ITERATOR_DEBUG_LEVEL 1
-//#endif // _DEBUG
-
 #ifndef UTILITIES_H
 #define UTILITIES_H
 

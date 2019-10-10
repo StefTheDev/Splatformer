@@ -1,9 +1,12 @@
 #include "MenuScene.h"
 
-
 MenuScene::MenuScene()
 {
 
+}
+
+MenuScene::~MenuScene() {
+	std::cout << "Menu Destroyed\n";
 }
 
 void MenuScene::Update()
@@ -18,6 +21,7 @@ void MenuScene::Render(SDL_Renderer * gameRenderer)
 
 void MenuScene::Load(SDL_Renderer* _gameRenderer) 
 {
+
 	std::unique_ptr<UIText> header = std::make_unique<UIText>();
 
 	header->LoadSprite(nullptr);
@@ -29,7 +33,7 @@ void MenuScene::Load(SDL_Renderer* _gameRenderer)
 	play->LoadSprite(nullptr);
 	play->Initialise(Vector2(0.0f, -80.0f), "PLAY", 64, _gameRenderer, [this] 
 	{
-		std::cout << "Testing" << std::endl;
+		GameManager::GetInstance()->Switch(LOBBY);
 	});
 
 	objects.push_back(std::move(play));
@@ -57,4 +61,5 @@ void MenuScene::Load(SDL_Renderer* _gameRenderer)
 
 void MenuScene::Unload()
 {
+
 }

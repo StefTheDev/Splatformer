@@ -5,9 +5,12 @@
 #include "UIButton.h"
 #include "UIText.h"
 
+#include "GameManager.h"
+
 class MenuScene : public Scene {
 public:
 	MenuScene();
+	virtual ~MenuScene() override;
 
 	void Update() override;
 	void Render(SDL_Renderer* gameRenderer) override;
@@ -15,6 +18,4 @@ public:
 private:
 	void Load(SDL_Renderer* gameRenderer) override;
 	void Unload() override;
-
-	std::unique_ptr<b2World> world;
 };

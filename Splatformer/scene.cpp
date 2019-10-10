@@ -12,17 +12,27 @@ float MapBetween(float x, float lower, float upper, float min, float max) {
 	return ((x - lower) / (upper - lower) * (max - min) + min);
 }
 
+Scene::~Scene() {
+	std::cout << "Scene Destroyed\n";
+	objects.clear();
+	std::vector<std::unique_ptr<Entity>>().swap(objects);
+}
+
 void Scene::LoadScene(SDL_Renderer* _gameRenderer) {
 	//Do something each time any scene is loaded
+
+	objects.clear();
 	Load(_gameRenderer);
+	loaded = true;
 }
 
 void Scene::UnloadScene()
 {
-	//Do something each time any scene is unloaded
-	if (GetCamera() == nullptr) return;
-	camera.SetPosition({ 0.0f, 0.0f });
 	Unload();
+
+	//Do something each time any scene is unloaded
+	objects.clear();
+	std::vector<std::unique_ptr<Entity>>().swap(objects);
 }
 
 void Scene::UpdateScene() {
@@ -50,6 +60,7 @@ void Scene::RenderScene(SDL_Renderer* _gameRenderer) {
 
 void Scene::HandleEvents(SDL_Event _sdlEvent) {
 	for (auto& entity : objects) {
+		if (objects.size() <= 0) break;
 		switch (entity->GetType()) {
 			case PLAYER: static_cast<Player*>(entity.get())->Listen(_sdlEvent); break;
 			case PLATFORM: static_cast<Platform*>(entity.get())->Listen(_sdlEvent); break;

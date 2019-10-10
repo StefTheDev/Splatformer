@@ -1,6 +1,6 @@
 #include "UIText.h"
 
-UIText::UIText() :Entity()
+UIText::UIText() : Entity()
 {
 	type = BUTTON;
 }
@@ -9,6 +9,8 @@ UIText::~UIText()
 {
 	if(textTexture != nullptr) SDL_DestroyTexture(textTexture);
 	if(font != nullptr) TTF_CloseFont(font);
+	text.clear();
+	std::string().swap(text);
 }
 
 bool UIText::Initialise(Vector2 position, std::string text, int size, SDL_Color color, SDL_Renderer* renderer)
@@ -52,7 +54,9 @@ void UIText::Update()
 	destination.h = height;
 }
 
-void UIText::SetText(std::string _text) {
+
+void UIText::SetText(std::string _text)
+{
 	text = _text;
 }
 

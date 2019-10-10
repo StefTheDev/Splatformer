@@ -7,6 +7,7 @@ Entity::Entity()
 
 Entity::~Entity()
 {
+	std::cout << "Something destroyed\n";
 }
 
 bool Entity::Initialise(Vector2 _position, Vector2 _dimension)
@@ -47,7 +48,6 @@ void Entity::Update()
 		if (sprite->IsAnimated()) source.x = source.w * static_cast<int>((SDL_GetTicks() / sprite->GetSpeed()) % sprite->GetFrames());
 
 		source.y = sprite->GetIndex() * source.h;
-
 	}
 	destination.x = static_cast<int>(position.x);
 	destination.y = static_cast<int>(position.y);
@@ -76,7 +76,7 @@ std::shared_ptr<Sprite> Entity::GetSprite()
 
 void Entity::Transform(Vector2 position)
 {
-	this->position += position;
+	this->position += (position * deltaTime);
 }
 
 void Entity::Rotate(float angle)

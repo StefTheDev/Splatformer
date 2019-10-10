@@ -2,11 +2,17 @@
 #include "GameManager.h"
 
 Lobby::Lobby() {
+
+}
+
+Lobby::~Lobby() {
+	std::cout << "Lobby Destroyed\n";
+
+	players.clear();
 }
 
 void Lobby::Update() {
 	controllersAtStartOfGame = Input::GetInstance()->GetNumGamepads();
-	std::cout << "Controllers: " << controllersAtStartOfGame << std::endl;
 
 	static_cast<UIText*>(objects[0].get())->SetText("Players: " + std::to_string(Input::GetInstance()->GetNumGamepads()));
 }
@@ -17,10 +23,10 @@ void Lobby::Render(SDL_Renderer* gameRenderer) {
 
 void Lobby::ButtonDown(SDL_JoystickID _gamepadID, Uint8 _button) {
 	if (_button == SDL_CONTROLLER_BUTTON_A) {
-		//Go to GameScene
-		//GameManager::GetInstance();
+		GameManager::GetInstance()->Switch(INGAME);
 	} else if (_button == SDL_CONTROLLER_BUTTON_B) {
 		//Go to MenuScene
+		GameManager::GetInstance()->Switch(MENU);
 	}
 }
 
