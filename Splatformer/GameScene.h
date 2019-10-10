@@ -6,7 +6,10 @@
 #include "Coin.h"
 #include "Ball.h"
 #include "RespawnPlatform.h"
+
+//UI Entities
 #include "UIButton.h"
+#include "UIText.h"
 
 class GameScene : public Scene {
 public:
@@ -51,6 +54,9 @@ private:
 	// check if players need to be respawned
 	void ProcessRespawn();
 	void RespawnPlayers();
+
+	std::unique_ptr<UIText> winText;
+	std::vector<std::unique_ptr<UIText>> scores;
 
 	bool gameOver = false;
 };
