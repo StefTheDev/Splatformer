@@ -122,6 +122,11 @@ void Input::HandleEvents(SDL_Event _event)
 
 	case SDL_CONTROLLERDEVICEREMOVED:
 		std::cout << "DEVICEREMOVED cdevice.which = " << _event.cdevice.which << std::endl;
+
+		/*for (auto& controller : connectedControllers) {
+			if(controller->)
+		}*/
+		connectedControllers.clear();
 		Initialise();
 		break;
 

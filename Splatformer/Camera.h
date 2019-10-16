@@ -31,6 +31,7 @@ public:
 
 	SDL_Rect* GetRect();
 
+	bool IsQueueEmpty() { return targetQueue.empty(); }
 
 	std::unique_ptr<Collider> collider;
 private:

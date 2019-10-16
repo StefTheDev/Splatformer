@@ -230,14 +230,24 @@ void GameScene::ProcessRespawn()
 	{
 		if ((*it)->GetActive())
 		{
-			furthestPlatform = (*it);
+			furthestActivatedPlatform = (*it);
+			auto itPlusOne = it + 1;
+			// get the furthestActivatedPlatformPlusOne
+			if (itPlusOne == respawnPoints.end())
+			{
+				furthestActivatedPlatformPlusOne = furthestActivatedPlatform;
+			}
+			else
+			{
+				furthestActivatedPlatformPlusOne = (*itPlusOne);
+			}
 		}
 	}
 
 	// a new RespawnPlatform has been activated
-	if (furthestPlatform->respawnNumber > latestRespawn)
+	if (furthestActivatedPlatform->respawnNumber > latestRespawn)
 	{
-		latestRespawn = furthestPlatform->respawnNumber;
+		latestRespawn = furthestActivatedPlatform->respawnNumber;
 		//check if any player is dead
 		for (auto it = players.begin(); it != players.end(); it++) {
 			if (!(*it)->CheckIsAlive()) {
@@ -282,14 +292,18 @@ void GameScene::RespawnPlayers()
 	//	else break;
 	//}
 
-	if (furthestPlatform != nullptr)
+	if (furthestActivatedPlatform != nullptr)
 	{
 		// send camera to the platform
-		camera.PushTargetFront(Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition()));
+		if (camera.IsQueueEmpty())
+		{
+			camera.PushTargetFront(Vector2(furthestActivatedPlatformPlusOne->GetCollider()->body.get()->GetPosition()));
+		}
+		camera.PushTargetFront(Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()));
 		camera.SetMoveSpeed(500.0f);
 		//camera.SetPosition(Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition()));
 
-		Vector2 spawnPosition = Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition()) - Vector2(0.0f, camera.GetHeight() / 2.0f);
+		Vector2 spawnPosition = Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()) - Vector2(0.0f, camera.GetHeight() / 2.0f);
 		spawnPosition.y += 32.0f;
 
 		// respawn players
