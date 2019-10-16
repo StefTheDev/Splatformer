@@ -297,7 +297,12 @@ void GameScene::RespawnPlayers()
 		// send camera to the platform
 		if (camera.IsQueueEmpty())
 		{
-			camera.PushTargetFront(Vector2(furthestActivatedPlatformPlusOne->GetCollider()->body.get()->GetPosition()));
+			auto it = respawnPoints.end() - 1;
+			while (*it != furthestActivatedPlatformPlusOne)
+			{
+				camera.PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
+				it--;
+			}
 		}
 		camera.PushTargetFront(Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()));
 		camera.SetMoveSpeed(500.0f);
