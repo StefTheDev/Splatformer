@@ -47,7 +47,7 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	winText = std::make_unique<UIText>();
 
 	winText->LoadSprite(nullptr);
-	winText->Initialise(Vector2(0.0f, -500.0f), "Test", 64, SDL_Color{ 255, 255, 255 }, _gameRenderer);
+	winText->Initialise(Vector2(0.0f, -500.0f), "", 64, SDL_Color{ 255, 255, 255 }, _gameRenderer);
 
 	camera.Initialise(sceneWorld.get());
 
@@ -55,7 +55,7 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	camera.PushTargetBack(Vector2(0.0f, 0.0f));
 	camera.SetMoveSpeed(100.0f);*/
 
-	LevelLoader::LoadLevel("Resources/Levels/LevelOne.csv", objects, respawnPoints);
+	LevelLoader::LoadLevel("Resources/Levels/LevelThree.csv", objects, respawnPoints);
 
 
 	std::sort(respawnPoints.begin(), respawnPoints.end(), RespawnPlatform::sortAscending);
@@ -65,10 +65,10 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	LoadControllers();
 	for (auto& object : objects) {
 		switch (object->GetType()) {
-			case PLAYER: static_cast<Player*>(object.get())->Initialise(sceneWorld.get(), playerSprite); break;
-			case PLATFORM: static_cast<Platform*>(object.get())->Initialise(sceneWorld.get(), platformSprite); break;
-			case COIN: static_cast<Coin*>(object.get())->Initialise(sceneWorld.get(), coinSprite); break;
-			case BALL: static_cast<Ball*>(object.get())->Initialise(sceneWorld.get(), ballSprite); break;
+		case PLAYER: static_cast<Player*>(object.get())->Initialise(sceneWorld.get(), playerSprite); break;
+		case PLATFORM: static_cast<Platform*>(object.get())->Initialise(sceneWorld.get(), platformSprite); break;
+		case COIN: static_cast<Coin*>(object.get())->Initialise(sceneWorld.get(), coinSprite); break;
+		case BALL: static_cast<Ball*>(object.get())->Initialise(sceneWorld.get(), ballSprite); break;
 		}
 	}
 
@@ -91,8 +91,8 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	}
 }
 
-void GameScene::Unload()
-{
+void GameScene::Unload() {
+
 	controllers.clear();
 }
 
@@ -137,7 +137,7 @@ void GameScene::Update() {
 			gameOver = true;
 			int winner = 0;
 			int highestScore = INT_MIN;
-			// check who won
+			// check who won 
 			for (int i = 0; i < players.size(); i++)
 			{
 				if ((players[i]->getCoins() - players[i]->GetDeaths()) > highestScore)

@@ -1,9 +1,5 @@
 #pragma once
 
-//#ifndef _DEBUG
-//#define _ITERATOR_DEBUG_LEVEL 1
-//#endif // _DEBUG
-
 #ifndef UTILITIES_H
 #define UTILITIES_H
 
@@ -44,6 +40,7 @@ constexpr float PLAYER_HEIGHT = 50.0f;
 extern float deltaTime;
 extern int WINDOW_WIDTH;
 extern int WINDOW_HEIGHT;
+extern int controllersAtStartOfGame;
 
 struct b2BodyDeleter {
 	void operator()(b2Body* _body) const {

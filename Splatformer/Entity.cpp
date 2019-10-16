@@ -7,6 +7,7 @@ Entity::Entity()
 
 Entity::~Entity()
 {
+	std::cout << "Something destroyed\n";
 }
 
 bool Entity::Initialise(Vector2 _position, Vector2 _dimension)
@@ -42,7 +43,7 @@ void Entity::Render(SDL_Renderer * renderer)
 
 void Entity::Update()
 {
-	if (sprite != nullptr) 
+	if (sprite != nullptr)
 	{
 		if (sprite->IsAnimated()) source.x = source.w * static_cast<int>((SDL_GetTicks() / sprite->GetSpeed()) % sprite->GetFrames());
 

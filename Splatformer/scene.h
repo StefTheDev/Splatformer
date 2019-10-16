@@ -6,6 +6,8 @@
 
 class Scene {
 public:
+	virtual ~Scene();
+
 	void LoadScene(SDL_Renderer* gameRenderer);
 	void UnloadScene();
 

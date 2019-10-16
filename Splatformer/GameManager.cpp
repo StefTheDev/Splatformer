@@ -1,16 +1,10 @@
 #include "GameManager.h"
 #include "SoundManager.h"
 
-#include "MenuScene.h"
-#include "GameScene.h"
-
+#include "SceneStorage.h"
 
 GameManager* GameManager::gameManager = nullptr;
 
-GameManager::GameManager()
-{
-
-}
 
 GameManager::~GameManager()
 {
@@ -19,6 +13,7 @@ GameManager::~GameManager()
 
 bool GameManager::Initialise(std::string _title)
 {
+
 	Uint32 flags = SDL_WINDOW_SHOWN;
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
@@ -38,15 +33,16 @@ bool GameManager::Initialise(std::string _title)
 		timeCurrentFrame = SDL_GetPerformanceCounter();
 
 		if (TTF_Init() == -1) return false;
-	} else {
-		return false;
+
+		scenes.push_back(std::make_unique<SceneStorage<MenuScene>>());
+		scenes.push_back(std::make_unique<SceneStorage<Lobby>>());
+		scenes.push_back(std::make_unique<SceneStorage<GameScene>>());
+
+		scenes[MENU]->LoadScene(renderer);
+
+		Input::GetInstance();
+		Input::GetInstance()->Initialise();
 	}
-
-	scenes.push_back(std::make_unique<MenuScene>());
-	scenes.push_back(std::make_unique<GameScene>());
-
-	Input::GetInstance();
-	Input::GetInstance()->Initialise();
 
 	SoundManager::Initialise();
 	SoundManager::LoadSounds("Resources/Sounds");
@@ -79,6 +75,7 @@ void GameManager::HandleEvents()
 			break;
 		}
 
+
 		scenes[gameState]->HandleEvents(event);
 	}
 }
@@ -92,8 +89,19 @@ void GameManager::Process()
 
 	deltaTime = (float)((timeCurrentFrame - timeLastFrame) / (float)SDL_GetPerformanceFrequency());
 
+
 	scenes[gameState]->UpdateScene();
 	Input::GetInstance()->Process();
+}
+
+void GameManager::CheckSwitch() {
+	if (gameState == nextGameState) return;
+	 
+	scenes[gameState]->UnloadScene();
+
+	gameState = nextGameState;
+
+	scenes[gameState]->LoadScene(renderer);
 }
 
 void GameManager::Clean()
@@ -102,16 +110,13 @@ void GameManager::Clean()
 
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
+
 	SDL_Quit();
 }
 
 void GameManager::Switch(GameState _gameState)
 {
-	if(scenes[gameState]->loaded) scenes[gameState]->UnloadScene();
-
-	gameState = _gameState;
-
-	scenes[gameState]->LoadScene(renderer);
+	nextGameState = _gameState;
 }
 
 GameManager* GameManager::GetInstance()

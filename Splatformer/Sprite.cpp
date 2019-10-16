@@ -12,7 +12,7 @@ Sprite::Sprite(std::string fileName, SDL_Renderer * renderer, bool animated)
 
 Sprite::~Sprite()
 {
-
+	if (texture != nullptr) SDL_DestroyTexture(texture);
 }
 
 void Sprite::Add(std::string name, SpriteAnimation animation)

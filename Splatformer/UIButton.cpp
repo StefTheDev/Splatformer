@@ -9,6 +9,7 @@ UIButton::UIButton() :Entity()
 UIButton::~UIButton()
 {
 	SDL_DestroyTexture(textTexture);
+	std::cout << "UIButton Destroyed\n";
 }
 
 bool UIButton::Initialise(Vector2 position, std::string text, int size, SDL_Renderer* renderer, std::function<void()> onClick)
@@ -18,6 +19,7 @@ bool UIButton::Initialise(Vector2 position, std::string text, int size, SDL_Rend
 	SDL_Surface* fontSurface = TTF_RenderText_Solid(font, text.c_str(), SDL_Color{ 255, 255, 255 });
 	textTexture = SDL_CreateTextureFromSurface(renderer, fontSurface);
 	SDL_FreeSurface(fontSurface);
+	TTF_CloseFont(font);
 
 	int width, height;
 	SDL_QueryTexture(textTexture, NULL, NULL, &width, &height);

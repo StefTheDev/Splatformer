@@ -2,6 +2,7 @@
 
 #include "Utilities.h"
 
+class StorageBase;
 class MenuScene;
 class GameScene;
 class Scene;
@@ -9,6 +10,7 @@ class Scene;
 enum GameState
 {
 	MENU = 0,
+	LOBBY,
 	INGAME,
 	EXIT
 };
@@ -19,7 +21,7 @@ const int FRAME_DELAY = 1000 / FPS;
 class GameManager
 {
 public:
-	GameManager();
+	GameManager() = default;
 	~GameManager();
 
 	bool Initialise(std::string _title);
@@ -27,6 +29,7 @@ public:
 	void Render();
 	void HandleEvents();
 	void Process();
+	void CheckSwitch();
 	void Clean();
 	void Switch(GameState gameState);
 
@@ -44,12 +47,13 @@ private:
 	SDL_Surface * surface;
 
 	GameState gameState = MENU;
+	GameState nextGameState = MENU;
 
 	Uint64 timeCurrentFrame = 0;
 	Uint64 timeLastFrame = 0;
 
 	//Input inputManager;
-	std::vector<std::unique_ptr<Scene>> scenes;
+	std::vector<std::unique_ptr<StorageBase>> scenes;
 
 	static GameManager* gameManager;
 };
