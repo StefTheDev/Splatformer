@@ -63,9 +63,14 @@ void Input::Initialise()
 		{
 			// Open the controller and add it to our list
 			SDL_GameController* pad = SDL_GameControllerOpen(i);
+			
 			if (SDL_GameControllerGetAttached(pad) == 1)
 			{
 				connectedControllers.push_back(pad);
+				char *mapping;
+				mapping = SDL_GameControllerMapping(pad);
+				SDL_Log("Controller %i is mapped as \"%s\".", i, mapping);
+				std::cout << "Controller %i MAPPING: " << mapping << std::endl;
 			}
 			else
 				std::cout << "SDL_GetError() = " << SDL_GetError() << std::endl;
@@ -117,12 +122,21 @@ void Input::HandleEvents(SDL_Event _event)
 		// when the game is running
 	case SDL_CONTROLLERDEVICEADDED:
 		std::cout << "DEVICEADDED cdevice.which = " << _event.cdevice.which << std::endl;
-		Initialise();
+
+		AddController(_event);
+		//Initialise();
 		break;
 
 	case SDL_CONTROLLERDEVICEREMOVED:
 		std::cout << "DEVICEREMOVED cdevice.which = " << _event.cdevice.which << std::endl;
-		Initialise();
+
+		ControllerRemoved(_event);
+
+		/*for (auto& controller : connectedControllers) {
+			if(controller->)
+		}*/
+		/*connectedControllers.clear();
+		Initialise();*/
 		break;
 
 		// If a controller button is pressed
@@ -143,6 +157,7 @@ void Input::HandleEvents(SDL_Event _event)
 		for (int i = 0; i < numGamepads; i++) {
 			if (_event.cbutton.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(connectedControllers[i]))) {
 				controllerInputs[i].buttons[_event.cbutton.button] = false;
+				std::cout << SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(connectedControllers[i])) << std::endl;
 				//std::cout << "BUTTON UP" << std::endl;
 			}
 		}
@@ -159,6 +174,58 @@ void Input::HandleEvents(SDL_Event _event)
 	}
 }
 
-void Input::AddController()
+void Input::AddController(SDL_Event _event)
 {
+
+	//check if a controller was previously removed
+	if (!removedControllers.empty())
+	{
+		// Open the controller and add it to our list
+		SDL_GameController* pad = SDL_GameControllerOpen(_event.cdevice.which);
+
+		if (SDL_GameControllerGetAttached(pad) == 1)
+		{
+			// add the new controller again
+			auto it = connectedControllers.insert(connectedControllers.begin() + _event.cdevice.which,pad);
+			// erase the old controller
+			connectedControllers.erase(it + 1);
+
+			// erase it from removedController
+			auto removedControllersIter = removedControllers.begin();
+			while(removedControllersIter != removedControllers.end())
+			{
+				if (*removedControllersIter == SDL_GameControllerMapping(pad))
+				{
+					removedControllersIter = removedControllers.erase(removedControllersIter);
+				}
+				else removedControllersIter++;
+			}
+			char *mapping;
+			mapping = SDL_GameControllerMapping(pad);
+			SDL_Log("Controller %i is mapped as \"%s\".", _event.cdevice.which, mapping);
+			std::cout << "Controller %i MAPPING: " << mapping << std::endl;
+
+			// reset status for the added controller
+			for (int a = 0; a < SDL_CONTROLLER_AXIS_MAX; a++)
+			{
+				controllerInputs[_event.cdevice.which].axis[a] = 0;
+				lastControllerInputs[_event.cdevice.which].axis[a] = 0;
+			}
+			for (int b = 0; b < SDL_CONTROLLER_BUTTON_MAX; b++)
+			{
+				controllerInputs[_event.cdevice.which].buttons[b] = false;
+				lastControllerInputs[_event.cdevice.which].buttons[b] = false;
+			}
+
+		}
+		else
+			std::cout << "SDL_GetError() = " << SDL_GetError() << std::endl;
+	}
+	
+}
+
+void Input::ControllerRemoved(SDL_Event _event)
+{
+	SDL_GameController* pad = SDL_GameControllerOpen(_event.cdevice.which);
+	removedControllers.push_back(SDL_GameControllerMapping(pad));
 }

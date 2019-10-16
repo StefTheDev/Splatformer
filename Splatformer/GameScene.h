@@ -47,7 +47,9 @@ private:
 	bool paused = false;
 
 	std::vector<RespawnPlatform*> respawnPoints;
-	RespawnPlatform* furthestPlatform = nullptr;
+	RespawnPlatform* furthestActivatedPlatform = nullptr;
+	RespawnPlatform* furthestActivatedPlatformPlusOne = nullptr;
+	//RespawnPlatform* furthest
 	int latestRespawn = -5;
 
 	std::vector<Player*> players;

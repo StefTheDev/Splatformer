@@ -29,6 +29,8 @@ public:
 	void Initialise();
 	void Process();
 	void HandleEvents(SDL_Event _event);
+	void AddController(SDL_Event _event);
+	void ControllerRemoved(SDL_Event _event);
 	int GetNumGamepads() { return numGamepads; }
 	void AddController();
 
@@ -39,6 +41,8 @@ private:
 	std::vector<SDL_GameController*> connectedControllers;
 	std::vector<GamePad> controllerInputs;
 	std::vector<GamePad> lastControllerInputs;
+	std::vector<char*> removedControllers;
+	//std::vector<int> removedControllers;
 	int numGamepads = 0;
 };
 
