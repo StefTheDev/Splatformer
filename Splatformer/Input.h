@@ -31,6 +31,7 @@ public:
 	void HandleEvents(SDL_Event _event);
 	void AddController(SDL_Event _event);
 	void ControllerRemoved(SDL_Event _event);
+	void CountGamePads();
 	int GetNumGamepads() { return numGamepads; }
 	void AddController();
 
