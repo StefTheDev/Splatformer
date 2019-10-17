@@ -165,6 +165,7 @@
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="TimePlatform.cpp" />
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UIText.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="sceneTest.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="TimePlatform.h" />
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="UIText.h" />

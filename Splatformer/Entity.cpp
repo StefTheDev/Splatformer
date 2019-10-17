@@ -7,7 +7,7 @@ Entity::Entity()
 
 Entity::~Entity()
 {
-	std::cout << "Something destroyed\n";
+	
 }
 
 bool Entity::Initialise(Vector2 _position, Vector2 _dimension)
@@ -57,7 +57,7 @@ void Entity::Update()
 
 bool Entity::LoadSprite(std::shared_ptr<Sprite> _sprite)
 {
-	if (_sprite == nullptr) 
+	if (_sprite == nullptr)
 	{
 		sprite = nullptr;
 		return false;

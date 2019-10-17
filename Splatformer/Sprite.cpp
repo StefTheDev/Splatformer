@@ -27,6 +27,30 @@ void Sprite::Play(std::string name)
 	speed = animations[name].speed;
 }
 
+void Sprite::Draw(SDL_Renderer* _renderer, Vector2 _position, Vector2 _dimensions, double _angle, int _frame, int _layer) {
+	if (texture == nullptr) return;
+
+	srcRect.x = _frame * _dimensions.x;
+	srcRect.y = _layer * _dimensions.y;
+
+	SDL_Rect dest = {
+		_position.x,
+		_position.y,
+		_dimensions.x,
+		_dimensions.y
+	};
+
+	SDL_RenderCopyEx(
+		_renderer,
+		texture,
+		&srcRect,
+		&dest,
+		_angle,
+		NULL,
+		SDL_FLIP_NONE
+	);
+}
+
 SDL_Texture * Sprite::GetTexture()
 {
 	return texture;
@@ -50,4 +74,10 @@ int Sprite::GetIndex() const
 bool Sprite::IsAnimated() const
 {
 	return animated;
+}
+
+void Sprite::SetSource(Vector2 _dimensions) {
+	srcRect.x = srcRect.y = 0;
+	srcRect.w = _dimensions.x;
+	srcRect.h = _dimensions.y;
 }

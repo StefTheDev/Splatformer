@@ -2,6 +2,7 @@
 
 #include "LevelLoader.h"
 #include "GameManager.h"
+#include "SpriteManager.h"
 
 constexpr int velIterations = 8;
 constexpr int posIterations = 3;
@@ -38,9 +39,18 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	}
 
 	playerSprite = std::make_shared<Sprite>("Resources/Sprites/Apple.png", _gameRenderer, false);
-	platformSprite = std::make_shared<Sprite>("Resources/Sprites/platform.png", _gameRenderer, false);
+	platformSprite = std::make_shared<Sprite>("Resources/Sprites/PlatformSpriteSheet.png", _gameRenderer, false);
+	platformSprite->SetSource({64.0f, 32.0f});
 	coinSprite = std::make_shared<Sprite>("Resources/Sprites/Carrot.png", _gameRenderer, false);
 	ballSprite = std::make_shared<Sprite>("Resources/Sprites/Onion.png", _gameRenderer, false);
+
+	SpriteManager::Get()->AddSprite("JumpPlatCounter", std::make_shared<Sprite>("Resources/Sprites/GemSpriteSheet.png", _gameRenderer, false));
+	SpriteManager::Get()->GetSprite("JumpPlatCounter")->SetSource(Vector2(32.0f, 32.0f));
+
+	/*objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER1));
+	players.push_back((Player*)objects.back().get());*/
+	//objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER2));
+	//players.push_back((Player*)objects.back().get());
 
 	std::unique_ptr<UIButton> button = std::make_unique<UIButton>();
 	button->LoadSprite(buttonSprite);
