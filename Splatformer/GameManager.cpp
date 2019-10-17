@@ -125,6 +125,11 @@ void GameManager::AddScore(ScoreData scoreData)
 	scores.push_back(scoreData);
 }
 
+void GameManager::Clear()
+{
+	scores.clear();
+}
+
 GameManager* GameManager::GetInstance()
 {
 	if (gameManager == nullptr) gameManager = new GameManager();
