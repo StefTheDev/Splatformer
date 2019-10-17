@@ -122,14 +122,14 @@ void Input::HandleEvents(SDL_Event _event)
 		// when the game is running
 	case SDL_CONTROLLERDEVICEADDED:
 		std::cout << "DEVICEADDED cdevice.which = " << _event.cdevice.which << std::endl;
-
+		CountGamePads();
 		AddController(_event);
 		//Initialise();
 		break;
 
 	case SDL_CONTROLLERDEVICEREMOVED:
 		std::cout << "DEVICEREMOVED cdevice.which = " << _event.cdevice.which << std::endl;
-
+		CountGamePads();
 		ControllerRemoved(_event);
 
 		/*for (auto& controller : connectedControllers) {
@@ -228,4 +228,22 @@ void Input::ControllerRemoved(SDL_Event _event)
 {
 	SDL_GameController* pad = SDL_GameControllerOpen(_event.cdevice.which);
 	removedControllers.push_back(SDL_GameControllerMapping(pad));
+}
+
+void Input::CountGamePads()
+{
+	int nJoysticks = SDL_NumJoysticks();
+	numGamepads = 0;
+
+	//Count how many controllers there are
+	for (int i = 0; i < nJoysticks; i++)
+	{
+		if (SDL_IsGameController(i))
+		{
+			numGamepads++;
+		}
+	}
+
+	// Limit it to four
+	if (numGamepads > 4) numGamepads = 4; // just in case more than 4 controllers are plugged in
 }
