@@ -6,6 +6,7 @@
 class Player : public Entity {
 public:
 	Player(Vector2 position, Controllers playerNum);
+	~Player();
 
 	void Initialise(b2World* world, std::shared_ptr<Sprite> playSprite);
 	void Render(SDL_Renderer * renderer);

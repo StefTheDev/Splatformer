@@ -27,6 +27,7 @@ constexpr int MASK_CAMERA_DEFAULT		= 0b0000100;
 class Collider {
 public:
 	Collider(Vector2 position, DataContainer colliderData, Vector2 dimensions = { 32.0f, 32.0f });
+	~Collider();
 
 	//Initialise immovable collider
 	void InitialiseStatic(b2World* worldRef, bool isSensor = false);

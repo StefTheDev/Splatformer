@@ -91,7 +91,8 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	}
 }
 
-void GameScene::Unload() {
+void GameScene::Unload()
+{
 
 	controllers.clear();
 }

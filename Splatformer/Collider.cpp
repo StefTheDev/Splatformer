@@ -6,6 +6,11 @@ Collider::Collider(Vector2 _position, DataContainer _colliderData, Vector2 _dime
 	colliderData = _colliderData;
 }
 
+Collider::~Collider()
+{
+
+}
+
 void Collider::InitialiseStatic(b2World* _world, bool _isSensor) {
 	b2Vec2 b2Dimensions = (dimensions/2.0f).AsBox2D();
 	

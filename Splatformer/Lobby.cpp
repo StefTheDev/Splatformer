@@ -55,4 +55,5 @@ void Lobby::Load(SDL_Renderer* _gameRenderer)
 }
 
 void Lobby::Unload() {
+
 }

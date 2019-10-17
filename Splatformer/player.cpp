@@ -18,6 +18,11 @@ Player::Player(Vector2 _position, Controllers _playerNum) {
 	Entity::Initialise(_position, { width, height });
 }
 
+Player::~Player()
+{
+	delete storedBall;
+}
+
 void Player::Initialise(b2World* _world, std::shared_ptr<Sprite> _playerSprite) {
 	if (!LoadSprite(_playerSprite)) return;
 
