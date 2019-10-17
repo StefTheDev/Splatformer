@@ -8,6 +8,7 @@ class GameScene;
 class WinScene;
 class Scene;
 
+
 enum GameState
 {
 	MENU = 0,
