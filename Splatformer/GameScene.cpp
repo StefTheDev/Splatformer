@@ -298,14 +298,25 @@ void GameScene::RespawnPlayers()
 		if (camera.IsQueueEmpty())
 		{
 			auto it = respawnPoints.end() - 1;
-			while (*it != furthestActivatedPlatformPlusOne)
+			/*if (*it == furthestActivatedPlatformPlusOne)
+			{
+				camera.PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
+			}
+			while (*it != furthestActivatedPlatform)
 			{
 				camera.PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
 				it--;
-			}
+			}*/
+
+			do 
+			{
+				camera.PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
+				it--;
+			} while (*it != furthestActivatedPlatform && it != respawnPoints.begin());
 		}
 		camera.PushTargetFront(Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()));
-		camera.SetMoveSpeed(500.0f);
+	
+		camera.SetMoveSpeed(1500.0f);
 		//camera.SetPosition(Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition()));
 
 		Vector2 spawnPosition = Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()) - Vector2(0.0f, camera.GetHeight() / 2.0f);
