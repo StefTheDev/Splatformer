@@ -9,7 +9,7 @@ constexpr int posIterations = 3;
 GameScene::GameScene() {
 	b2Vec2 gravity(0.0f, -39.2f);
 
-	camera = Camera(1920.0f, 1080.0f);
+	camera = new Camera(1920.0f, 1080.0f);
 
 	contactListener = new PlatformingListener();
 
@@ -21,7 +21,7 @@ GameScene::GameScene() {
 
 GameScene::~GameScene()
 {
-
+	delete camera;
 
 	/*
 	delete furthestActivatedPlatform;
@@ -55,7 +55,7 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	winText->LoadSprite(nullptr);
 	winText->Initialise(Vector2(0.0f, -500.0f), "", 64, SDL_Color{ 255, 255, 255 }, _gameRenderer);
 
-	camera.Initialise(sceneWorld.get());
+	camera->Initialise(sceneWorld.get());
 
 	/*camera.PushTargetBack(Vector2(1200.0f, 0.0f));
 	camera.PushTargetBack(Vector2(0.0f, 0.0f));
@@ -80,11 +80,11 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 
 	respawnPoints[0]->Activate();
 
-	camera.SetPosition(respawnPoints[0]->GetPosition());
+	camera->SetPosition(respawnPoints[0]->GetPosition());
 	for (auto it = respawnPoints.begin(); it != respawnPoints.end(); it++) {
-		camera.PushTargetBack((*it)->GetPosition());
+		camera->PushTargetBack((*it)->GetPosition());
 	}
-	camera.SetMoveSpeed(100.0f);
+	camera->SetMoveSpeed(100.0f);
 
 
 	for (int i = 0; i < players.size(); i++)
@@ -126,17 +126,17 @@ void GameScene::Update() {
 			}
 			else {
 				switch ((*entity)->GetType()) {
-				case PLAYER: static_cast<Player*>((*entity).get())->Update(&camera); break;
-				case PLATFORM: static_cast<Platform*>((*entity).get())->Update(&camera, timeElapsed); break;
-				case COIN: static_cast<Coin*>((*entity).get())->Update(&camera); break;
-				case BALL: static_cast<Ball*>((*entity).get())->Update(&camera); break;
+				case PLAYER: static_cast<Player*>((*entity).get())->Update(camera); break;
+				case PLATFORM: static_cast<Platform*>((*entity).get())->Update(camera, timeElapsed); break;
+				case COIN: static_cast<Coin*>((*entity).get())->Update(camera); break;
+				case BALL: static_cast<Ball*>((*entity).get())->Update(camera); break;
 				}
 			}
 		}
 
 
 		ProcessRespawn();
-		camera.Update();
+		camera->Update();
 
 		// the final checkpoint has been reached
 		if (respawnPoints.back()->GetActive())
@@ -295,20 +295,20 @@ void GameScene::RespawnPlayers()
 	if (furthestActivatedPlatform != nullptr)
 	{
 		// send camera to the platform
-		if (camera.IsQueueEmpty())
+		if (camera->IsQueueEmpty())
 		{
 			auto it = respawnPoints.end() - 1;
 			while (*it != furthestActivatedPlatformPlusOne)
 			{
-				camera.PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
+				camera->PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
 				it--;
 			}
 		}
-		camera.PushTargetFront(Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()));
-		camera.SetMoveSpeed(500.0f);
+		camera->PushTargetFront(Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()));
+		camera->SetMoveSpeed(500.0f);
 		//camera.SetPosition(Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition()));
 
-		Vector2 spawnPosition = Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()) - Vector2(0.0f, camera.GetHeight() / 2.0f);
+		Vector2 spawnPosition = Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()) - Vector2(0.0f, camera->GetHeight() / 2.0f);
 		spawnPosition.y += 32.0f;
 
 		// respawn players

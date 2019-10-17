@@ -41,6 +41,7 @@ public:
 	void Switch(GameState gameState);
 
 	void AddScore(ScoreData scoreData);
+	void Clear();
 
 	SDL_Window * GetWindow();
 	SDL_Renderer* GetRenderer();

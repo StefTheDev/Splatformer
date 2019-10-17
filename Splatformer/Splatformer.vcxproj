@@ -161,7 +161,6 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="RespawnPlatform.cpp" />
     <ClCompile Include="scene.cpp" />
-    <ClCompile Include="sceneTest.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -190,7 +189,6 @@
     <ClInclude Include="RespawnPlatform.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="SceneStorage.h" />
-    <ClInclude Include="sceneTest.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TimePlatform.h" />

@@ -14,6 +14,7 @@ float MapBetween(float x, float lower, float upper, float min, float max) {
 
 Scene::~Scene() {
 	std::cout << "Scene Destroyed\n";
+
 	objects.clear();
 	std::vector<std::unique_ptr<Entity>>().swap(objects);
 }
@@ -158,5 +159,5 @@ void Scene::Quit() {
 }
 
 Camera* Scene::GetCamera() {
-	return &camera;
+	return camera;
 }
