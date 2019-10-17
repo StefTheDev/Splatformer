@@ -12,7 +12,8 @@ enum EntityType {
 	COIN,
 	BALL,
 	BUTTON,
-	TEXT
+	TEXT,
+	BACKGROUND
 };
 
 class Entity
