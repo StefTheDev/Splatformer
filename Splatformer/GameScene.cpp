@@ -18,6 +18,18 @@ GameScene::GameScene() {
 	sceneWorld->SetAllowSleeping(false);
 }
 
+
+GameScene::~GameScene()
+{
+
+
+	/*
+	delete furthestActivatedPlatform;
+	delete furthestActivatedPlatformPlusOne;
+	delete contactListener;
+	*/
+}
+
 void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	for (int i = 0; i < SDL_NumJoysticks(); ++i) {
 		if (SDL_IsGameController(i)) {
@@ -29,12 +41,6 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	platformSprite = std::make_shared<Sprite>("Resources/Sprites/platform.png", _gameRenderer, false);
 	coinSprite = std::make_shared<Sprite>("Resources/Sprites/Carrot.png", _gameRenderer, false);
 	ballSprite = std::make_shared<Sprite>("Resources/Sprites/Onion.png", _gameRenderer, false);
-
-
-	/*objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER1));
-	players.push_back((Player*)objects.back().get());*/
-	//objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER2));
-	//players.push_back((Player*)objects.back().get());
 
 	std::unique_ptr<UIButton> button = std::make_unique<UIButton>();
 	button->LoadSprite(buttonSprite);
@@ -136,19 +142,12 @@ void GameScene::Update() {
 		if (respawnPoints.back()->GetActive())
 		{
 			gameOver = true;
-			int winner = 0;
-			int highestScore = INT_MIN;
 			// check who won 
 			for (int i = 0; i < players.size(); i++)
 			{
-				if ((players[i]->getCoins() - players[i]->GetDeaths()) > highestScore)
-				{
-					winner = i;
-					highestScore = (players[i]->getCoins() - players[i]->GetDeaths());
-				}
+				int score = players[i]->getCoins() - players[i]->GetDeaths();
+				GameManager::GetInstance()->AddScore(ScoreData{i, score });
 			}
-
-			GameManager::GetInstance()->SetWinner(winner + 1);
 			GameManager::GetInstance()->Switch(WINNING);
 		}
 	}
@@ -208,6 +207,7 @@ void GameScene::LoadControllers()
 
 void GameScene::ControllerCheck()
 {
+	if (sceneWorld == nullptr) return;
 	// TODO: Incomplete. Either move to lobby scene or scrap since we are no longer adding players while the game is running
 	if (Input::GetInstance()->GetNumGamepads() > players.size())
 	{

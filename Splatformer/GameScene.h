@@ -14,6 +14,7 @@
 class GameScene : public Scene {
 public:
 	GameScene();
+	~GameScene();
 
 	void Update() override;
 	void Render(SDL_Renderer* gameRenderer) override;
@@ -49,7 +50,7 @@ private:
 	std::vector<RespawnPlatform*> respawnPoints;
 	RespawnPlatform* furthestActivatedPlatform = nullptr;
 	RespawnPlatform* furthestActivatedPlatformPlusOne = nullptr;
-	//RespawnPlatform* furthest
+
 	int latestRespawn = -5;
 
 	std::vector<Player*> players;
