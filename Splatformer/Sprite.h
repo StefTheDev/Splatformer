@@ -36,6 +36,8 @@ public:
 	int GetFrames() const;
 	int GetIndex() const;
 	bool IsAnimated() const;
+	void Draw(SDL_Renderer* _renderer, Vector2 _position, Vector2 _dimensions, double _angle, int _frame, int _layer);
+	void SetSource(Vector2 _dimensions);
 
 private:
 

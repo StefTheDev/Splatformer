@@ -51,3 +51,30 @@ bool Sprite::IsAnimated() const
 {
 	return animated;
 }
+
+void Sprite::Draw(SDL_Renderer* _renderer, Vector2 _position, Vector2 _dimensions, double _angle, int _frame, int _layer) {
+	if (texture == nullptr) return;
+
+	SDL_Rect dest = {
+		_position.x,
+		_position.y,
+		_dimensions.x,
+		_dimensions.y
+	};
+
+	SDL_RenderCopyEx(
+		_renderer,
+		texture,
+		&srcRect,
+		&dest,
+		_angle,
+		NULL,
+		SDL_FLIP_NONE
+	);
+}
+
+void Sprite::SetSource(Vector2 _dimensions) {
+	srcRect.x = srcRect.y = 0;
+	srcRect.w = _dimensions.x;
+	srcRect.h = _dimensions.y;
+}

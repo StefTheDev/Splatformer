@@ -6,6 +6,7 @@
 #include "Ball.h"
 #include "UIText.h"
 #include "UIButton.h"
+#include "Background.h"
 
 //Map a value, x, that exists between lower and upper, to a value between min and max
 float MapBetween(float x, float lower, float upper, float min, float max) {
@@ -45,6 +46,7 @@ void Scene::UpdateScene() {
 }
 
 void Scene::RenderScene(SDL_Renderer* _gameRenderer) {
+
 	for (auto& entity : objects) {
 		switch (entity->GetType()) {
 			case PLAYER: static_cast<Player*>(entity.get())->Render(_gameRenderer); break;
@@ -53,6 +55,7 @@ void Scene::RenderScene(SDL_Renderer* _gameRenderer) {
 			case BALL: static_cast<Ball*>(entity.get())->Render(_gameRenderer); break;
 			case BUTTON: static_cast<UIButton*>(entity.get())->Render(_gameRenderer); break;
 			case TEXT: static_cast<UIText*>(entity.get())->Render(_gameRenderer); break;
+			case BACKGROUND: static_cast<Background*>(entity.get())->Render(_gameRenderer); break;
 		}
 	}
 

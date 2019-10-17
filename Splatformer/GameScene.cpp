@@ -2,6 +2,7 @@
 
 #include "LevelLoader.h"
 #include "GameManager.h"
+#include "Background.h"
 
 constexpr int velIterations = 8;
 constexpr int posIterations = 3;
@@ -38,9 +39,17 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	}
 
 	playerSprite = std::make_shared<Sprite>("Resources/Sprites/Apple.png", _gameRenderer, false);
-	platformSprite = std::make_shared<Sprite>("Resources/Sprites/platform.png", _gameRenderer, false);
-	coinSprite = std::make_shared<Sprite>("Resources/Sprites/Carrot.png", _gameRenderer, false);
-	ballSprite = std::make_shared<Sprite>("Resources/Sprites/Onion.png", _gameRenderer, false);
+	platformSprite = std::make_shared<Sprite>("Resources/Sprites/platform_base.png", _gameRenderer, false);
+	coinSprite = std::make_shared<Sprite>("Resources/Sprites/coin.png", _gameRenderer, false);
+	ballSprite = std::make_shared<Sprite>("Resources/Sprites/ball.png", _gameRenderer, false);
+	backgroundSprite = std::make_shared<Sprite>("Resources/Sprites/Background.png", _gameRenderer, false);
+
+	backgroundSprite->SetSource(Vector2(2500, 1080));
+
+	/*objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER1));
+	players.push_back((Player*)objects.back().get());*/
+	//objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER2));
+	//players.push_back((Player*)objects.back().get());
 
 	std::unique_ptr<UIButton> button = std::make_unique<UIButton>();
 	button->LoadSprite(buttonSprite);
@@ -61,12 +70,12 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	camera.PushTargetBack(Vector2(0.0f, 0.0f));
 	camera.SetMoveSpeed(100.0f);*/
 
+	std::unique_ptr<Background> background = std::make_unique<Background>(Vector2(0.0f,0.0f));
+	objects.push_back(std::move(background));
+
 	LevelLoader::LoadLevel("Resources/Levels/LevelThree.csv", objects, respawnPoints);
 
-
 	std::sort(respawnPoints.begin(), respawnPoints.end(), RespawnPlatform::sortAscending);
-
-
 
 	LoadControllers();
 	for (auto& object : objects) {
@@ -75,6 +84,7 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 		case PLATFORM: static_cast<Platform*>(object.get())->Initialise(sceneWorld.get(), platformSprite); break;
 		case COIN: static_cast<Coin*>(object.get())->Initialise(sceneWorld.get(), coinSprite); break;
 		case BALL: static_cast<Ball*>(object.get())->Initialise(sceneWorld.get(), ballSprite); break;
+		case BACKGROUND: static_cast<Background*>(object.get())->Initialise(sceneWorld.get(), backgroundSprite); break;
 		}
 	}
 
@@ -104,6 +114,7 @@ void GameScene::Unload()
 }
 
 void GameScene::Update() {
+
 	sceneWorld->Step(deltaTime, velIterations, posIterations);
 
 	timeElapsed += deltaTime;
@@ -142,7 +153,7 @@ void GameScene::Update() {
 		if (respawnPoints.back()->GetActive())
 		{
 			gameOver = true;
-			// check who won 
+			// check who won
 			for (int i = 0; i < players.size(); i++)
 			{
 				int score = players[i]->getCoins() - players[i]->GetDeaths();
@@ -154,6 +165,7 @@ void GameScene::Update() {
 }
 
 void GameScene::Render(SDL_Renderer* _gameRenderer) {
+
 	winText->Render(_gameRenderer);
 
 	for (int i = 0; i < players.size(); i++)
@@ -298,14 +310,26 @@ void GameScene::RespawnPlayers()
 		if (camera->IsQueueEmpty())
 		{
 			auto it = respawnPoints.end() - 1;
-			while (*it != furthestActivatedPlatformPlusOne)
+			/*if (*it == furthestActivatedPlatformPlusOne)
 			{
 				camera->PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
 				it--;
 			}
+			while (*it != furthestActivatedPlatform)
+			{
+				camera.PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
+				it--;
+			}*/
+
+			do
+			{
+				camera.PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
+				it--;
+			} while (*it != furthestActivatedPlatform && it != respawnPoints.begin());
 		}
-		camera->PushTargetFront(Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()));
-		camera->SetMoveSpeed(500.0f);
+		camera.PushTargetFront(Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()));
+
+		camera.SetMoveSpeed(1500.0f);
 		//camera.SetPosition(Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition()));
 
 		Vector2 spawnPosition = Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()) - Vector2(0.0f, camera->GetHeight() / 2.0f);

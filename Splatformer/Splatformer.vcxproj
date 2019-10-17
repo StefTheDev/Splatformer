@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Background.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Coin.cpp" />
@@ -161,6 +162,7 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="RespawnPlatform.cpp" />
     <ClCompile Include="scene.cpp" />
+    <ClCompile Include="sceneTest.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -172,6 +174,7 @@
     <ClCompile Include="WinScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Background.h" />
     <ClInclude Include="Ball.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Coin.h" />
@@ -189,6 +192,7 @@
     <ClInclude Include="RespawnPlatform.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="SceneStorage.h" />
+    <ClInclude Include="sceneTest.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TimePlatform.h" />
