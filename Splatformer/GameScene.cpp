@@ -49,20 +49,7 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	/*objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER1));
 	players.push_back((Player*)objects.back().get());*/
 	//objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER2));
-	//players.push_back((Player*)objects.back().get());
-
-	std::unique_ptr<UIButton> button = std::make_unique<UIButton>();
-	button->LoadSprite(buttonSprite);
-	button->Initialise(Vector2((-WINDOW_WIDTH/2) + 100, -500.0f), "Menu", 32, _gameRenderer, [this] {
-		GameManager::GetInstance()->Switch(MENU);
-	});
-
-	objects.push_back(std::move(button));
-
-	winText = std::make_unique<UIText>();
-
-	winText->LoadSprite(nullptr);
-	winText->Initialise(Vector2(0.0f, -500.0f), "", 64, SDL_Color{ 255, 255, 255 }, _gameRenderer);
+	//players.push_back((Player*)objects.back().get())
 
 	camera->Initialise(sceneWorld.get());
 
@@ -105,6 +92,14 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 
 		scores.push_back(std::move(score));
 	}
+
+	std::unique_ptr<UIButton> button = std::make_unique<UIButton>();
+	button->LoadSprite(buttonSprite);
+	button->Initialise(Vector2((-WINDOW_WIDTH / 2) + 100, -500.0f), "Menu", 32, _gameRenderer, [this] {
+		GameManager::GetInstance()->Switch(MENU);
+		});
+
+	objects.push_back(std::move(button));
 }
 
 void GameScene::Unload()
@@ -118,8 +113,6 @@ void GameScene::Update() {
 	sceneWorld->Step(deltaTime, velIterations, posIterations);
 
 	timeElapsed += deltaTime;
-
-	winText->Update();
 
 	for (int i = 0; i < players.size(); i++)
 	{
@@ -164,9 +157,9 @@ void GameScene::Update() {
 	}
 }
 
-void GameScene::Render(SDL_Renderer* _gameRenderer) {
+void GameScene::Render(SDL_Renderer* _gameRenderer) 
+{
 
-	winText->Render(_gameRenderer);
 
 	for (int i = 0; i < players.size(); i++)
 	{
@@ -323,13 +316,13 @@ void GameScene::RespawnPlayers()
 
 			do
 			{
-				camera.PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
+				camera->PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
 				it--;
 			} while (*it != furthestActivatedPlatform && it != respawnPoints.begin());
 		}
-		camera.PushTargetFront(Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()));
+		camera->PushTargetFront(Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()));
 
-		camera.SetMoveSpeed(1500.0f);
+		camera->SetMoveSpeed(1500.0f);
 		//camera.SetPosition(Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition()));
 
 		Vector2 spawnPosition = Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()) - Vector2(0.0f, camera->GetHeight() / 2.0f);

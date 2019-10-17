@@ -111,9 +111,6 @@
     <ClCompile Include="LevelLoader.cpp">
       <Filter>Source Files\Loaders</Filter>
     </ClCompile>
-    <ClCompile Include="sceneTest.cpp">
-      <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="JumpPlatform.cpp">
       <Filter>Source Files\Entities\Platforms</Filter>
     </ClCompile>
@@ -193,9 +190,6 @@
     </ClInclude>
     <ClInclude Include="LevelLoader.h">
       <Filter>Header Files\Loaders</Filter>
-    </ClInclude>
-    <ClInclude Include="sceneTest.h">
-      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Ball.h">
       <Filter>Header Files\Entities\Collectables</Filter>
