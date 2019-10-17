@@ -30,12 +30,15 @@ public:
 	//Animation
 	void Add(std::string, SpriteAnimation);
 	void Play(std::string);
+	void Draw(SDL_Renderer* renderer, Vector2 position, Vector2 dimensions, double angle = 0.0, int frame = 0, int layer = 0);
 
 	//Data
 	int GetSpeed() const;
 	int GetFrames() const;
 	int GetIndex() const;
 	bool IsAnimated() const;
+
+	void SetSource(Vector2 dimensions);
 
 private:
 

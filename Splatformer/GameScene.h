@@ -14,6 +14,7 @@
 class GameScene : public Scene {
 public:
 	GameScene();
+	~GameScene();
 
 	void Update() override;
 	void Render(SDL_Renderer* gameRenderer) override;
@@ -35,7 +36,7 @@ private:
 	std::unique_ptr<b2World> sceneWorld;
 	PlatformingListener* contactListener;
 
-	std::shared_ptr<Sprite> playerSprite, platformSprite, buttonSprite, coinSprite, ballSprite;
+	std::shared_ptr<Sprite> playerSprite, platformSprite, buttonSprite, coinSprite, ballSprite, backgroundSprite;
 
 	std::vector<SDL_GameController*> controllers;
 
@@ -49,7 +50,7 @@ private:
 	std::vector<RespawnPlatform*> respawnPoints;
 	RespawnPlatform* furthestActivatedPlatform = nullptr;
 	RespawnPlatform* furthestActivatedPlatformPlusOne = nullptr;
-	//RespawnPlatform* furthest
+
 	int latestRespawn = -5;
 
 	std::vector<Player*> players;

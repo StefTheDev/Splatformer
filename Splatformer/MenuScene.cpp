@@ -56,7 +56,6 @@ void MenuScene::Load(SDL_Renderer* _gameRenderer)
 	});
 
 	objects.push_back(std::move(exit));
-
 }
 
 void MenuScene::Unload()

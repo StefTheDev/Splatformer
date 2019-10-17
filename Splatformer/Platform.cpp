@@ -13,10 +13,14 @@ Platform::Platform(TileInfo _info) {
 }
 
 void Platform::Initialise(b2World* _world, std::shared_ptr<Sprite> _platformSprite) {
-	std::cout << "Platform Init Called\n";
+	std::cout << "Base Platform initialised\n";
+
 	if (!LoadSprite(_platformSprite)) std::cout << "ERROR: Couldn't load sprite\n";
 
-	GetSprite()->Add("idle", SpriteAnimation{ 0, 1, 500 }); //Index, frames, speed
+	GetSprite()->Add("solid", SpriteAnimation{ 0, 1, 500 }); //Index, frames, speed
+	GetSprite()->Add("notSolid", SpriteAnimation{ 1, 1, 500 }); //Index, frames, speed
+
+	GetSprite()->Play("solid");
 
 	DataContainer info = {
 		ColliderType::PLT,
@@ -39,9 +43,18 @@ void Platform::Initialise(b2World* _world, std::shared_ptr<Sprite> _platformSpri
 void Platform::Update(Camera* _gameCamera, float _sceneTime) {
 	SetPosition(collider->GetPosition() - _gameCamera->GetPosition());
 
-	GetSprite()->Play("idle");
-
 	Entity::Update();
+}
+
+void Platform::Render(SDL_Renderer* _renderer) {
+	GetSprite()->Draw(
+		_renderer,
+		position,
+		Vector2(thisInfo.dimensions.x * width, thisInfo.dimensions.y * height),
+		0.0f,
+		0,
+		0
+	);
 }
 
 void Platform::SetCanCollide(bool _canCollide) {

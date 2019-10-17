@@ -54,5 +54,5 @@ protected:
 
 
 	std::vector<std::unique_ptr<Entity>> objects;
-	Camera camera;
+	Camera* camera;
 };

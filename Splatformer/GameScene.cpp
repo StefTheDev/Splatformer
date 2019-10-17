@@ -2,6 +2,8 @@
 
 #include "LevelLoader.h"
 #include "GameManager.h"
+#include "SpriteManager.h"
+#include "Background.h"
 
 constexpr int velIterations = 8;
 constexpr int posIterations = 3;
@@ -9,13 +11,25 @@ constexpr int posIterations = 3;
 GameScene::GameScene() {
 	b2Vec2 gravity(0.0f, -39.2f);
 
-	camera = Camera(1920.0f, 1080.0f);
+	camera = new Camera(1920.0f, 1080.0f);
 
 	contactListener = new PlatformingListener();
 
 	sceneWorld = std::make_unique<b2World>(gravity);
 	sceneWorld->SetContactListener(contactListener);
 	sceneWorld->SetAllowSleeping(false);
+}
+
+
+GameScene::~GameScene()
+{
+	delete camera;
+
+	/*
+	delete furthestActivatedPlatform;
+	delete furthestActivatedPlatformPlusOne;
+	delete contactListener;
+	*/
 }
 
 void GameScene::Load(SDL_Renderer* _gameRenderer) {
@@ -26,41 +40,24 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	}
 
 	playerSprite = std::make_shared<Sprite>("Resources/Sprites/Apple.png", _gameRenderer, false);
-	platformSprite = std::make_shared<Sprite>("Resources/Sprites/platform.png", _gameRenderer, false);
-	coinSprite = std::make_shared<Sprite>("Resources/Sprites/Carrot.png", _gameRenderer, false);
-	ballSprite = std::make_shared<Sprite>("Resources/Sprites/Onion.png", _gameRenderer, false);
+	platformSprite = std::make_shared<Sprite>("Resources/Sprites/PlatformSpriteSheet.png", _gameRenderer, false);
+	platformSprite->SetSource({64.0f, 32.0f});
+	coinSprite = std::make_shared<Sprite>("Resources/Sprites/coin.png", _gameRenderer, false);
+	ballSprite = std::make_shared<Sprite>("Resources/Sprites/ball.png", _gameRenderer, false);
+	backgroundSprite = std::make_shared<Sprite>("Resources/Sprites/Background.png", _gameRenderer, false);
+	backgroundSprite->SetSource(Vector2(2500, 1080));
 
+	SpriteManager::Get()->AddSprite("JumpPlatCounter", std::make_shared<Sprite>("Resources/Sprites/GemSpriteSheet.png", _gameRenderer, false));
+	SpriteManager::Get()->GetSprite("JumpPlatCounter")->SetSource(Vector2(32.0f, 32.0f));
 
-	/*objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER1));
-	players.push_back((Player*)objects.back().get());*/
-	//objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), PLAYER2));
-	//players.push_back((Player*)objects.back().get());
+	camera->Initialise(sceneWorld.get());
 
-	std::unique_ptr<UIButton> button = std::make_unique<UIButton>();
-	button->LoadSprite(buttonSprite);
-	button->Initialise(Vector2((-WINDOW_WIDTH/2) + 100, -500.0f), "Menu", 32, _gameRenderer, [this] {
-		GameManager::GetInstance()->Switch(MENU);
-	});
-
-	objects.push_back(std::move(button));
-
-	winText = std::make_unique<UIText>();
-
-	winText->LoadSprite(nullptr);
-	winText->Initialise(Vector2(0.0f, -500.0f), "", 64, SDL_Color{ 255, 255, 255 }, _gameRenderer);
-
-	camera.Initialise(sceneWorld.get());
-
-	/*camera.PushTargetBack(Vector2(1200.0f, 0.0f));
-	camera.PushTargetBack(Vector2(0.0f, 0.0f));
-	camera.SetMoveSpeed(100.0f);*/
+	std::unique_ptr<Background> background = std::make_unique<Background>(Vector2(0.0f,0.0f));
+	objects.push_back(std::move(background));
 
 	LevelLoader::LoadLevel("Resources/Levels/LevelThree.csv", objects, respawnPoints);
 
-
 	std::sort(respawnPoints.begin(), respawnPoints.end(), RespawnPlatform::sortAscending);
-
-
 
 	LoadControllers();
 	for (auto& object : objects) {
@@ -69,16 +66,17 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 		case PLATFORM: static_cast<Platform*>(object.get())->Initialise(sceneWorld.get(), platformSprite); break;
 		case COIN: static_cast<Coin*>(object.get())->Initialise(sceneWorld.get(), coinSprite); break;
 		case BALL: static_cast<Ball*>(object.get())->Initialise(sceneWorld.get(), ballSprite); break;
+		case BACKGROUND: static_cast<Background*>(object.get())->Initialise(sceneWorld.get(), backgroundSprite); break;
 		}
 	}
 
 	respawnPoints[0]->Activate();
 
-	camera.SetPosition(respawnPoints[0]->GetPosition());
+	camera->SetPosition(respawnPoints[0]->GetPosition());
 	for (auto it = respawnPoints.begin(); it != respawnPoints.end(); it++) {
-		camera.PushTargetBack((*it)->GetPosition());
+		camera->PushTargetBack((*it)->GetPosition());
 	}
-	camera.SetMoveSpeed(100.0f);
+	camera->SetMoveSpeed(100.0f);
 
 
 	for (int i = 0; i < players.size(); i++)
@@ -89,6 +87,14 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 
 		scores.push_back(std::move(score));
 	}
+
+	std::unique_ptr<UIButton> button = std::make_unique<UIButton>();
+	button->LoadSprite(buttonSprite);
+	button->Initialise(Vector2((-WINDOW_WIDTH / 2) + 100, -500.0f), "Menu", 32, _gameRenderer, [this] {
+		GameManager::GetInstance()->Switch(MENU);
+		});
+
+	objects.push_back(std::move(button));
 }
 
 void GameScene::Unload()
@@ -98,11 +104,10 @@ void GameScene::Unload()
 }
 
 void GameScene::Update() {
+
 	sceneWorld->Step(deltaTime, velIterations, posIterations);
 
 	timeElapsed += deltaTime;
-
-	winText->Update();
 
 	for (int i = 0; i < players.size(); i++)
 	{
@@ -120,42 +125,36 @@ void GameScene::Update() {
 			}
 			else {
 				switch ((*entity)->GetType()) {
-				case PLAYER: static_cast<Player*>((*entity).get())->Update(&camera); break;
-				case PLATFORM: static_cast<Platform*>((*entity).get())->Update(&camera, timeElapsed); break;
-				case COIN: static_cast<Coin*>((*entity).get())->Update(&camera); break;
-				case BALL: static_cast<Ball*>((*entity).get())->Update(&camera); break;
+				case PLAYER: static_cast<Player*>((*entity).get())->Update(camera); break;
+				case PLATFORM: static_cast<Platform*>((*entity).get())->Update(camera, timeElapsed); break;
+				case COIN: static_cast<Coin*>((*entity).get())->Update(camera); break;
+				case BALL: static_cast<Ball*>((*entity).get())->Update(camera); break;
 				}
 			}
 		}
 
 
 		ProcessRespawn();
-		camera.Update();
+		camera->Update();
 
 		// the final checkpoint has been reached
 		if (respawnPoints.back()->GetActive())
 		{
 			gameOver = true;
-			int winner = 0;
-			int highestScore = INT_MIN;
-			// check who won 
+			// check who won
 			for (int i = 0; i < players.size(); i++)
 			{
-				if ((players[i]->getCoins() - players[i]->GetDeaths()) > highestScore)
-				{
-					winner = i;
-					highestScore = (players[i]->getCoins() - players[i]->GetDeaths());
-				}
+				int score = players[i]->getCoins() - players[i]->GetDeaths();
+				GameManager::GetInstance()->AddScore(ScoreData{i, score });
 			}
-
-			GameManager::GetInstance()->SetWinner(winner + 1);
 			GameManager::GetInstance()->Switch(WINNING);
 		}
 	}
 }
 
-void GameScene::Render(SDL_Renderer* _gameRenderer) {
-	winText->Render(_gameRenderer);
+void GameScene::Render(SDL_Renderer* _gameRenderer) 
+{
+
 
 	for (int i = 0; i < players.size(); i++)
 	{
@@ -208,6 +207,7 @@ void GameScene::LoadControllers()
 
 void GameScene::ControllerCheck()
 {
+	if (sceneWorld == nullptr) return;
 	// TODO: Incomplete. Either move to lobby scene or scrap since we are no longer adding players while the game is running
 	if (Input::GetInstance()->GetNumGamepads() > players.size())
 	{
@@ -295,12 +295,13 @@ void GameScene::RespawnPlayers()
 	if (furthestActivatedPlatform != nullptr)
 	{
 		// send camera to the platform
-		if (camera.IsQueueEmpty())
+		if (camera->IsQueueEmpty())
 		{
 			auto it = respawnPoints.end() - 1;
 			/*if (*it == furthestActivatedPlatformPlusOne)
 			{
-				camera.PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
+				camera->PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
+				it--;
 			}
 			while (*it != furthestActivatedPlatform)
 			{
@@ -308,18 +309,18 @@ void GameScene::RespawnPlayers()
 				it--;
 			}*/
 
-			do 
+			do
 			{
-				camera.PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
+				camera->PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
 				it--;
 			} while (*it != furthestActivatedPlatform && it != respawnPoints.begin());
 		}
-		camera.PushTargetFront(Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()));
-	
-		camera.SetMoveSpeed(1500.0f);
+		camera->PushTargetFront(Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()));
+
+		camera->SetMoveSpeed(1500.0f);
 		//camera.SetPosition(Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition()));
 
-		Vector2 spawnPosition = Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()) - Vector2(0.0f, camera.GetHeight() / 2.0f);
+		Vector2 spawnPosition = Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()) - Vector2(0.0f, camera->GetHeight() / 2.0f);
 		spawnPosition.y += 32.0f;
 
 		// respawn players
