@@ -170,6 +170,7 @@
     <ClCompile Include="UIText.cpp" />
     <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="WinScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="UIText.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Vector2.h" />
+    <ClInclude Include="WinScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,7 +6,8 @@
 #include "UIButton.h"
 #include "UIText.h"
 
-class Lobby : public Scene {
+class Lobby : public Scene 
+{
 public:
 	Lobby();
 	virtual ~Lobby() override;

@@ -4,6 +4,7 @@
 #include "MenuScene.h"
 #include "GameScene.h"
 #include "Lobby.h"
+#include "WinScene.h"
 
 class StorageBase {
 public:
@@ -25,7 +26,6 @@ public:
 
 	virtual void UnloadScene() override {
 		sceneInstance->UnloadScene();
-
 		sceneInstance.reset();
 	}
 

@@ -147,9 +147,8 @@ void GameScene::Update() {
 				}
 			}
 
-			// TODO: Add winner text
-			std::cout << "The winner is Player: " << winner + 1 << std::endl;
-			winText->SetText("Winner " + std::to_string(winner + 1));
+			GameManager::GetInstance()->SetWinner(winner + 1);
+			GameManager::GetInstance()->Switch(WINNING);
 		}
 	}
 }
