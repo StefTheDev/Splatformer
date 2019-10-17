@@ -7,7 +7,7 @@ constexpr int CATEGORY_PLAYER			= 0b0000100;
 constexpr int CATEGORY_CAMERA			= 0b0001000;
 constexpr int CATEGORY_SENSOR			= 0b0010000;
 constexpr int CATEGORY_COIN				= 0b0100000;
-constexpr int CATEGORY_BALL				= 0b1000000;
+constexpr int CATEGORY_BALL				= 0b0100000;
 
 constexpr int MASK_PLATFORM_COLLIDE		= 0b0100100;
 constexpr int MASK_PLATFORM_NOCOLLIDE	= 0b0000000;
