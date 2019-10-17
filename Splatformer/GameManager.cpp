@@ -120,9 +120,9 @@ void GameManager::Switch(GameState _gameState)
 	nextGameState = _gameState;
 }
 
-void GameManager::SetWinner(int winner)
+void GameManager::AddScore(ScoreData scoreData)
 {
-	this->winner = winner;
+	scores.push_back(scoreData);
 }
 
 GameManager* GameManager::GetInstance()
@@ -136,9 +136,9 @@ GameState GameManager::GetState()
 	return gameState;
 }
 
-int GameManager::GetWinner() const
+std::vector<ScoreData> GameManager::GetScoreData()
 {
-	return winner;
+	return scores;
 }
 
 SDL_Window * GameManager::GetWindow()

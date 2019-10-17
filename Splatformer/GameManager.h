@@ -18,6 +18,11 @@ enum GameState
 	EXIT
 };
 
+struct ScoreData {
+	int index;
+	int score;
+};
+
 const int FPS = 60;
 const int FRAME_DELAY = 1000 / FPS;
 
@@ -35,14 +40,15 @@ public:
 	void CheckSwitch();
 	void Clean();
 	void Switch(GameState gameState);
-	void SetWinner(int winner);
+
+	void AddScore(ScoreData scoreData);
 
 	SDL_Window * GetWindow();
 	SDL_Renderer* GetRenderer();
 	SDL_Surface* GetSurface();
 
 	GameState GetState();
-	int GetWinner() const;
+	std::vector<ScoreData> GetScoreData();
 
 	static GameManager* GetInstance();
 
@@ -57,10 +63,9 @@ private:
 	Uint64 timeCurrentFrame = 0;
 	Uint64 timeLastFrame = 0;
 
-	int winner = 0;
-
 	//Input inputManager;
 	std::vector<std::unique_ptr<StorageBase>> scenes;
+	std::vector<ScoreData> scores;
 
 	static GameManager* gameManager;
 };
