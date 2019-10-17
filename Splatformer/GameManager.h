@@ -50,7 +50,7 @@ private:
 	SDL_Renderer * renderer;
 	SDL_Surface * surface;
 
-	GameState gameState = WINNING;
+	GameState gameState = MENU;
 	GameState nextGameState = MENU;
 
 	Uint64 timeCurrentFrame = 0;

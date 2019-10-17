@@ -33,7 +33,7 @@ void WinScene::Load(SDL_Renderer* gameRenderer)
 	std::string text = "Player " + std::to_string(GameManager::GetInstance()->GetWinner());
 
 	winner->LoadSprite(nullptr);
-	winner->Initialise(Vector2(0.0f, -320.0f), text.c_str(), 128, SDL_Color{ 0, 255, 255 }, gameRenderer);
+	winner->Initialise(Vector2(0.0f, 0.0f), text.c_str(), 128, SDL_Color{ 0, 255, 255 }, gameRenderer);
 
 	objects.push_back(std::move(winner));
 

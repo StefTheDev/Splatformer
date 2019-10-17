@@ -39,7 +39,7 @@ bool GameManager::Initialise(std::string _title)
 		scenes.push_back(std::make_unique<SceneStorage<GameScene>>());
 		scenes.push_back(std::make_unique<SceneStorage<WinScene>>());
 
-		scenes[WINNING]->LoadScene(renderer);
+		scenes[MENU]->LoadScene(renderer);
 
 		Input::GetInstance();
 		Input::GetInstance()->Initialise();
@@ -48,7 +48,7 @@ bool GameManager::Initialise(std::string _title)
 	SoundManager::Initialise();
 	SoundManager::LoadSounds("Resources/Sounds");
 
-	Switch(WINNING);
+	Switch(MENU);
 
 	return true;
 }
@@ -134,6 +134,11 @@ GameManager* GameManager::GetInstance()
 GameState GameManager::GetState()
 {
 	return gameState;
+}
+
+int GameManager::GetWinner() const
+{
+	return winner;
 }
 
 SDL_Window * GameManager::GetWindow()
