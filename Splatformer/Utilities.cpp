@@ -176,12 +176,14 @@ void PlatformingListener::BeginContact(b2Contact* contact) {
 			ball = static_cast<Ball*>(fixtureAData->data);
 		}
 
-		if (!ball->IsThrown()) {
+		if (!ball->IsThrown() && !ball->isCollected()) {
 
-			ball->Collected();
+			ball->Collect();
 			player->GainBall(ball);
 		}
+
 		return;
+
 	} else if ((fixtureAData->type == PLR || fixtureAData->type == RESPAWN) && (fixtureBData->type == PLR || fixtureBData->type == RESPAWN)) {
 		Player* player;
 		RespawnPlatform* respawnPlatform;
