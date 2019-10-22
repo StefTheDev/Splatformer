@@ -84,6 +84,7 @@ void Player::Update(Camera* _gameCamera) {
 }
 
 void Player::addCoin() {
+	SoundManager::PlaySound("coin pickup", FMOD_DEFAULT);
 
 	coinsCollected += 1;
 
@@ -117,6 +118,7 @@ void Player::ThrowBall(int _button) {
 	//Vector2{ 960.0f, -540.0 }
 
 	if (haveBall) {
+		SoundManager::PlaySound("throw", FMOD_DEFAULT);
 		storedBall->ThrowBall(Vector2{collider->GetPosition().x + (55.0f * _button), -collider->GetPosition().y }, _button); //position);
 		storedBall = nullptr;
 		haveBall = false;
@@ -151,6 +153,8 @@ void Player::Kill() {
 	SDL_RemoveTimer(jumpTimer);
 	collider->body->SetGravityScale(0.0f);
 	deaths++;
+
+	SoundManager::PlaySound("death", FMOD_DEFAULT);
 
 	std::cout << "Player Am Dead\n";
 }

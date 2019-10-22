@@ -18,6 +18,8 @@ GameScene::GameScene() {
 	sceneWorld = std::make_unique<b2World>(gravity);
 	sceneWorld->SetContactListener(contactListener);
 	sceneWorld->SetAllowSleeping(false);
+
+	SoundManager::PlaySound("game bgm", FMOD_LOOP_NORMAL);
 }
 
 
@@ -99,7 +101,7 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 
 void GameScene::Unload()
 {
-
+	SoundManager::loopChannel->stop();
 	controllers.clear();
 }
 

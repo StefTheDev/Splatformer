@@ -1,4 +1,5 @@
 #include "RespawnPlatform.h"
+#include "soundmanager.h"
 
 //RespawnPlatform::RespawnPlatform(Vector2 _position, int _respawnNumber) : Platform(_position)
 //{
@@ -44,8 +45,13 @@ void RespawnPlatform::Initialise(b2World * _world, std::shared_ptr<Sprite> _plat
 
 void RespawnPlatform::Activate()
 {
-	isActive = true;
-	// TODO: create visual feedback to show a new checkpoint has been reached
-	// TODO: respawn players
-	std::cout << "ACTIVATE" << std::endl;
+	if (!isActive)
+	{
+		isActive = true;
+
+		SoundManager::PlaySound("checkpoint reached", FMOD_DEFAULT);
+		// TODO: create visual feedback to show a new checkpoint has been reached
+		// TODO: respawn players
+		std::cout << "ACTIVATE" << std::endl;
+	}
 }

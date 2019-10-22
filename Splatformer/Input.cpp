@@ -69,8 +69,8 @@ void Input::Initialise()
 				connectedControllers.push_back(pad);
 				char *mapping;
 				mapping = SDL_GameControllerMapping(pad);
-				SDL_Log("Controller %i is mapped as \"%s\".", i, mapping);
-				std::cout << "Controller %i MAPPING: " << mapping << std::endl;
+				/*SDL_Log("Controller %i is mapped as \"%s\".", i, mapping);
+				std::cout << "Controller %i MAPPING: " << mapping << std::endl;*/
 			}
 			else
 				std::cout << "SDL_GetError() = " << SDL_GetError() << std::endl;
@@ -202,8 +202,8 @@ void Input::AddController(SDL_Event _event)
 			}
 			char *mapping;
 			mapping = SDL_GameControllerMapping(pad);
-			SDL_Log("Controller %i is mapped as \"%s\".", _event.cdevice.which, mapping);
-			std::cout << "Controller %i MAPPING: " << mapping << std::endl;
+		/*	SDL_Log("Controller %i is mapped as \"%s\".", _event.cdevice.which, mapping);
+			std::cout << "Controller %i MAPPING: " << mapping << std::endl;*/
 
 			// reset status for the added controller
 			for (int a = 0; a < SDL_CONTROLLER_AXIS_MAX; a++)
