@@ -24,7 +24,7 @@ void Lobby::Render(SDL_Renderer* gameRenderer) {
 }
 
 void Lobby::ButtonDown(SDL_JoystickID _gamepadID, Uint8 _button) {
-	if (_button == SDL_CONTROLLER_BUTTON_A && controllersAtStartOfGame < 2) {
+	if (_button == SDL_CONTROLLER_BUTTON_A && controllersAtStartOfGame >= 1) {
 		GameManager::GetInstance()->Switch(INGAME);
 	} else if (_button == SDL_CONTROLLER_BUTTON_B) {
 		//Go to MenuScene

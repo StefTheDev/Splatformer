@@ -48,9 +48,20 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	ballSprite = std::make_shared<Sprite>("Resources/Sprites/ball.png", _gameRenderer, false);
 	backgroundSprite = std::make_shared<Sprite>("Resources/Sprites/Background.png", _gameRenderer, false);
 	backgroundSprite->SetSource(Vector2(2500, 1080));
+	//progressBarSprite = std::make_shared<Sprite>("Resources/Sprites/")
 
 	SpriteManager::Get()->AddSprite("JumpPlatCounter", std::make_shared<Sprite>("Resources/Sprites/GemSpriteSheet.png", _gameRenderer, false));
 	SpriteManager::Get()->GetSprite("JumpPlatCounter")->SetSource(Vector2(32.0f, 32.0f));
+
+	SpriteManager::Get()->AddSprite("ProgressBarSprite", std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false));
+	SpriteManager::Get()->GetSprite("ProgressBarSprite")->SetSource(Vector2(1900.0f, 64.0f));
+
+	SpriteManager::Get()->AddSprite("ProgressBarFill", std::make_shared<Sprite>("Resources/Sprites/green.png", _gameRenderer, false));
+	SpriteManager::Get()->GetSprite("ProgressBarFill")->SetSource(Vector2(1900.0f, 64.0f));
+
+	SpriteManager::Get()->AddSprite("ProgressIcon", std::make_shared<Sprite>("Resources/Sprites/pointer.png", _gameRenderer, false));
+	SpriteManager::Get()->GetSprite("ProgressIcon")->SetSource(Vector2(32.0f, 64.0f));
+
 
 	camera->Initialise(sceneWorld.get());
 
@@ -73,6 +84,8 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	}
 
 	respawnPoints[0]->Activate();
+	// get the distanceFromBeginningToEnd
+	distanceFromBeginningToEnd = (respawnPoints.front()->GetPosition() - respawnPoints.back()->GetPosition()).Magnitude();
 
 	camera->SetPosition(respawnPoints[0]->GetPosition());
 	for (auto it = respawnPoints.begin(); it != respawnPoints.end(); it++) {
@@ -135,7 +148,7 @@ void GameScene::Update() {
 			}
 		}
 
-
+		CheckClosest();
 		ProcessRespawn();
 		camera->Update();
 
@@ -156,12 +169,19 @@ void GameScene::Update() {
 
 void GameScene::Render(SDL_Renderer* _gameRenderer) 
 {
-
-
 	for (int i = 0; i < players.size(); i++)
 	{
 		scores[i]->Render(_gameRenderer);
 	}
+
+	// PROGRESS BAR
+	SpriteManager::Get()->GetSprite("ProgressBarSprite")->Draw(_gameRenderer, { 10.0f, WINDOW_HEIGHT - 32.0f}, { 1900.0f, 64.0f });
+
+	// calculate how far the players have gotten in the level
+	SpriteManager::Get()->GetSprite("ProgressBarFill")->Draw(_gameRenderer, { 10.0f, WINDOW_HEIGHT - 32.0f }, { 1900.0f * progressBarScale + 20.0f, 64.0f });
+
+	SpriteManager::Get()->GetSprite("ProgressIcon")->Draw(_gameRenderer, { 10.0f + progressBarScale*1900.0f, WINDOW_HEIGHT - 64.0f}, { 32.0f, 64.0f });
+
 
 }
 
@@ -336,3 +356,23 @@ void GameScene::RespawnPlayers()
 		}
 	}
 }
+
+void GameScene::CheckClosest()
+{	
+	float closest = INT_MAX;
+	float distance;
+	for (auto it = players.begin(); it != players.end(); it++)
+	{
+		distance = ((*it)->GetPosition() - respawnPoints.back()->GetPosition()).Magnitude();
+		if (distance < closest && (*it)->CheckIsAlive())
+		{
+			closest = distance;
+		}
+	}
+	currentDistance = closest;
+
+	progressBarScale = 1 - currentDistance / distanceFromBeginningToEnd;
+
+	progressBarScale = b2Clamp(progressBarScale, 0.0f, 1.0f);
+}
+
