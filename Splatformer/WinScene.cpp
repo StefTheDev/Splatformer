@@ -72,6 +72,8 @@ void WinScene::Load(SDL_Renderer* gameRenderer)
 		});
 
 	objects.push_back(std::move(play));
+
+	SoundManager::PlaySound("Victory", FMOD_DEFAULT);
 }
 
 void WinScene::Unload()

@@ -36,7 +36,7 @@ private:
 	std::unique_ptr<b2World> sceneWorld;
 	PlatformingListener* contactListener;
 
-	std::shared_ptr<Sprite> playerSprite, platformSprite, buttonSprite, coinSprite, ballSprite, backgroundSprite;
+	std::shared_ptr<Sprite> playerSprite, platformSprite, buttonSprite, coinSprite, ballSprite, backgroundSprite, progressBarSprite;
 
 	std::vector<SDL_GameController*> controllers;
 
@@ -64,4 +64,10 @@ private:
 	std::vector<std::unique_ptr<UIText>> scores;
 
 	bool gameOver = false;
+
+	// progress bar
+	float distanceFromBeginningToEnd;
+	float currentDistance; // the distance of the closest player to the final checkpoint. Updated using the CheckClosest function
+	float progressBarScale = 0.0f;
+	void CheckClosest(); // finds the distance of the closest player to the final checkpoint.
 };

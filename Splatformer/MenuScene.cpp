@@ -2,7 +2,7 @@
 
 MenuScene::MenuScene()
 {
-
+	
 }
 
 MenuScene::~MenuScene() {
@@ -20,7 +20,6 @@ void MenuScene::Render(SDL_Renderer * gameRenderer)
 
 void MenuScene::Load(SDL_Renderer* _gameRenderer) 
 {
-
 	std::unique_ptr<UIText> header = std::make_unique<UIText>();
 
 	header->LoadSprite(nullptr);
@@ -55,9 +54,12 @@ void MenuScene::Load(SDL_Renderer* _gameRenderer)
 	});
 
 	objects.push_back(std::move(exit));
+
+	// TODO: WHY THIS NO WORK?
+	SoundManager::PlaySound("Jump", FMOD_LOOP_NORMAL);
 }
 
 void MenuScene::Unload()
 {
-
+	//SoundManager::loopChannel->stop();
 }
