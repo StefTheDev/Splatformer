@@ -13,7 +13,6 @@ Platform::Platform(TileInfo _info) {
 }
 
 void Platform::Initialise(b2World* _world, std::shared_ptr<Sprite> _platformSprite) {
-	std::cout << "Base Platform initialised\n";
 
 	if (!LoadSprite(_platformSprite)) std::cout << "ERROR: Couldn't load sprite\n";
 

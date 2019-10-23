@@ -44,6 +44,7 @@ void Player::Initialise(b2World* _world, std::shared_ptr<Sprite> _playerSprite) 
 }
 
 void Player::Render(SDL_Renderer * _renderer){
+	if (isDead) return;
 	//if(storedBall != nullptr) storedBall->Render(_renderer);
 	Entity::Render(_renderer);
 }
@@ -57,9 +58,11 @@ void Player::Update(Camera* _gameCamera) {
 	} else if (!(Input::GetInstance()->IsControllerButtonHeld(playerIndex, SDL_CONTROLLER_BUTTON_A))) {
 		FinishJump();
 	}
+
 	if (Input::GetInstance()->IsControllerButtonPressed(playerIndex, SDL_CONTROLLER_BUTTON_LEFTSHOULDER)) {
 		ThrowBall(-1);
 	}
+
 	if (Input::GetInstance()->IsControllerButtonPressed(playerIndex, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)) {
 		ThrowBall(1);
 	}
@@ -81,6 +84,10 @@ void Player::Update(Camera* _gameCamera) {
 
 	GetSprite()->Play("idle");
 	Entity::Update();
+}
+
+Vector2 Player::GetAbsPosition() {
+	return Vector2(collider->GetPosition());
 }
 
 void Player::addCoin() {
@@ -155,8 +162,6 @@ void Player::Kill() {
 	deaths++;
 
 	SoundManager::PlaySound("death", FMOD_DEFAULT);
-
-	std::cout << "Player Am Dead\n";
 }
 
 void Player::Respawn(Vector2 _respawnPosition) {
@@ -165,7 +170,6 @@ void Player::Respawn(Vector2 _respawnPosition) {
 	collider->body->SetGravityScale(1.0f);
 	collider->body->SetTransform((_respawnPosition).AsBox2D(), 0.0f);
 	collider->body->SetLinearVelocity({ 0,0 });
-	std::cout << "RESPAWN" << std::endl;
 }
 
 Uint32 Player::jumpTimerCallback(Uint32 interval, void* param) {

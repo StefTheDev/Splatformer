@@ -6,7 +6,6 @@ MenuScene::MenuScene()
 }
 
 MenuScene::~MenuScene() {
-	std::cout << "Menu Destroyed\n";
 }
 
 void MenuScene::Update()

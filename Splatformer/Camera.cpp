@@ -27,7 +27,9 @@ void Camera::Initialise(b2World* _gameWorld) {
 }
 
 void Camera::Update() {
-	if (!targetQueue.empty()) {
+	arrived = false;
+
+	if (!targetQueue.empty() && moveSpeed > 0.0f) {
 		Vector2 difference((targetQueue.front() - Vector2(width / 2.0f, height / 2.0f)) - position);
 		Vector2 direction = difference.Normalised();
 
@@ -37,12 +39,19 @@ void Camera::Update() {
 			scale = 1.0f;
 		} else {
 			targetQueue.pop_front();
-			moveSpeed = 100.0f;
+
+			arrived = true;
+
+			if (!targetQueue.empty()) {
+				Vector2 difference((targetQueue.front() - Vector2(width / 2.0f, height / -2.0f)) - position);
+
+				moveDir = difference.Normalised();
+			} else {
+				moveDir = Vector2(0.0f, 0.0f);
+			}
 		}
 
 		position += direction * (moveSpeed * deltaTime * scale);
-
-		//collider->body->SetTransform((Vector2(position.x, -position.y) + Vector2(width / 2.0f, height / -2.0f)).AsBox2D(), 0.0f);
 	}
 
 	// Always update the collider
@@ -79,6 +88,10 @@ void Camera::PushTargetBack(Vector2 _newTarget) {
 
 void Camera::PushTargetFront(Vector2 _newTarget) {
 	targetQueue.push_front(_newTarget);
+
+	Vector2 difference((targetQueue.front() - Vector2(width / 2.0f, height / -2.0f)) - position);
+
+	moveDir = difference.Normalised();
 }
 
 void Camera::SetTargetPosition(Vector2 _newTarget) {
@@ -101,6 +114,14 @@ float Camera::GetMoveSpeed() {
 	return moveSpeed;
 }
 
+Vector2 Camera::GetMoveVector() {
+	return moveDir;
+}
+
 SDL_Rect* Camera::GetRect() {
 	return &drawRect;
+}
+
+bool Camera::Arrived() {
+	return arrived;
 }

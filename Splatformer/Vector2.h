@@ -30,6 +30,7 @@ public:
 
 	float Magnitude();
 	Vector2 Normalised();
+	float Dot(Vector2 other);
 
 	b2Vec2 AsBox2D();
 

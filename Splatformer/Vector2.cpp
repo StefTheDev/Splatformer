@@ -92,6 +92,10 @@ Vector2 Vector2::Normalised() {
 	return outVec;
 }
 
+float Vector2::Dot(Vector2 _other) {
+	return (x * _other.x) + (y * _other.y);
+}
+
 b2Vec2 Vector2::AsBox2D() {
 	return b2Vec2(x/PPM, y/PPM);
 }
