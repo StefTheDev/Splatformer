@@ -176,8 +176,7 @@ void PlatformingListener::BeginContact(b2Contact* contact) {
 			ball = static_cast<Ball*>(fixtureAData->data);
 		}
 
-		if (!ball->IsThrown()) {
-
+		if (!(ball->IsThrown())) {
 			ball->Collected();
 			player->GainBall(ball);
 		}
@@ -199,13 +198,11 @@ void PlatformingListener::BeginContact(b2Contact* contact) {
 		if ((player->GetPosition().y + player->GetDimensions().y / 2) < (respawnPlatform->GetPosition().y - respawnPlatform->GetDimensions().y / 2)) {
 			respawnPlatform->Activate();
 		}
-		//std::cout << "CONTACT: " << contact->IsEnabled();
 
 
 		return;
 	}
 
-	std::cout << "Contact Begun\n";
 }
 
 void PlatformingListener::EndContact(b2Contact* contact) {
@@ -284,4 +281,9 @@ void PlatformingListener::EndContact(b2Contact* contact) {
 		return;
 	}
 #pragma endregion
+}
+
+
+float mapTo(float _x, float _min, float _max, float _outMin, float _outMax) {
+	return _outMin + (_x - _min) * (_outMax - _outMin) / (_max - _min);
 }

@@ -12,6 +12,8 @@ public:
 	void Render(SDL_Renderer * renderer);
 	void Update(Camera* gameCamera);
 
+	Vector2 GetAbsPosition();
+
 	void Jump();
 	void FinishJump();
 	void MoveHorizontal(float scale);

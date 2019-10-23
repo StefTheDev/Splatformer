@@ -6,7 +6,6 @@ Lobby::Lobby() {
 }
 
 Lobby::~Lobby() {
-	std::cout << "Lobby Destroyed\n";
 
 	players.clear();
 }
@@ -15,8 +14,6 @@ void Lobby::Update() {
 	controllersAtStartOfGame = Input::GetInstance()->GetNumGamepads();
 
 	static_cast<UIText*>(objects[0].get())->SetText("Players: " + std::to_string(Input::GetInstance()->GetNumGamepads()));
-
-
 }
 
 void Lobby::Render(SDL_Renderer* gameRenderer) {
@@ -24,7 +21,7 @@ void Lobby::Render(SDL_Renderer* gameRenderer) {
 }
 
 void Lobby::ButtonDown(SDL_JoystickID _gamepadID, Uint8 _button) {
-	if (_button == SDL_CONTROLLER_BUTTON_A && controllersAtStartOfGame < 2) {
+	if (_button == SDL_CONTROLLER_BUTTON_A && controllersAtStartOfGame > 0) {
 		GameManager::GetInstance()->Switch(INGAME);
 	} else if (_button == SDL_CONTROLLER_BUTTON_B) {
 		//Go to MenuScene

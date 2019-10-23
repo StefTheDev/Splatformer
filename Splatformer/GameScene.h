@@ -52,10 +52,12 @@ private:
 	RespawnPlatform* furthestActivatedPlatformPlusOne = nullptr;
 
 	int latestRespawn = -5;
+	bool respawnQueued = false;
 
 	std::vector<Player*> players;
 	// check if players need to be respawned
 	void ProcessRespawn();
+	void RespawnCamera();
 	void RespawnPlayers();
 
 	std::unique_ptr<UIText> winText;

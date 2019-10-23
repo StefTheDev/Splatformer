@@ -5,8 +5,13 @@
 #include "SpriteManager.h"
 #include "Background.h"
 
+#include <algorithm>
+
 constexpr int velIterations = 8;
 constexpr int posIterations = 3;
+
+constexpr float cameraSpeed = 100.0f;
+constexpr float maxCamMulti = 10.0f;
 
 GameScene::GameScene() {
 	b2Vec2 gravity(0.0f, -39.2f);
@@ -76,7 +81,7 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	for (auto it = respawnPoints.begin(); it != respawnPoints.end(); it++) {
 		camera->PushTargetBack((*it)->GetPosition());
 	}
-	camera->SetMoveSpeed(100.0f);
+	camera->SetMoveSpeed(cameraSpeed);
 
 
 	for (int i = 0; i < players.size(); i++)
@@ -109,11 +114,41 @@ void GameScene::Update() {
 
 	timeElapsed += deltaTime;
 
+	float highestScalar = -99999.0f;
+
+	if (respawnQueued && camera->Arrived()) {
+		RespawnPlayers();
+		respawnQueued = false;
+	}
+
+	bool allDead = true;
+
 	for (int i = 0; i < players.size(); i++)
 	{
 		scores[i]->Update();
 		scores[i]->SetText("Player " + std::to_string(i + 1) + ": " + std::to_string(players[i]->getCoins() - players[i]->GetDeaths()));
+
+		if (players[i]->CheckIsAlive()) {
+			allDead = false;
+			Vector2 camMid = camera->GetPosition() + Vector2(camera->GetWidth()/2.0f, camera->GetHeight()/2.0f);
+			Vector2 playerFromMiddle = players[i]->GetPosition() - Vector2(camera->GetWidth() / 2.0f, camera->GetHeight() / 2.0f);
+
+			float plrCamDot = playerFromMiddle.Dot(camera->GetMoveVector());
+
+			//Clamp
+			float clampedValue = std::max(plrCamDot, 0.0f);
+
+			float speedScalar = powf(1.02f, clampedValue/2.0f);
+
+			highestScalar = std::max(highestScalar, speedScalar);
+		}
 	}
+
+	if (highestScalar < 0) highestScalar = 1.0f;
+
+	std::cout << highestScalar << std::endl;
+
+	if(!allDead && highestScalar < 100) camera->SetMoveSpeed(cameraSpeed * highestScalar);
 
 	if (!gameOver)
 	{
@@ -154,8 +189,6 @@ void GameScene::Update() {
 
 void GameScene::Render(SDL_Renderer* _gameRenderer) 
 {
-
-
 	for (int i = 0; i < players.size(); i++)
 	{
 		scores[i]->Render(_gameRenderer);
@@ -251,10 +284,9 @@ void GameScene::ProcessRespawn()
 		//check if any player is dead
 		for (auto it = players.begin(); it != players.end(); it++) {
 			if (!(*it)->CheckIsAlive()) {
-				needToRespawn = true;
+				RespawnPlayers();
 				break;
 			}
-			else needToRespawn = false;
 		}
 	}
 	// have NOT reached a new checkpoint yet
@@ -266,37 +298,18 @@ void GameScene::ProcessRespawn()
 			// if any player is alive
 			if ((*it)->CheckIsAlive())
 			{
-				needToRespawn = false;
-				break;
+				return;
 			}
 		}
-	}
 
-	if (needToRespawn)
-	{
-		RespawnPlayers();
+		if(!respawnQueued) RespawnCamera();
 	}
 }
 
-void GameScene::RespawnPlayers()
-{
-	//RespawnPlatform* furthestPlatform = nullptr;
-
-	//// find which respawnPlatform to respawn on
-	//for (auto it = respawnPoints.begin(); it != respawnPoints.end(); it++)
-	//{
-	//	if ((*it)->GetActive())
-	//	{
-	//		furthestPlatform = (*it);
-	//	}
-	//	else break;
-	//}
-
-	if (furthestActivatedPlatform != nullptr)
-	{
+void GameScene::RespawnCamera() {
+	if (furthestActivatedPlatform != nullptr) {
 		// send camera to the platform
-		if (camera->IsQueueEmpty())
-		{
+		if (camera->IsQueueEmpty()) {
 			auto it = respawnPoints.end() - 1;
 			/*if (*it == furthestActivatedPlatformPlusOne)
 			{
@@ -309,8 +322,7 @@ void GameScene::RespawnPlayers()
 				it--;
 			}*/
 
-			do
-			{
+			do {
 				camera->PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
 				it--;
 			} while (*it != furthestActivatedPlatform && it != respawnPoints.begin());
@@ -320,6 +332,14 @@ void GameScene::RespawnPlayers()
 		camera->SetMoveSpeed(1500.0f);
 		//camera.SetPosition(Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition()));
 
+		respawnQueued = true;
+	}
+}
+
+void GameScene::RespawnPlayers()
+{
+	if (furthestActivatedPlatform != nullptr)
+	{
 		Vector2 spawnPosition = Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()) - Vector2(0.0f, camera->GetHeight() / 2.0f);
 		spawnPosition.y += 32.0f;
 

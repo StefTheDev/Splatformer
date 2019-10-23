@@ -147,7 +147,6 @@ void Input::HandleEvents(SDL_Event _event)
 			if (_event.cbutton.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(connectedControllers[i]))) {
 				// So the relevant state can be updated
 				controllerInputs[i].buttons[_event.cbutton.button] = true;
-				//std::cout << "BUTTON DOWN" << std::endl;
 			}
 		}
 		break;
@@ -157,8 +156,6 @@ void Input::HandleEvents(SDL_Event _event)
 		for (int i = 0; i < numGamepads; i++) {
 			if (_event.cbutton.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(connectedControllers[i]))) {
 				controllerInputs[i].buttons[_event.cbutton.button] = false;
-				std::cout << SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(connectedControllers[i])) << std::endl;
-				//std::cout << "BUTTON UP" << std::endl;
 			}
 		}
 		break;

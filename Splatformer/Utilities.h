@@ -70,4 +70,6 @@ class PlatformingListener : public b2ContactListener {
 	void BeginContact(b2Contact* contact);
 	void EndContact(b2Contact* contact);
 };
+
+float mapTo(float x, float min, float max, float outMin, float outMax);
 #endif

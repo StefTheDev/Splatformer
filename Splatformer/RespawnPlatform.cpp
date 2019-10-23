@@ -19,7 +19,6 @@ void RespawnPlatform::Update(Camera * gameCamera, float sceneTime)
 
 void RespawnPlatform::Initialise(b2World * _world, std::shared_ptr<Sprite> _platformSprite)
 {
-	std::cout << "Initialise in RespawnChild was called" << std::endl;
 	if (!LoadSprite(_platformSprite)) return;
 
 	GetSprite()->Add("idle", SpriteAnimation{ 0, 1, 500 }); //Index, frames, speed
@@ -47,5 +46,4 @@ void RespawnPlatform::Activate()
 	isActive = true;
 	// TODO: create visual feedback to show a new checkpoint has been reached
 	// TODO: respawn players
-	std::cout << "ACTIVATE" << std::endl;
 }

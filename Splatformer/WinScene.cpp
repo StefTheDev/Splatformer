@@ -8,7 +8,6 @@ WinScene::WinScene()
 
 WinScene::~WinScene()
 {
-	std::cout << "Win Scene Destroyed\n";
 }
 
 void WinScene::Update()
@@ -73,8 +72,6 @@ void WinScene::Load(SDL_Renderer* gameRenderer)
 		});
 
 	objects.push_back(std::move(play));
-
-	std::cout << "Win Scene Loaded with " << objects.size() << " objects";
 }
 
 void WinScene::Unload()

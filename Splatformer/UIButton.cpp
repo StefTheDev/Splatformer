@@ -9,7 +9,6 @@ UIButton::UIButton() :Entity()
 UIButton::~UIButton()
 {
 	SDL_DestroyTexture(textTexture);
-	std::cout << "UIButton Destroyed\n";
 }
 
 bool UIButton::Initialise(Vector2 position, std::string text, int size, SDL_Renderer* renderer, std::function<void()> onClick)
