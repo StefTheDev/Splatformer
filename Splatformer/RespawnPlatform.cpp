@@ -1,5 +1,6 @@
 #include "RespawnPlatform.h"
 #include "soundmanager.h"
+#include "SpriteManager.h"	
 
 //RespawnPlatform::RespawnPlatform(Vector2 _position, int _respawnNumber) : Platform(_position)
 //{
@@ -40,6 +41,8 @@ void RespawnPlatform::Initialise(b2World * _world, std::shared_ptr<Sprite> _plat
 	collider->SetCollisionMask(MASK_PLATFORM_COLLIDE);
 
 	SetPosition(collider->GetPosition());
+
+	sprite = SpriteManager::Get()->GetSprite("RespawnSprite");
 }
 
 void RespawnPlatform::Activate()
@@ -53,3 +56,8 @@ void RespawnPlatform::Activate()
 		// TODO: respawn players
 	}
 }
+
+//void RespawnPlatform::Render(SDL_Renderer* _renderer) {
+//	SpriteManager::Get()->GetSprite("RespawnSprite")->Draw(_renderer, Vector2(position.x, position.y),
+//		Vector2(64, 32));
+//}

@@ -53,10 +53,12 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	ballSprite = std::make_shared<Sprite>("Resources/Sprites/ball.png", _gameRenderer, false);
 	backgroundSprite = std::make_shared<Sprite>("Resources/Sprites/Background.png", _gameRenderer, false);
 	backgroundSprite->SetSource(Vector2(2500, 1080));
-	//progressBarSprite = std::make_shared<Sprite>("Resources/Sprites/")
 
 	SpriteManager::Get()->AddSprite("JumpPlatCounter", std::make_shared<Sprite>("Resources/Sprites/GemSpriteSheet.png", _gameRenderer, false));
 	SpriteManager::Get()->GetSprite("JumpPlatCounter")->SetSource(Vector2(32.0f, 32.0f));
+
+	SpriteManager::Get()->AddSprite("RespawnSprite", std::make_shared<Sprite>("Resources/Sprites/respawn.png", _gameRenderer, false));
+	SpriteManager::Get()->GetSprite("RespawnSprite")->SetSource(Vector2(64.0f, 32.0f));
 
 	SpriteManager::Get()->AddSprite("ProgressBarSprite", std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false));
 	SpriteManager::Get()->GetSprite("ProgressBarSprite")->SetSource(Vector2(1900.0f, 64.0f));
@@ -73,7 +75,7 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	std::unique_ptr<Background> background = std::make_unique<Background>(Vector2(0.0f,0.0f));
 	objects.push_back(std::move(background));
 
-	LevelLoader::LoadLevel("Resources/Levels/LevelThree.csv", objects, respawnPoints);
+	LevelLoader::LoadLevel("Resources/Levels/JasonLevel.csv", objects, respawnPoints);
 
 	std::sort(respawnPoints.begin(), respawnPoints.end(), RespawnPlatform::sortAscending);
 
