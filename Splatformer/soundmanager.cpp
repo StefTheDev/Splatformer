@@ -143,6 +143,5 @@ void SoundManager::Release() {
 	for (auto& sound : sounds) {
 		sound.second->release();
 	}
-
 	audioSystem->release();
 }
