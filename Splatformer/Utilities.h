@@ -72,4 +72,9 @@ class PlatformingListener : public b2ContactListener {
 };
 
 float mapTo(float x, float min, float max, float outMin, float outMax);
+
+template <typename T> 
+T sgn(T val) {
+	return (T(0) < val) - (val < T(0));
+}
 #endif

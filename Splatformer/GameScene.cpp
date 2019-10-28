@@ -55,12 +55,15 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	SpriteManager::Get()->AddSprite("JumpPlatCounter", std::make_shared<Sprite>("Resources/Sprites/GemSpriteSheet.png", _gameRenderer, false));
 	SpriteManager::Get()->GetSprite("JumpPlatCounter")->SetSource(Vector2(32.0f, 32.0f));
 
+	SpriteManager::Get()->AddSprite("TimePlatCounter", std::make_shared<Sprite>("Resources/Sprites/TimeGemSpriteSheet.png", _gameRenderer, false));
+	SpriteManager::Get()->GetSprite("TimePlatCounter")->SetSource(Vector2(32.0f, 32.0f));
+
 	camera->Initialise(sceneWorld.get());
 
 	std::unique_ptr<Background> background = std::make_unique<Background>(Vector2(0.0f,0.0f));
 	objects.push_back(std::move(background));
 
-	LevelLoader::LoadLevel("Resources/Levels/LevelThree.csv", objects, respawnPoints);
+	LevelLoader::LoadLevel("Resources/Levels/LengthTesting.csv", objects, respawnPoints);
 
 	std::sort(respawnPoints.begin(), respawnPoints.end(), RespawnPlatform::sortAscending);
 
@@ -145,8 +148,6 @@ void GameScene::Update() {
 	}
 
 	if (highestScalar < 0) highestScalar = 1.0f;
-
-	std::cout << highestScalar << std::endl;
 
 	if(!allDead && highestScalar < 100) camera->SetMoveSpeed(cameraSpeed * highestScalar);
 
@@ -311,26 +312,22 @@ void GameScene::RespawnCamera() {
 		// send camera to the platform
 		if (camera->IsQueueEmpty()) {
 			auto it = respawnPoints.end() - 1;
-			/*if (*it == furthestActivatedPlatformPlusOne)
-			{
-				camera->PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
-				it--;
-			}
-			while (*it != furthestActivatedPlatform)
-			{
-				camera.PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
-				it--;
-			}*/
-
 			do {
 				camera->PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
 				it--;
 			} while (*it != furthestActivatedPlatform && it != respawnPoints.begin());
+		} else {
+			int resDifference = (respawnPoints.size() - latestRespawn) - camera->GetQueueSize();
+			auto it = --(respawnPoints.begin() + latestRespawn);
+
+			for (int i = resDifference; i > 0; i--) {
+				camera->PushTargetFront(Vector2((*(it + i))->GetCollider()->body.get()->GetPosition()));
+			}
 		}
+
 		camera->PushTargetFront(Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()));
 
 		camera->SetMoveSpeed(1500.0f);
-		//camera.SetPosition(Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition()));
 
 		respawnQueued = true;
 	}
@@ -340,8 +337,10 @@ void GameScene::RespawnPlayers()
 {
 	if (furthestActivatedPlatform != nullptr)
 	{
-		Vector2 spawnPosition = Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()) - Vector2(0.0f, camera->GetHeight() / 2.0f);
-		spawnPosition.y += 32.0f;
+		Vector2 resPos = Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition());
+		resPos.y *= -1.0f;
+
+		Vector2 spawnPosition = resPos + Vector2(0.0f, 64.0f);
 
 		// respawn players
 		for (auto it = players.begin(); it != players.end(); it++)
