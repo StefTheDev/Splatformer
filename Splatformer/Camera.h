@@ -33,6 +33,7 @@ public:
 	SDL_Rect* GetRect();
 
 	bool IsQueueEmpty() { return targetQueue.empty(); }
+	int GetQueueSize() { return targetQueue.size(); }
 
 	void ClearQueue() { targetQueue.clear(); }
 

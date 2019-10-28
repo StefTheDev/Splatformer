@@ -60,6 +60,9 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	SpriteManager::Get()->AddSprite("RespawnSprite", std::make_shared<Sprite>("Resources/Sprites/respawn.png", _gameRenderer, false));
 	SpriteManager::Get()->GetSprite("RespawnSprite")->SetSource(Vector2(64.0f, 32.0f));
 
+	SpriteManager::Get()->AddSprite("TimePlatCounter", std::make_shared<Sprite>("Resources/Sprites/TimeGemSpriteSheet.png", _gameRenderer, false));
+	SpriteManager::Get()->GetSprite("TimePlatCounter")->SetSource(Vector2(32.0f, 32.0f));
+
 	SpriteManager::Get()->AddSprite("ProgressBarSprite", std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false));
 	SpriteManager::Get()->GetSprite("ProgressBarSprite")->SetSource(Vector2(1900.0f, 64.0f));
 
@@ -68,7 +71,6 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 
 	SpriteManager::Get()->AddSprite("ProgressIcon", std::make_shared<Sprite>("Resources/Sprites/pointer.png", _gameRenderer, false));
 	SpriteManager::Get()->GetSprite("ProgressIcon")->SetSource(Vector2(32.0f, 64.0f));
-
 
 	camera->Initialise(sceneWorld.get());
 
@@ -162,8 +164,6 @@ void GameScene::Update() {
 	}
 
 	if (highestScalar < 0) highestScalar = 1.0f;
-
-	std::cout << highestScalar << std::endl;
 
 	if(!allDead && highestScalar < 100) camera->SetMoveSpeed(cameraSpeed * highestScalar);
 
@@ -351,7 +351,6 @@ void GameScene::RespawnCamera() {
 		camera->PushTargetFront(Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()));
 
 		camera->SetMoveSpeed(1500.0f);
-		//camera.SetPosition(Vector2(furthestPlatform->GetCollider()->body.get()->GetPosition()));
 
 		respawnQueued = true;
 	}
@@ -361,8 +360,10 @@ void GameScene::RespawnPlayers()
 {
 	if (furthestActivatedPlatform != nullptr)
 	{
-		Vector2 spawnPosition = Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()) - Vector2(0.0f, camera->GetHeight() / 2.0f);
-		spawnPosition.y += 32.0f;
+		Vector2 resPos = Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition());
+		resPos.y *= -1.0f;
+
+		Vector2 spawnPosition = resPos + Vector2(0.0f, 64.0f);
 
 		// respawn players
 		for (auto it = players.begin(); it != players.end(); it++)

@@ -1,6 +1,8 @@
 #include "player.h"
 #include "SoundManager.h"
 
+constexpr float MAX_MOVE_SPEED = 480.0f;
+
 int Player::currentJumps = 0;
 
 Uint32 resetGravScale(Uint32 _interval, void* _param) {
@@ -71,6 +73,12 @@ void Player::Update(Camera* _gameCamera) {
 
 	if (abs(stickPos) > 0.3f) {
 		MoveHorizontal(stickPos);
+	}
+
+	Vector2 moveVec(collider->body->GetLinearVelocity());
+
+	if (abs(moveVec.x) > MAX_MOVE_SPEED) {
+		collider->body->SetLinearVelocity({ sgn(moveVec.x) * MAX_MOVE_SPEED / PPM, -moveVec.AsBox2D().y});
 	}
 
 	SetPosition(collider->GetPosition() - _gameCamera->GetPosition());
