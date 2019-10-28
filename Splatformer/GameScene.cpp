@@ -53,10 +53,12 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	ballSprite = std::make_shared<Sprite>("Resources/Sprites/ball.png", _gameRenderer, false);
 	backgroundSprite = std::make_shared<Sprite>("Resources/Sprites/Background.png", _gameRenderer, false);
 	backgroundSprite->SetSource(Vector2(2500, 1080));
-	//progressBarSprite = std::make_shared<Sprite>("Resources/Sprites/")
 
 	SpriteManager::Get()->AddSprite("JumpPlatCounter", std::make_shared<Sprite>("Resources/Sprites/GemSpriteSheet.png", _gameRenderer, false));
 	SpriteManager::Get()->GetSprite("JumpPlatCounter")->SetSource(Vector2(32.0f, 32.0f));
+
+	SpriteManager::Get()->AddSprite("RespawnSprite", std::make_shared<Sprite>("Resources/Sprites/respawn.png", _gameRenderer, false));
+	SpriteManager::Get()->GetSprite("RespawnSprite")->SetSource(Vector2(64.0f, 32.0f));
 
 	SpriteManager::Get()->AddSprite("TimePlatCounter", std::make_shared<Sprite>("Resources/Sprites/TimeGemSpriteSheet.png", _gameRenderer, false));
 	SpriteManager::Get()->GetSprite("TimePlatCounter")->SetSource(Vector2(32.0f, 32.0f));
@@ -335,21 +337,19 @@ void GameScene::ProcessRespawn()
 
 void GameScene::RespawnCamera() {
 	if (furthestActivatedPlatform != nullptr) {
-		// send camera to the platform
-		if (camera->IsQueueEmpty()) {
-			auto it = respawnPoints.end() - 1;
-			do {
-				camera->PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
-				it--;
-			} while (*it != furthestActivatedPlatform && it != respawnPoints.begin());
-		} else {
-			int resDifference = (respawnPoints.size() - latestRespawn) - camera->GetQueueSize();
-			auto it = --(respawnPoints.begin() + latestRespawn);
 
-			for (int i = resDifference; i > 0; i--) {
-				camera->PushTargetFront(Vector2((*(it + i))->GetCollider()->body.get()->GetPosition()));
-			}
-		}
+		// clear the camera queue
+		camera->ClearQueue();
+
+		// send camera to the latest activated respawn platform
+		// and push all the subsequent respawn platforms as well
+
+		auto it = respawnPoints.end() - 1;
+		
+		do {
+			camera->PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
+			it--;
+		} while (*it != furthestActivatedPlatform && it != respawnPoints.begin());
 
 		camera->PushTargetFront(Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()));
 

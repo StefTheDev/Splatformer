@@ -1,6 +1,6 @@
 #include "RespawnPlatform.h"
 #include "soundmanager.h"
-#include "SpriteManager.h"
+#include "SpriteManager.h"	
 
 //RespawnPlatform::RespawnPlatform(Vector2 _position, int _respawnNumber) : Platform(_position)
 //{
@@ -77,7 +77,10 @@ void RespawnPlatform::Activate()
 		isActive = true;
 
 		SoundManager::PlaySound("checkpoint reached", FMOD_DEFAULT);
-		// TODO: create visual feedback to show a new checkpoint has been reached
-		// TODO: respawn players
 	}
 }
+
+//void RespawnPlatform::Render(SDL_Renderer* _renderer) {
+//	SpriteManager::Get()->GetSprite("RespawnSprite")->Draw(_renderer, Vector2(position.x, position.y),
+//		Vector2(64, 32));
+//}

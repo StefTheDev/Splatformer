@@ -43,7 +43,7 @@ void Camera::Update() {
 			arrived = true;
 
 			if (!targetQueue.empty()) {
-				Vector2 difference((targetQueue.front() - Vector2(width / 2.0f, height / -2.0f)) - position);
+				Vector2 difference((targetQueue.front() - Vector2(width / 2.0f, height / 2.0f)) - position);
 
 				moveDir = difference.Normalised();
 			} else {
@@ -89,7 +89,7 @@ void Camera::PushTargetBack(Vector2 _newTarget) {
 void Camera::PushTargetFront(Vector2 _newTarget) {
 	targetQueue.push_front(_newTarget);
 
-	Vector2 difference((targetQueue.front() - Vector2(width / 2.0f, height / -2.0f)) - position);
+	Vector2 difference((targetQueue.front() - Vector2(width / 2.0f, height / 2.0f)) - position);
 
 	moveDir = difference.Normalised();
 }
