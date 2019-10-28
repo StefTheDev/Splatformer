@@ -334,25 +334,20 @@ void GameScene::ProcessRespawn()
 
 void GameScene::RespawnCamera() {
 	if (furthestActivatedPlatform != nullptr) {
-		// send camera to the platform
-		if (camera->IsQueueEmpty()) {
-			auto it = respawnPoints.end() - 1;
-			/*if (*it == furthestActivatedPlatformPlusOne)
-			{
-				camera->PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
-				it--;
-			}
-			while (*it != furthestActivatedPlatform)
-			{
-				camera.PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
-				it--;
-			}*/
 
-			do {
-				camera->PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
-				it--;
-			} while (*it != furthestActivatedPlatform && it != respawnPoints.begin());
-		}
+		// clear the camera queue
+		camera->ClearQueue();
+
+		// send camera to the latest activated respawn platform
+		// and push all the subsequent respawn platforms as well
+
+		auto it = respawnPoints.end() - 1;
+		
+		do {
+			camera->PushTargetFront(Vector2((*it)->GetCollider()->body.get()->GetPosition()));
+			it--;
+		} while (*it != furthestActivatedPlatform && it != respawnPoints.begin());
+
 		camera->PushTargetFront(Vector2(furthestActivatedPlatform->GetCollider()->body.get()->GetPosition()));
 
 		camera->SetMoveSpeed(1500.0f);

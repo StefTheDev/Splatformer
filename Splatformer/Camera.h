@@ -34,6 +34,8 @@ public:
 
 	bool IsQueueEmpty() { return targetQueue.empty(); }
 
+	void ClearQueue() { targetQueue.clear(); }
+
 	bool Arrived();
 
 	std::unique_ptr<Collider> collider;
