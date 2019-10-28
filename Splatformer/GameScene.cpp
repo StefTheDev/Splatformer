@@ -61,6 +61,9 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	SpriteManager::Get()->AddSprite("TimePlatCounter", std::make_shared<Sprite>("Resources/Sprites/TimeGemSpriteSheet.png", _gameRenderer, false));
 	SpriteManager::Get()->GetSprite("TimePlatCounter")->SetSource(Vector2(32.0f, 32.0f));
 
+	SpriteManager::Get()->AddSprite("RespawnGems", std::make_shared<Sprite>("Resources/Sprites/RespawnGems.png", _gameRenderer, false));
+	SpriteManager::Get()->GetSprite("RespawnGems")->SetSource(Vector2(32.0f, 32.0f));
+
 	SpriteManager::Get()->AddSprite("ProgressBarSprite", std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false));
 	SpriteManager::Get()->GetSprite("ProgressBarSprite")->SetSource(Vector2(1900.0f, 64.0f));
 
@@ -75,7 +78,7 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	std::unique_ptr<Background> background = std::make_unique<Background>(Vector2(0.0f,0.0f));
 	objects.push_back(std::move(background));
 
-	LevelLoader::LoadLevel("Resources/Levels/LengthTesting.csv", objects, respawnPoints);
+	LevelLoader::LoadLevel("Resources/Levels/LevelFour.csv", objects, respawnPoints);
 
 	std::sort(respawnPoints.begin(), respawnPoints.end(), RespawnPlatform::sortAscending);
 
