@@ -3,6 +3,7 @@
 #include "Vector2.h"
 #include "Entity.h"
 #include "Camera.h"
+#include "soundmanager.h"
 
 class Scene {
 public:

@@ -75,6 +75,7 @@ void Ball::ThrowBall(Vector2 _position, int _button) {
 	collider->body->SetTransform(_position.AsBox2D(), 0.0f);
 	collider->body->SetLinearVelocity({ (75.0f * _button), 0.0f });
 	this->collider->body->GetFixtureList()[0].SetSensor(false);
+	this->collider->SetCollisionMask(MASK_BALL_NOCOLLIDE);
 
 }
 

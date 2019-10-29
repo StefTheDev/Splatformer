@@ -36,7 +36,7 @@ private:
 	std::unique_ptr<b2World> sceneWorld;
 	PlatformingListener* contactListener;
 
-	std::shared_ptr<Sprite> playerSprite, platformSprite, buttonSprite, coinSprite, ballSprite, backgroundSprite;
+	std::shared_ptr<Sprite> playerSprite, platformSprite, buttonSprite, coinSprite, ballSprite, backgroundSprite, progressBarSprite, respawnSprite;
 
 	std::vector<SDL_GameController*> controllers;
 
@@ -52,14 +52,22 @@ private:
 	RespawnPlatform* furthestActivatedPlatformPlusOne = nullptr;
 
 	int latestRespawn = -5;
+	bool respawnQueued = false;
 
 	std::vector<Player*> players;
 	// check if players need to be respawned
 	void ProcessRespawn();
+	void RespawnCamera();
 	void RespawnPlayers();
 
 	std::unique_ptr<UIText> winText;
 	std::vector<std::unique_ptr<UIText>> scores;
 
 	bool gameOver = false;
+
+	// progress bar
+	float distanceFromBeginningToEnd;
+	float currentDistance; // the distance of the closest player to the final checkpoint. Updated using the CheckClosest function
+	float progressBarScale = 0.0f;
+	void CheckClosest(); // finds the distance of the closest player to the final checkpoint.
 };

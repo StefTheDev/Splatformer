@@ -1,6 +1,8 @@
 #include "player.h"
 #include "SoundManager.h"
 
+constexpr float MAX_MOVE_SPEED = 480.0f;
+
 int Player::currentJumps = 0;
 
 Uint32 resetGravScale(Uint32 _interval, void* _param) {
@@ -44,6 +46,7 @@ void Player::Initialise(b2World* _world, std::shared_ptr<Sprite> _playerSprite) 
 }
 
 void Player::Render(SDL_Renderer * _renderer){
+	if (isDead) return;
 	//if(storedBall != nullptr) storedBall->Render(_renderer);
 	Entity::Render(_renderer);
 }
@@ -57,9 +60,11 @@ void Player::Update(Camera* _gameCamera) {
 	} else if (!(Input::GetInstance()->IsControllerButtonHeld(playerIndex, SDL_CONTROLLER_BUTTON_A))) {
 		FinishJump();
 	}
+
 	if (Input::GetInstance()->IsControllerButtonPressed(playerIndex, SDL_CONTROLLER_BUTTON_LEFTSHOULDER)) {
 		ThrowBall(-1);
 	}
+
 	if (Input::GetInstance()->IsControllerButtonPressed(playerIndex, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)) {
 		ThrowBall(1);
 	}
@@ -68,6 +73,12 @@ void Player::Update(Camera* _gameCamera) {
 
 	if (abs(stickPos) > 0.3f) {
 		MoveHorizontal(stickPos);
+	}
+
+	Vector2 moveVec(collider->body->GetLinearVelocity());
+
+	if (abs(moveVec.x) > MAX_MOVE_SPEED) {
+		collider->body->SetLinearVelocity({ sgn(moveVec.x) * MAX_MOVE_SPEED / PPM, -moveVec.AsBox2D().y});
 	}
 
 	SetPosition(collider->GetPosition() - _gameCamera->GetPosition());
@@ -83,7 +94,12 @@ void Player::Update(Camera* _gameCamera) {
 	Entity::Update();
 }
 
+Vector2 Player::GetAbsPosition() {
+	return Vector2(collider->GetPosition());
+}
+
 void Player::addCoin() {
+	SoundManager::PlaySound("coin pickup", FMOD_DEFAULT);
 
 	coinsCollected += 1;
 
@@ -117,6 +133,7 @@ void Player::ThrowBall(int _button) {
 	//Vector2{ 960.0f, -540.0 }
 
 	if (haveBall) {
+		SoundManager::PlaySound("throw", FMOD_DEFAULT);
 		storedBall->ThrowBall(Vector2{collider->GetPosition().x + (55.0f * _button), -collider->GetPosition().y }, _button); //position);
 		storedBall = nullptr;
 		haveBall = false;
@@ -152,7 +169,7 @@ void Player::Kill() {
 	collider->body->SetGravityScale(0.0f);
 	deaths++;
 
-	std::cout << "Player Am Dead\n";
+	SoundManager::PlaySound("death", FMOD_DEFAULT);
 }
 
 void Player::Respawn(Vector2 _respawnPosition) {
@@ -161,7 +178,6 @@ void Player::Respawn(Vector2 _respawnPosition) {
 	collider->body->SetGravityScale(1.0f);
 	collider->body->SetTransform((_respawnPosition).AsBox2D(), 0.0f);
 	collider->body->SetLinearVelocity({ 0,0 });
-	std::cout << "RESPAWN" << std::endl;
 }
 
 Uint32 Player::jumpTimerCallback(Uint32 interval, void* param) {

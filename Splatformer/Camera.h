@@ -28,15 +28,23 @@ public:
 	//Set the number of pixels to move per second toward the target position
 	void SetMoveSpeed(float newMoveSpeed);
 	float GetMoveSpeed();
+	Vector2 GetMoveVector();
 
 	SDL_Rect* GetRect();
 
 	bool IsQueueEmpty() { return targetQueue.empty(); }
+	int GetQueueSize() { return targetQueue.size(); }
+
+	void ClearQueue() { targetQueue.clear(); }
+
+	bool Arrived();
 
 	std::unique_ptr<Collider> collider;
 private:
+	bool arrived = false;
+
 	float width, height;
-	Vector2 position;
+	Vector2 position, moveDir;
 
 	std::deque<Vector2> targetQueue;
 

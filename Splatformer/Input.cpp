@@ -69,8 +69,8 @@ void Input::Initialise()
 				connectedControllers.push_back(pad);
 				char *mapping;
 				mapping = SDL_GameControllerMapping(pad);
-				SDL_Log("Controller %i is mapped as \"%s\".", i, mapping);
-				std::cout << "Controller %i MAPPING: " << mapping << std::endl;
+				/*SDL_Log("Controller %i is mapped as \"%s\".", i, mapping);
+				std::cout << "Controller %i MAPPING: " << mapping << std::endl;*/
 			}
 			else
 				std::cout << "SDL_GetError() = " << SDL_GetError() << std::endl;
@@ -147,7 +147,6 @@ void Input::HandleEvents(SDL_Event _event)
 			if (_event.cbutton.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(connectedControllers[i]))) {
 				// So the relevant state can be updated
 				controllerInputs[i].buttons[_event.cbutton.button] = true;
-				//std::cout << "BUTTON DOWN" << std::endl;
 			}
 		}
 		break;
@@ -157,8 +156,6 @@ void Input::HandleEvents(SDL_Event _event)
 		for (int i = 0; i < numGamepads; i++) {
 			if (_event.cbutton.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(connectedControllers[i]))) {
 				controllerInputs[i].buttons[_event.cbutton.button] = false;
-				std::cout << SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(connectedControllers[i])) << std::endl;
-				//std::cout << "BUTTON UP" << std::endl;
 			}
 		}
 		break;
@@ -202,8 +199,8 @@ void Input::AddController(SDL_Event _event)
 			}
 			char *mapping;
 			mapping = SDL_GameControllerMapping(pad);
-			SDL_Log("Controller %i is mapped as \"%s\".", _event.cdevice.which, mapping);
-			std::cout << "Controller %i MAPPING: " << mapping << std::endl;
+		/*	SDL_Log("Controller %i is mapped as \"%s\".", _event.cdevice.which, mapping);
+			std::cout << "Controller %i MAPPING: " << mapping << std::endl;*/
 
 			// reset status for the added controller
 			for (int a = 0; a < SDL_CONTROLLER_AXIS_MAX; a++)

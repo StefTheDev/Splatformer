@@ -11,6 +11,7 @@ public:
 
 	void Update(Camera* gameCamera, float sceneTime) override;
 	virtual void Initialise(b2World* world, std::shared_ptr<Sprite> platformSprite) override;
+	void Render(SDL_Renderer* renderer) override;
 	void Activate();
 	int respawnNumber;
 	bool GetActive() { return isActive; }
