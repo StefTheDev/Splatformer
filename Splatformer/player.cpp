@@ -85,8 +85,8 @@ void Player::Update(Camera* _gameCamera) {
 
 	if (storedBall != nullptr) {
 		storedBall->BindToPlayer(collider->GetPosition());
+		//storedBall->BindToPlayer(position);
 	}
-
 
 	jumpedInAir = (jumpedInAir && !canJump);
 
