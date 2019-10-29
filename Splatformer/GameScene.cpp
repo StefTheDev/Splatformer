@@ -80,7 +80,7 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	std::unique_ptr<Background> background = std::make_unique<Background>(Vector2(0.0f,0.0f));
 	objects.push_back(std::move(background));
 
-	LevelLoader::LoadLevel("Resources/Levels/LevelFour.csv", objects, respawnPoints);
+	LevelLoader::LoadLevel("Resources/Levels/JasonLevel.csv", objects, respawnPoints);
 
 	std::sort(respawnPoints.begin(), respawnPoints.end(), RespawnPlatform::sortAscending);
 
