@@ -1,4 +1,5 @@
 #include "Ball.h"
+#include <iostream>
 
 
 
@@ -26,7 +27,7 @@ void Ball::Initialise(b2World* _world, std::shared_ptr<Sprite> _ballSprite) {
 
 	collider = std::make_unique<Collider>(position, info, Vector2(width, height));
 
-	collider->InitialiseDynamic(_world, 1.0f, 0.3f, 0.5f);
+	collider->InitialiseKinematicCircle(_world, true);
 	collider->SetCollisionCategory(CATEGORY_BALL);
 	collider->SetCollisionMask(MASK_BALL_DEFAULT);
 
@@ -34,8 +35,10 @@ void Ball::Initialise(b2World* _world, std::shared_ptr<Sprite> _ballSprite) {
 }
 
 void Ball::BindToPlayer(Vector2 _position) {
+
 	_position.y *= -1.0f;
-	collider->body->SetTransform(_position.AsBox2D(), 0.0f);
+	this->SetPosition(_position);
+	collider->body->SetTransform(position.AsBox2D(), 0.0f);
 }
 
 void Ball::Update(Camera* _gameCamera) {
@@ -51,9 +54,15 @@ void Ball::Render(SDL_Renderer * _renderer){
 }
 
 
-void Ball::Collected() {
+void Ball::Collect() {
 
+	collected = true;
 	this->collider->body->GetFixtureList()[0].SetSensor(true);
+}
+
+bool Ball::isCollected() {
+
+	return collected;
 
 }
 
@@ -61,6 +70,8 @@ void Ball::ThrowBall(Vector2 _position, int _button) {
 	// apply to ball
 
 	thrown = true;
+	collider->body->SetType(b2_dynamicBody);
+	collider->body->SetActive(true);
 	collider->body->SetTransform(_position.AsBox2D(), 0.0f);
 	collider->body->SetLinearVelocity({ (75.0f * _button), 0.0f });
 	this->collider->body->GetFixtureList()[0].SetSensor(false);

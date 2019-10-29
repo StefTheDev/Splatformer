@@ -49,7 +49,7 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	playerSprite = std::make_shared<Sprite>("Resources/Sprites/Apple.png", _gameRenderer, false);
 	platformSprite = std::make_shared<Sprite>("Resources/Sprites/PlatformSpriteSheet.png", _gameRenderer, false);
 	platformSprite->SetSource({64.0f, 32.0f});
-	coinSprite = std::make_shared<Sprite>("Resources/Sprites/coin.png", _gameRenderer, false);
+	coinSprite = std::make_shared<Sprite>("Resources/Sprites/SugarCube.png", _gameRenderer, false);
 	ballSprite = std::make_shared<Sprite>("Resources/Sprites/ball.png", _gameRenderer, false);
 	backgroundSprite = std::make_shared<Sprite>("Resources/Sprites/Background.png", _gameRenderer, false);
 	backgroundSprite->SetSource(Vector2(2500, 1080));

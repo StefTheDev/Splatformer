@@ -13,7 +13,9 @@ public:
 	void Render(SDL_Renderer * renderer);
 	void BindToPlayer(Vector2 position);
 
-	void Collected();
+	void Collect();
+
+	bool isCollected();
 
 	void ThrowBall(Vector2 position, int button);
 	bool IsThrown();
@@ -24,4 +26,5 @@ private:
 	float width = 75.0f;
 	float height = 40.0f;
 	bool thrown = false;
+	bool collected = false;
 };

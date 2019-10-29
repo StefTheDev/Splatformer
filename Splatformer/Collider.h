@@ -36,6 +36,14 @@ public:
 	//Initialise collider that is unstoppable but can be moved in code
 	void InitialiseKinematic(b2World* worldRef, bool isSensor = false);
 
+	//Initialise immovable collider
+	void InitialiseStaticCircle(b2World* worldRef, bool isSensor = false);
+	//Initialise collider with circular dynamic collisions
+	void InitialiseDynamicCircle(b2World* worldRef, float density, float friction, float damping, bool IsSensor = false);
+	//Initialise collider that is unstoppable but can be moved in code
+	void InitialiseKinematicCircle(b2World* worldRef, bool isSensor = false);
+
+
 	//Reminder: If ((categoryA & maskB) != 0 && (categoryB & maskA) != 0) Collisions Can Happen
 
 	//Set the collider category bits
