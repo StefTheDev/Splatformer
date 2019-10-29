@@ -34,16 +34,12 @@ void MenuScene::Load(SDL_Renderer* _gameRenderer)
 		GameManager::GetInstance()->Switch(LOBBY);
 	});
 
-	objects.push_back(std::move(play));
-
 	std::unique_ptr<UIButton> credits = std::make_unique<UIButton>();
 	credits->LoadSprite(nullptr);
 	credits->Initialise(Vector2(0.0f, 0.0f), "CREDITS", 64, _gameRenderer, [this]
 	{
 		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Credits", "Made by Damon, Jason, Chloe, Stef.", NULL);
 	});
-
-	objects.push_back(std::move(credits));
 
 	std::unique_ptr<UIButton> exit = std::make_unique<UIButton>();
 	exit->LoadSprite(nullptr);
@@ -52,11 +48,20 @@ void MenuScene::Load(SDL_Renderer* _gameRenderer)
 		SDL_Quit();
 		std::exit(0);
 	});
+	
+	play->SetHover(true);
+	play->SetUp(exit.get());
+	play->SetDown(credits.get());
 
+	credits->SetUp(play.get());
+	credits->SetDown(exit.get());
+
+	exit->SetUp(credits.get());
+	exit->SetDown(play.get());
+
+	objects.push_back(std::move(play));
+	objects.push_back(std::move(credits));
 	objects.push_back(std::move(exit));
-
-	// TODO: WHY THIS NO WORK?
-	SoundManager::PlaySound("Jump", FMOD_LOOP_NORMAL);
 }
 
 void MenuScene::Unload()

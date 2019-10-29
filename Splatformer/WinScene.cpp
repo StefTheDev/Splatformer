@@ -72,6 +72,7 @@ void WinScene::Load(SDL_Renderer* gameRenderer)
 		});
 
 	objects.push_back(std::move(play));
+	static_cast<UIButton*>(objects.back().get())->SetHover(true);
 
 	SoundManager::PlaySound("Victory", FMOD_DEFAULT);
 }
