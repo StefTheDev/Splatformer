@@ -13,6 +13,14 @@ constexpr int posIterations = 3;
 constexpr float cameraSpeed = 100.0f;
 constexpr float maxCamMulti = 10.0f;
 
+std::string levelNames[] = {
+	"LevelOne",
+	"LevelTwo",
+	"LevelThree",
+	"LevelFour",
+	"JasonLevel",
+};
+
 GameScene::GameScene() {
 	b2Vec2 gravity(0.0f, -39.2f);
 
@@ -80,7 +88,7 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	std::unique_ptr<Background> background = std::make_unique<Background>(Vector2(0.0f,0.0f));
 	objects.push_back(std::move(background));
 
-	LevelLoader::LoadLevel("Resources/Levels/JasonLevel.csv", objects, respawnPoints);
+	LevelLoader::LoadLevel("Resources/Levels/"+ levelNames[SELECTED_LEVEL] +".csv", objects, respawnPoints);
 
 	std::sort(respawnPoints.begin(), respawnPoints.end(), RespawnPlatform::sortAscending);
 

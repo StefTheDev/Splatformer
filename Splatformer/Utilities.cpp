@@ -10,6 +10,7 @@ float deltaTime = 0.0f;
 int WINDOW_WIDTH = 1920;
 int WINDOW_HEIGHT = 1080;
 
+unsigned int SELECTED_LEVEL = 0;
 int controllersAtStartOfGame = 0;
 
 void PlatformingListener::PreSolve(b2Contact* contact, const b2Manifold* oldManifold) {
