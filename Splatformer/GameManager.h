@@ -15,6 +15,7 @@ enum GameState
 	LOBBY,
 	INGAME,
 	WINNING,
+	INSTRUCTION,
 	EXIT
 };
 

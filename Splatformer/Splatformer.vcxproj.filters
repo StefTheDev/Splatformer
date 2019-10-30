@@ -141,14 +141,17 @@
     <ClCompile Include="WinScene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Background.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="player.cpp">
       <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="InstructionScene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Background.cpp">
+      <Filter>Source Files\Entities\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="Background.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InstructionScene.h">
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

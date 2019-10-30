@@ -29,7 +29,7 @@ bool GameManager::Initialise(std::string _title)
 		renderer = SDL_CreateRenderer(window, -1, 0);
 		surface = SDL_GetWindowSurface(window);
 
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+		SDL_SetRenderDrawColor(renderer, 10, 10, 10, 255);
 		SDL_UpdateWindowSurface(window);
 
 		timeCurrentFrame = SDL_GetPerformanceCounter();
@@ -40,6 +40,7 @@ bool GameManager::Initialise(std::string _title)
 		scenes.push_back(std::make_unique<SceneStorage<Lobby>>());
 		scenes.push_back(std::make_unique<SceneStorage<GameScene>>());
 		scenes.push_back(std::make_unique<SceneStorage<WinScene>>());
+		scenes.push_back(std::make_unique<SceneStorage<InstructionScene>>());
 
 		scenes[MENU]->LoadScene(renderer);
 
