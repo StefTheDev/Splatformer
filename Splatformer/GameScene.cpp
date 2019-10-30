@@ -113,23 +113,17 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	}
 	camera->SetMoveSpeed(cameraSpeed);
 
+	float xScale = 0.8f;
+	float xOffset = ((1920 * xScale) / (players.size() + 1)) * -0.5f;
+	float stepDist = (1920 * xScale) / (players.size() + 1);
 
 	for (int i = 0; i < players.size(); i++)
 	{
 		std::unique_ptr<UIText> score = std::make_unique<UIText>();
 		score->LoadSprite(nullptr);
-		score->Initialise(Vector2(i * 100, 400.0f), "Test", 16, SDL_Color{ 255, 255, 255 }, _gameRenderer);
-
+		score->Initialise(Vector2(xOffset + (i * stepDist), 400.0f), "Test", 36, SDL_Color{ 0, 0, 0 }, _gameRenderer);
 		scores.push_back(std::move(score));
 	}
-
-	std::unique_ptr<UIButton> button = std::make_unique<UIButton>();
-	button->LoadSprite(buttonSprite);
-	button->Initialise(Vector2((-WINDOW_WIDTH / 2) + 100, -500.0f), "Menu", 32, _gameRenderer, [this] {
-		GameManager::GetInstance()->Switch(MENU);
-		});
-
-	objects.push_back(std::move(button));
 }
 
 void GameScene::Unload()
