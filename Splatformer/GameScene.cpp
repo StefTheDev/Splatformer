@@ -50,12 +50,14 @@ GameScene::~GameScene()
 void GameScene::Load(SDL_Renderer* _gameRenderer) {
 
 	Input::GetInstance()->inGame = true;
+	Input::GetInstance()->Initialise();
 
 	for (int i = 0; i < SDL_NumJoysticks(); ++i) {
 		if (SDL_IsGameController(i)) {
 			controllers.push_back(SDL_GameControllerOpen(i));
 		}
 	}
+
 
 	playerSprite = std::make_shared<Sprite>("Resources/Sprites/Apple.png", _gameRenderer, false);
 	platformSprite = std::make_shared<Sprite>("Resources/Sprites/PlatformSpriteSheet.png", _gameRenderer, false);
@@ -245,7 +247,9 @@ bool GameScene::IsPaused() const
 }
 
 void GameScene::ButtonDown(SDL_JoystickID _gamepadID, Uint8 _button) {
-
+	if (_button == SDL_CONTROLLER_BUTTON_BACK) {
+		GameManager::GetInstance()->Switch(MENU);
+	}
 }
 
 void GameScene::ButtonUp(SDL_JoystickID _gamepadID, Uint8 _button) {
