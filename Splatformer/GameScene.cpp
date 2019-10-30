@@ -128,7 +128,7 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	camera->SetMoveSpeed(cameraSpeed);
 
 	float xScale = 0.8f;
-	float xOffset = ((1920 * xScale) / (players.size() + 1)) * -0.5f;
+	float xOffset = ((1920 * xScale) / (players.size() + 1)) * -0.5f;
 	float stepDist = (1920 * xScale) / (players.size() + 1);
 
 	for (int i = 0; i < players.size(); i++)

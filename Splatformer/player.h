@@ -21,6 +21,7 @@ public:
 	void ThrowBall(int button);
 
 	void addCoin();
+	void addCoins(int coins);
 	int getCoins();
 	int GetDeaths() { return deaths; }
 
