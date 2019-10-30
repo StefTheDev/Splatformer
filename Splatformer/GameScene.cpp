@@ -83,6 +83,15 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	SpriteManager::Get()->AddSprite("ProgressIcon", std::make_shared<Sprite>("Resources/Sprites/pointer.png", _gameRenderer, false));
 	SpriteManager::Get()->GetSprite("ProgressIcon")->SetSource(Vector2(32.0f, 64.0f));
 
+	SpriteManager::Get()->AddSprite("AppleSprite", std::make_shared<Sprite>("Resources/Sprites/Apple.png", _gameRenderer, false));
+	SpriteManager::Get()->GetSprite("AppleSprite")->SetSource(Vector2(50.0f, 50.0f));
+	SpriteManager::Get()->AddSprite("BananaSprite", std::make_shared<Sprite>("Resources/Sprites/Banana.png", _gameRenderer, false));
+	SpriteManager::Get()->GetSprite("BananaSprite")->SetSource(Vector2(50.0f, 50.0f));
+	SpriteManager::Get()->AddSprite("CarrotSprite", std::make_shared<Sprite>("Resources/Sprites/Carrot.png", _gameRenderer, false));
+	SpriteManager::Get()->GetSprite("CarrotSprite")->SetSource(Vector2(50.0f, 50.0f));
+	SpriteManager::Get()->AddSprite("OnionSprite", std::make_shared<Sprite>("Resources/Sprites/Onion.png", _gameRenderer, false));
+	SpriteManager::Get()->GetSprite("OnionSprite")->SetSource(Vector2(50.0f, 50.0f));
+
 	camera->Initialise(sceneWorld.get());
 
 	std::unique_ptr<Background> background = std::make_unique<Background>(Vector2(0.0f,0.0f));
@@ -95,7 +104,7 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	LoadControllers();
 	for (auto& object : objects) {
 		switch (object->GetType()) {
-		case PLAYER: static_cast<Player*>(object.get())->Initialise(sceneWorld.get(), playerSprite); break;
+		case PLAYER: static_cast<Player*>(object.get())->Initialise(sceneWorld.get()); break;
 		case PLATFORM: static_cast<Platform*>(object.get())->Initialise(sceneWorld.get(), platformSprite); break;
 		case COIN: static_cast<Coin*>(object.get())->Initialise(sceneWorld.get(), coinSprite); break;
 		case BALL: static_cast<Ball*>(object.get())->Initialise(sceneWorld.get(), ballSprite); break;
@@ -286,7 +295,7 @@ void GameScene::ControllerCheck()
 		{
 			objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), Controllers(i)));
 			players.push_back((Player*)objects.back().get());
-			players.back()->Initialise(sceneWorld.get(), playerSprite);
+			players.back()->Initialise(sceneWorld.get());
 		}
 	}
 }

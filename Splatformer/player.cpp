@@ -1,5 +1,6 @@
 #include "player.h"
 #include "SoundManager.h"
+#include "SpriteManager.h"
 
 constexpr float MAX_MOVE_SPEED = 480.0f;
 
@@ -25,8 +26,15 @@ Player::~Player()
 	
 }
 
-void Player::Initialise(b2World* _world, std::shared_ptr<Sprite> _playerSprite) {
-	if (!LoadSprite(_playerSprite)) return;
+void Player::Initialise(b2World* _world) {
+	std::string spriteNames[] = {
+		"AppleSprite",
+		"BananaSprite",
+		"CarrotSprite",
+		"OnionSprite"
+	};
+
+	if (!LoadSprite(SpriteManager::Get()->GetSprite(spriteNames[playerIndex]))) return;
 
 	GetSprite()->Add("idle", SpriteAnimation{ 0, 1, 500 }
 	); //Index, frames, speed
