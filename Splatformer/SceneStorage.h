@@ -5,6 +5,7 @@
 #include "GameScene.h"
 #include "Lobby.h"
 #include "WinScene.h"
+#include "InstructionScene.h"
 
 class StorageBase {
 public:
