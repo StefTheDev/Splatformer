@@ -242,7 +242,9 @@ bool GameScene::IsPaused() const
 }
 
 void GameScene::ButtonDown(SDL_JoystickID _gamepadID, Uint8 _button) {
-
+	if (_button == SDL_CONTROLLER_BUTTON_BACK) {
+		GameManager::GetInstance()->Switch(MENU);
+	}
 }
 
 void GameScene::ButtonUp(SDL_JoystickID _gamepadID, Uint8 _button) {

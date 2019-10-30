@@ -199,8 +199,9 @@ void PlatformingListener::BeginContact(b2Contact* contact) {
 			respawnPlatform = static_cast<RespawnPlatform*>(fixtureAData->data);
 		}
 
-		if ((player->GetPosition().y + player->GetDimensions().y / 2) < (respawnPlatform->GetPosition().y - respawnPlatform->GetDimensions().y / 2)) {
+		if ((player->GetPosition().y + player->GetDimensions().y / 2) < (respawnPlatform->GetPosition().y - respawnPlatform->GetDimensions().y / 2) && !respawnPlatform->GetActive()) {
 			respawnPlatform->Activate();
+			player->addCoins(5);
 		}
 
 

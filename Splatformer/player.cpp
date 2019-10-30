@@ -113,6 +113,12 @@ void Player::addCoin() {
 
 }
 
+void Player::addCoins(int _coins) {
+	SoundManager::PlaySound("coin pickup", FMOD_DEFAULT);
+	
+	coinsCollected += _coins;
+}
+
 int Player::getCoins() {
 
 	return coinsCollected;
