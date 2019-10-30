@@ -13,6 +13,8 @@ GameManager::~GameManager()
 
 bool GameManager::Initialise(std::string _title)
 {
+	SoundManager::Initialise();
+	SoundManager::LoadSounds("Resources/Sounds");
 
 	Uint32 flags = SDL_WINDOW_SHOWN;
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
@@ -45,8 +47,7 @@ bool GameManager::Initialise(std::string _title)
 		Input::GetInstance()->Initialise();
 	}
 
-	SoundManager::Initialise();
-	SoundManager::LoadSounds("Resources/Sounds");
+
 
 	Switch(MENU);
 

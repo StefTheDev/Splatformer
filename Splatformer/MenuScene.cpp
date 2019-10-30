@@ -2,7 +2,8 @@
 
 MenuScene::MenuScene()
 {
-	
+	//SoundManager::PlaySound("game bgm", FMOD_LOOP_NORMAL);
+
 }
 
 MenuScene::~MenuScene() {
@@ -22,6 +23,10 @@ void MenuScene::Load(SDL_Renderer* _gameRenderer)
 {
 
 	Input::GetInstance()->inGame = false;
+	//SoundManager::loopChannel
+	std::cout << SoundManager::PlaySound("menu bgm", FMOD_LOOP_NORMAL) << std::endl;
+	//SoundManager::LoadSounds("Resources\Sounds");
+	//SoundManager::PlaySound("Horn");
 
 
 	std::unique_ptr<UIText> header = std::make_unique<UIText>();
@@ -70,5 +75,5 @@ void MenuScene::Load(SDL_Renderer* _gameRenderer)
 
 void MenuScene::Unload()
 {
-	//SoundManager::loopChannel->stop();
+	std::cout << SoundManager::loopChannel->stop() << std::endl;
 }

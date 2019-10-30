@@ -101,7 +101,7 @@ void SoundManager::Update() {
 	audioSystem->update();
 }
 
-void SoundManager::PlaySound(std::string _sound) {
+FMOD_RESULT SoundManager::PlaySound(std::string _sound) {
 	FMOD_RESULT result;
 	FMOD_MODE sndType;
 	sounds[_sound]->getMode(&sndType);
@@ -111,9 +111,11 @@ void SoundManager::PlaySound(std::string _sound) {
 	} else {
 		result = audioSystem->playSound(sounds[_sound], 0, false, &miscChannel);
 	}
+
+	return result;
 }
 
-void SoundManager::PlaySound(std::string _sound, FMOD_MODE _mode) {
+FMOD_RESULT SoundManager::PlaySound(std::string _sound, FMOD_MODE _mode) {
 	FMOD_RESULT result;
 	sounds[_sound]->setMode(_mode);
 
@@ -122,6 +124,8 @@ void SoundManager::PlaySound(std::string _sound, FMOD_MODE _mode) {
 	} else {
 		result = audioSystem->playSound(sounds[_sound], 0, false, &miscChannel);
 	}
+
+	return result;
 }
 
 void SoundManager::SetSound(std::string _sound, FMOD_MODE _mode) {
