@@ -20,6 +20,10 @@ void MenuScene::Render(SDL_Renderer * gameRenderer)
 
 void MenuScene::Load(SDL_Renderer* _gameRenderer) 
 {
+
+	Input::GetInstance()->inGame = false;
+
+
 	std::unique_ptr<UIText> header = std::make_unique<UIText>();
 
 	header->LoadSprite(nullptr);

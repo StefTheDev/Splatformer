@@ -31,6 +31,9 @@ void Lobby::ButtonDown(SDL_JoystickID _gamepadID, Uint8 _button) {
 
 void Lobby::Load(SDL_Renderer* _gameRenderer) 
 {
+	Input::GetInstance()->inGame = false;
+
+
 	std::unique_ptr<UIText> label = std::make_unique<UIText>();
 
 	label->LoadSprite(nullptr);
