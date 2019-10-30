@@ -202,21 +202,59 @@ void Input::AddController(SDL_Event _event)
 		/*	SDL_Log("Controller %i is mapped as \"%s\".", _event.cdevice.which, mapping);
 			std::cout << "Controller %i MAPPING: " << mapping << std::endl;*/
 
-			// reset status for the added controller
-			for (int a = 0; a < SDL_CONTROLLER_AXIS_MAX; a++)
-			{
-				controllerInputs[_event.cdevice.which].axis[a] = 0;
-				lastControllerInputs[_event.cdevice.which].axis[a] = 0;
-			}
-			for (int b = 0; b < SDL_CONTROLLER_BUTTON_MAX; b++)
-			{
-				controllerInputs[_event.cdevice.which].buttons[b] = false;
-				lastControllerInputs[_event.cdevice.which].buttons[b] = false;
-			}
+			//// reset status for the added controller
+			//for (int a = 0; a < SDL_CONTROLLER_AXIS_MAX; a++)
+			//{
+			//	controllerInputs[_event.cdevice.which].axis[a] = 0;
+			//	lastControllerInputs[_event.cdevice.which].axis[a] = 0;
+			//}
+			//for (int b = 0; b < SDL_CONTROLLER_BUTTON_MAX; b++)
+			//{
+			//	controllerInputs[_event.cdevice.which].buttons[b] = false;
+			//	lastControllerInputs[_event.cdevice.which].buttons[b] = false;
+			//}
 
 		}
 		else
 			std::cout << "SDL_GetError() = " << SDL_GetError() << std::endl;
+	}
+	else
+	{
+		for (int i = 0; i < numGamepads; i++)
+		{
+			// Open the controller and add it to our list
+			SDL_GameController* pad = SDL_GameControllerOpen(i);
+
+			if (SDL_GameControllerGetAttached(pad) == 1)
+			{
+				connectedControllers.push_back(pad);
+				char *mapping;
+				mapping = SDL_GameControllerMapping(pad);
+				/*SDL_Log("Controller %i is mapped as \"%s\".", i, mapping);
+				std::cout << "Controller %i MAPPING: " << mapping << std::endl;*/
+			}
+			else
+				std::cout << "SDL_GetError() = " << SDL_GetError() << std::endl;
+		}
+	}
+
+	// Set vector sizes
+	controllerInputs.resize(numGamepads);
+	lastControllerInputs.resize(numGamepads);
+
+	// reset status of controllers
+	for (int i = 0; i < numGamepads; i++)
+	{
+		for (int a = 0; a < SDL_CONTROLLER_AXIS_MAX; a++)
+		{
+			controllerInputs[i].axis[a] = 0;
+			lastControllerInputs[i].axis[a] = 0;
+		}
+		for (int b = 0; b < SDL_CONTROLLER_BUTTON_MAX; b++)
+		{
+			controllerInputs[i].buttons[b] = false;
+			lastControllerInputs[i].buttons[b] = false;
+		}
 	}
 	
 }
