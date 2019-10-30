@@ -13,6 +13,14 @@ constexpr int posIterations = 3;
 constexpr float cameraSpeed = 100.0f;
 constexpr float maxCamMulti = 10.0f;
 
+std::string levelNames[] = {
+	"LevelOne",
+	"LevelTwo",
+	"LevelThree",
+	"LevelFour",
+	"JasonLevel",
+};
+
 GameScene::GameScene() {
 	b2Vec2 gravity(0.0f, -39.2f);
 
@@ -52,7 +60,7 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	playerSprite = std::make_shared<Sprite>("Resources/Sprites/Apple.png", _gameRenderer, false);
 	platformSprite = std::make_shared<Sprite>("Resources/Sprites/PlatformSpriteSheet.png", _gameRenderer, false);
 	platformSprite->SetSource({64.0f, 32.0f});
-	coinSprite = std::make_shared<Sprite>("Resources/Sprites/coin.png", _gameRenderer, false);
+	coinSprite = std::make_shared<Sprite>("Resources/Sprites/SugarCube.png", _gameRenderer, false);
 	ballSprite = std::make_shared<Sprite>("Resources/Sprites/ball.png", _gameRenderer, false);
 	backgroundSprite = std::make_shared<Sprite>("Resources/Sprites/Background.png", _gameRenderer, false);
 	backgroundSprite->SetSource(Vector2(2500, 1080));
@@ -66,6 +74,9 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	SpriteManager::Get()->AddSprite("TimePlatCounter", std::make_shared<Sprite>("Resources/Sprites/TimeGemSpriteSheet.png", _gameRenderer, false));
 	SpriteManager::Get()->GetSprite("TimePlatCounter")->SetSource(Vector2(32.0f, 32.0f));
 
+	SpriteManager::Get()->AddSprite("RespawnGems", std::make_shared<Sprite>("Resources/Sprites/RespawnGems.png", _gameRenderer, false));
+	SpriteManager::Get()->GetSprite("RespawnGems")->SetSource(Vector2(32.0f, 32.0f));
+
 	SpriteManager::Get()->AddSprite("ProgressBarSprite", std::make_shared<Sprite>("Resources/Sprites/player.png", _gameRenderer, false));
 	SpriteManager::Get()->GetSprite("ProgressBarSprite")->SetSource(Vector2(1900.0f, 64.0f));
 
@@ -75,19 +86,28 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	SpriteManager::Get()->AddSprite("ProgressIcon", std::make_shared<Sprite>("Resources/Sprites/pointer.png", _gameRenderer, false));
 	SpriteManager::Get()->GetSprite("ProgressIcon")->SetSource(Vector2(32.0f, 64.0f));
 
+	SpriteManager::Get()->AddSprite("AppleSprite", std::make_shared<Sprite>("Resources/Sprites/Apple.png", _gameRenderer, false));
+	SpriteManager::Get()->GetSprite("AppleSprite")->SetSource(Vector2(50.0f, 50.0f));
+	SpriteManager::Get()->AddSprite("BananaSprite", std::make_shared<Sprite>("Resources/Sprites/Banana.png", _gameRenderer, false));
+	SpriteManager::Get()->GetSprite("BananaSprite")->SetSource(Vector2(50.0f, 50.0f));
+	SpriteManager::Get()->AddSprite("CarrotSprite", std::make_shared<Sprite>("Resources/Sprites/Carrot.png", _gameRenderer, false));
+	SpriteManager::Get()->GetSprite("CarrotSprite")->SetSource(Vector2(50.0f, 50.0f));
+	SpriteManager::Get()->AddSprite("OnionSprite", std::make_shared<Sprite>("Resources/Sprites/Onion.png", _gameRenderer, false));
+	SpriteManager::Get()->GetSprite("OnionSprite")->SetSource(Vector2(50.0f, 50.0f));
+
 	camera->Initialise(sceneWorld.get());
 
 	std::unique_ptr<Background> background = std::make_unique<Background>(Vector2(0.0f,0.0f));
 	objects.push_back(std::move(background));
 
-	LevelLoader::LoadLevel("Resources/Levels/JasonLevel.csv", objects, respawnPoints);
+	LevelLoader::LoadLevel("Resources/Levels/"+ levelNames[SELECTED_LEVEL] +".csv", objects, respawnPoints);
 
 	std::sort(respawnPoints.begin(), respawnPoints.end(), RespawnPlatform::sortAscending);
 
 	LoadControllers();
 	for (auto& object : objects) {
 		switch (object->GetType()) {
-		case PLAYER: static_cast<Player*>(object.get())->Initialise(sceneWorld.get(), playerSprite); break;
+		case PLAYER: static_cast<Player*>(object.get())->Initialise(sceneWorld.get()); break;
 		case PLATFORM: static_cast<Platform*>(object.get())->Initialise(sceneWorld.get(), platformSprite); break;
 		case COIN: static_cast<Coin*>(object.get())->Initialise(sceneWorld.get(), coinSprite); break;
 		case BALL: static_cast<Ball*>(object.get())->Initialise(sceneWorld.get(), ballSprite); break;
@@ -105,23 +125,17 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	}*/
 	camera->SetMoveSpeed(cameraSpeed);
 
+	float xScale = 0.8f;
+	float xOffset = ((1920 * xScale) / (players.size() + 1)) * -0.5f;
+	float stepDist = (1920 * xScale) / (players.size() + 1);
 
 	for (int i = 0; i < players.size(); i++)
 	{
 		std::unique_ptr<UIText> score = std::make_unique<UIText>();
 		score->LoadSprite(nullptr);
-		score->Initialise(Vector2(i * 100, 400.0f), "Test", 16, SDL_Color{ 255, 255, 255 }, _gameRenderer);
-
+		score->Initialise(Vector2(xOffset + (i * stepDist), 400.0f), "Test", 36, SDL_Color{ 0, 0, 0 }, _gameRenderer);
 		scores.push_back(std::move(score));
 	}
-
-	std::unique_ptr<UIButton> button = std::make_unique<UIButton>();
-	button->LoadSprite(buttonSprite);
-	button->Initialise(Vector2((-WINDOW_WIDTH / 2) + 100, -500.0f), "Menu", 32, _gameRenderer, [this] {
-		GameManager::GetInstance()->Switch(MENU);
-		});
-
-	objects.push_back(std::move(button));
 }
 
 void GameScene::Unload()
@@ -278,7 +292,7 @@ void GameScene::ControllerCheck()
 		{
 			objects.push_back(std::make_unique<Player>(Vector2(50.0f, 0.0f), Controllers(i)));
 			players.push_back((Player*)objects.back().get());
-			players.back()->Initialise(sceneWorld.get(), playerSprite);
+			players.back()->Initialise(sceneWorld.get());
 		}
 	}
 }

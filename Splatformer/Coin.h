@@ -16,5 +16,5 @@ private:
 	std::unique_ptr<Collider> collider;
 
 	float width = 75.0f;
-	float height = 40.0f;
+	float height = 45.0f;
 };

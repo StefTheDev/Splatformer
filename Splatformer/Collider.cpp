@@ -31,6 +31,26 @@ void Collider::InitialiseStatic(b2World* _world, bool _isSensor) {
 	body->SetUserData(&colliderData);
 }
 
+void Collider::InitialiseStaticCircle(b2World* _world, bool _isSensor) {
+	b2Vec2 b2Dimensions = (dimensions / 2.0f).AsBox2D();
+
+	b2BodyDef bodyDef;
+
+	bodyDef.position = position.AsBox2D();
+
+	body = b2BodyPtr(_world->CreateBody(&bodyDef));
+
+	b2CircleShape boxBody;
+	boxBody.m_radius = b2Dimensions.y;
+
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &boxBody;
+	fixtureDef.isSensor = _isSensor;
+
+	body->CreateFixture(&fixtureDef);
+	body->SetUserData(&colliderData);
+}
+
 void Collider::InitialiseDynamic(b2World* _world, float _density, float _friction, float _damping, bool _isSensor) {
 	b2Vec2 b2Dimensions = (dimensions / 2.0f).AsBox2D();
 
@@ -56,6 +76,32 @@ void Collider::InitialiseDynamic(b2World* _world, float _density, float _frictio
 	body->SetUserData(&colliderData);
 }
 
+void Collider::InitialiseDynamicCircle(b2World* _world, float _density, float _friction, float _damping, bool _isSensor) {
+	b2Vec2 b2Dimensions = (dimensions / 2.0f).AsBox2D();
+
+	b2BodyDef bodyDef;
+
+	bodyDef.type = b2_dynamicBody;
+	bodyDef.position = position.AsBox2D();
+	bodyDef.linearDamping = _damping;
+	bodyDef.fixedRotation = true;
+
+	body = b2BodyPtr(_world->CreateBody(&bodyDef));
+
+	b2CircleShape circleBody;
+	circleBody.m_radius = b2Dimensions.y;
+
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &circleBody;
+	fixtureDef.isSensor = _isSensor;
+	fixtureDef.density = _density;
+	fixtureDef.friction = _friction;
+
+	body->CreateFixture(&fixtureDef);
+	body->SetUserData(&colliderData);
+}
+
+
 void Collider::InitialiseKinematic(b2World* _world, bool _isSensor) {
 	b2Vec2 b2Dimensions = (dimensions / 2.0f).AsBox2D();
 	
@@ -68,6 +114,27 @@ void Collider::InitialiseKinematic(b2World* _world, bool _isSensor) {
 
 	b2PolygonShape boxBody;
 	boxBody.SetAsBox(b2Dimensions.x, b2Dimensions.y);
+
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &boxBody;
+	fixtureDef.isSensor = _isSensor;
+
+	body->CreateFixture(&fixtureDef);
+	body->SetUserData(&colliderData);
+}
+
+void Collider::InitialiseKinematicCircle(b2World* _world, bool _isSensor) {
+	b2Vec2 b2Dimensions = (dimensions / 2.0f).AsBox2D();
+
+	b2BodyDef bodyDef;
+
+	bodyDef.type = b2_kinematicBody;
+	bodyDef.position = position.AsBox2D();
+
+	body = b2BodyPtr(_world->CreateBody(&bodyDef));
+
+	b2CircleShape boxBody;
+	boxBody.m_radius = b2Dimensions.y;
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &boxBody;

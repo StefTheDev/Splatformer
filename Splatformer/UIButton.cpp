@@ -26,37 +26,110 @@ bool UIButton::Initialise(Vector2 position, std::string text, int size, SDL_Rend
 	return Entity::Initialise(Vector2(((WINDOW_WIDTH - width) / 2) + position.x, ((WINDOW_HEIGHT - height) / 2) + position.y), Vector2(width, height));
 }
 
+void UIButton::Update() {
+	Entity::Update();
+	justHovered = false;
+
+	if (hovering) {
+		SDL_SetTextureColorMod(textTexture, 255, 0, 255);
+	} else {
+		SDL_SetTextureColorMod(textTexture, 250, 250, 250);
+	}
+}
+
 void UIButton::Render(SDL_Renderer* renderer)
 {
 	SDL_RenderCopy(renderer, textTexture, NULL, &destination);
 }
 
-void UIButton::Listen(SDL_Event event)
-{
+void UIButton::Listen(SDL_Event event) {
+	if ((!hovering) || justHovered) return;
+
 	switch (event.type)
 	{
-		case SDL_MOUSEMOTION: {
-			if (IsHover(event.motion.x, event.motion.y)) {
-				SDL_SetTextureColorMod(textTexture, 255, 0, 255);
-				if (hovering == false)
-				{
-					SoundManager::PlaySound("Menu");
-					hovering = true;
-				}
+		case SDL_CONTROLLERBUTTONDOWN:
+		{
+			switch(event.cbutton.button){
+			case (SDL_CONTROLLER_BUTTON_A): {
+				click();
+				break;
 			}
-			else {
-				SDL_SetTextureColorMod(textTexture, 250, 250, 250);
-				if(hovering == true) hovering = false;
+			case (SDL_CONTROLLER_BUTTON_DPAD_UP):{
+				SetFocus(0);
+				break;
 			}
-			break;
-		}
-		case SDL_MOUSEBUTTONDOWN: {
-
-			if (IsHover(event.motion.x, event.motion.y)) click();
-			break;
+			case (SDL_CONTROLLER_BUTTON_DPAD_RIGHT):{
+				SetFocus(1);
+				break;
+			}
+			case (SDL_CONTROLLER_BUTTON_DPAD_DOWN):{
+				SetFocus(2);
+				break;
+			}
+			case (SDL_CONTROLLER_BUTTON_DPAD_LEFT):
+			{
+				SetFocus(3);
+				break;
+			}default: {
+				break;
+			}
+			}
+		break;
 		}
 	}
+
 	Entity::Listen(event);
+}
+
+void UIButton::SetFocus(int _which) {
+	switch (_which) {
+	case(0): {
+		if (up == nullptr) return;
+		up->SetHover(true);
+		break;
+	}
+	case(1): {
+		if (right == nullptr) return;
+		right->SetHover(true);
+		break;
+	}
+	case(2):{
+		if (down == nullptr) return;
+		down->SetHover(true);
+		break;
+	}
+	case(3):{
+		if (left == nullptr) return;
+		left->SetHover(true);
+		break;
+	}
+	default: {
+		return;
+	}
+	}
+	SoundManager::PlaySound("Menu");
+	SetHover(false);
+}
+
+void UIButton::SetHover(bool _value) {
+	hovering = _value;
+	justHovered = _value;
+}
+
+void UIButton::SetUp(UIButton* _uiElement) {
+	up = _uiElement;
+}
+
+void UIButton::SetDown(UIButton* _uiElement) {
+	down = _uiElement;
+}
+
+void UIButton::SetLeft(UIButton* _uiElement) {
+	left = _uiElement;
+}
+
+void UIButton::SetRight(UIButton* _uiElement) {
+	right = _uiElement;
 }
 
 bool UIButton::LoadSprite(std::shared_ptr<Sprite> _sprite)

@@ -36,6 +36,8 @@ constexpr float PPM = 32.0f;
 constexpr float PLAYER_WIDTH = 50.0f;
 constexpr float PLAYER_HEIGHT = 50.0f;
 
+extern unsigned int SELECTED_LEVEL;
+
 //Time since last frame in seconds
 extern float deltaTime;
 extern int WINDOW_WIDTH;

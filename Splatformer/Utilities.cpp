@@ -10,6 +10,7 @@ float deltaTime = 0.0f;
 int WINDOW_WIDTH = 1920;
 int WINDOW_HEIGHT = 1080;
 
+unsigned int SELECTED_LEVEL = 0;
 int controllersAtStartOfGame = 0;
 
 void PlatformingListener::PreSolve(b2Contact* contact, const b2Manifold* oldManifold) {
@@ -176,11 +177,14 @@ void PlatformingListener::BeginContact(b2Contact* contact) {
 			ball = static_cast<Ball*>(fixtureAData->data);
 		}
 
-		if (!(ball->IsThrown())) {
-			ball->Collected();
+		if (!ball->IsThrown() && !ball->isCollected()) {
+
+			ball->Collect();
 			player->GainBall(ball);
 		}
+
 		return;
+
 	} else if ((fixtureAData->type == PLR || fixtureAData->type == RESPAWN) && (fixtureBData->type == PLR || fixtureBData->type == RESPAWN)) {
 		Player* player;
 		RespawnPlatform* respawnPlatform;
