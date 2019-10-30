@@ -48,6 +48,9 @@ GameScene::~GameScene()
 }
 
 void GameScene::Load(SDL_Renderer* _gameRenderer) {
+
+	Input::GetInstance()->inGame = true;
+
 	for (int i = 0; i < SDL_NumJoysticks(); ++i) {
 		if (SDL_IsGameController(i)) {
 			controllers.push_back(SDL_GameControllerOpen(i));
@@ -117,9 +120,9 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	distanceFromBeginningToEnd = (respawnPoints.front()->GetPosition() - respawnPoints.back()->GetPosition()).Magnitude();
 
 	camera->SetPosition(respawnPoints[0]->GetPosition());
-	for (auto it = respawnPoints.begin(); it != respawnPoints.end(); it++) {
+	/*for (auto it = respawnPoints.begin(); it != respawnPoints.end(); it++) {
 		camera->PushTargetBack((*it)->GetPosition());
-	}
+	}*/
 	camera->SetMoveSpeed(cameraSpeed);
 
 	float xScale = 0.8f;
@@ -183,7 +186,7 @@ void GameScene::Update() {
 
 	if (!gameOver)
 	{
-		ControllerCheck();
+		//ControllerCheck();
 
 		for (std::vector<std::unique_ptr<Entity>>::iterator entity = objects.begin(); entity != objects.end(); ++entity) {
 			if ((*entity)->ShouldDelete()) {

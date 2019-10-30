@@ -66,6 +66,9 @@ void Lobby::Load(SDL_Renderer* _gameRenderer)
 {
 	srand(time(NULL));
 
+	Input::GetInstance()->inGame = false;
+
+
 	std::unique_ptr<UIText> label = std::make_unique<UIText>();
 
 	label->LoadSprite(nullptr);

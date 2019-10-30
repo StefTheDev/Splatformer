@@ -69,8 +69,8 @@ void Input::Initialise()
 				connectedControllers.push_back(pad);
 				char *mapping;
 				mapping = SDL_GameControllerMapping(pad);
-				/*SDL_Log("Controller %i is mapped as \"%s\".", i, mapping);
-				std::cout << "Controller %i MAPPING: " << mapping << std::endl;*/
+				SDL_Log("Controller %i is mapped as \"%s\".", i, mapping);
+				std::cout << "Controller %i MAPPING: " << mapping << std::endl;
 			}
 			else
 				std::cout << "SDL_GetError() = " << SDL_GetError() << std::endl;
@@ -183,23 +183,25 @@ void Input::AddController(SDL_Event _event)
 		if (SDL_GameControllerGetAttached(pad) == 1)
 		{
 			// add the new controller again
-			auto it = connectedControllers.insert(connectedControllers.begin() + _event.cdevice.which,pad);
+			auto it = connectedControllers.insert(connectedControllers.begin() + _event.cdevice.which, pad);
 			// erase the old controller
 			connectedControllers.erase(it + 1);
 
+			
+			
 			// erase it from removedController
 			auto removedControllersIter = removedControllers.begin();
 			while(removedControllersIter != removedControllers.end())
 			{
-				if (*removedControllersIter == SDL_GameControllerMapping(pad))
+				if ((*removedControllersIter) == SDL_GameControllerMapping(pad))
 				{
 					removedControllersIter = removedControllers.erase(removedControllersIter);
 				}
 				else removedControllersIter++;
 			}
-			char *mapping;
+			/*char *mapping;
 			mapping = SDL_GameControllerMapping(pad);
-		/*	SDL_Log("Controller %i is mapped as \"%s\".", _event.cdevice.which, mapping);
+			SDL_Log("Controller %i is mapped as \"%s\".", _event.cdevice.which, mapping);
 			std::cout << "Controller %i MAPPING: " << mapping << std::endl;*/
 
 			// reset status for the added controller
@@ -218,6 +220,13 @@ void Input::AddController(SDL_Event _event)
 		else
 			std::cout << "SDL_GetError() = " << SDL_GetError() << std::endl;
 	}
+	else
+	{
+		connectedControllers.clear();
+		Initialise();
+	}
+
+
 	
 }
 
@@ -225,22 +234,39 @@ void Input::ControllerRemoved(SDL_Event _event)
 {
 	SDL_GameController* pad = SDL_GameControllerOpen(_event.cdevice.which);
 	removedControllers.push_back(SDL_GameControllerMapping(pad));
+
+	//if (SDL_GameControllerGetAttached(pad) == 1)
+	//{
+	//	char *mapping;
+	//	mapping = SDL_GameControllerMapping(pad);
+	//	SDL_Log("Controller %i is mapped as \"%s\".", _event.cdevice.which, mapping);
+	//	std::cout << "Controller %i MAPPING: " << mapping << std::endl;
+	//}
+
+	//char *mapping;
+	//mapping = SDL_GameControllerMapping(pad);
+	//SDL_Log("Controller %i is mapped as \"%s\".", _event.cdevice.which, mapping);
+	//std::cout << "Controller %i MAPPING: " << mapping << std::endl;
 }
 
 void Input::CountGamePads()
 {
-	int nJoysticks = SDL_NumJoysticks();
-	numGamepads = 0;
-
-	//Count how many controllers there are
-	for (int i = 0; i < nJoysticks; i++)
+	// only count if it's not in game
+	if (!inGame)
 	{
-		if (SDL_IsGameController(i))
-		{
-			numGamepads++;
-		}
-	}
+		int nJoysticks = SDL_NumJoysticks();
+		numGamepads = 0;
 
-	// Limit it to four
-	if (numGamepads > 4) numGamepads = 4; // just in case more than 4 controllers are plugged in
+		//Count how many controllers there are
+		for (int i = 0; i < nJoysticks; i++)
+		{
+			if (SDL_IsGameController(i))
+			{
+				numGamepads++;
+			}
+		}
+
+		// Limit it to four
+		if (numGamepads > 4) numGamepads = 4; // just in case more than 4 controllers are plugged in
+	}
 }

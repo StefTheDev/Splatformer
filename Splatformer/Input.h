@@ -34,6 +34,7 @@ public:
 	void CountGamePads();
 	int GetNumGamepads() { return numGamepads; }
 	void AddController();
+	bool inGame;
 
 private:
 	static Input* instance;
@@ -43,6 +44,9 @@ private:
 	std::vector<GamePad> controllerInputs;
 	std::vector<GamePad> lastControllerInputs;
 	std::vector<char*> removedControllers;
+	//std::vector<std::pair<char*, int>> removedControllers;
+
+	
 	//std::vector<int> removedControllers;
 	int numGamepads = 0;
 };
