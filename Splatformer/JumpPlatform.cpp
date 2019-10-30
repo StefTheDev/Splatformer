@@ -31,7 +31,7 @@ void JumpPlatform::Render(SDL_Renderer* _renderer) {
 		0,
 		static_cast<int>(!canCollide)
 	);
-	
+
 	float sizeX = thisInfo.dimensions.x * width;
 	float sizeY = thisInfo.dimensions.y * height;
 
