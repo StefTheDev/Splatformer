@@ -148,7 +148,7 @@ void Player::ThrowBall(int _button) {
 
 	if (haveBall) {
 		SoundManager::PlaySound("throw", FMOD_DEFAULT);
-		storedBall->ThrowBall(Vector2{collider->GetPosition().x + (55.0f * _button), -collider->GetPosition().y }, _button); //position);
+		storedBall->ThrowBall(Vector2{collider->GetPosition().x + (55.0f * _button), -collider->GetPosition().y - (height/2.0f) }, _button); //position);
 		storedBall = nullptr;
 		haveBall = false;
 	}
@@ -204,11 +204,16 @@ int Player::GetJumps() {
 	return currentJumps;
 }
 
+Collider * Player::GetCollider()
+{
+	return collider.get();
+}
+
 void Player::GainBall(Ball* _ball) {
 	haveBall = true;
 	storedBall = _ball;
 }
 
-bool Player::GetBall() {
+bool Player::HasBall() {
 	return haveBall;
 }

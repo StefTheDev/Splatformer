@@ -55,9 +55,8 @@ void Ball::Render(SDL_Renderer * _renderer){
 
 
 void Ball::Collect() {
-
 	collected = true;
-	this->collider->body->GetFixtureList()[0].SetSensor(true);
+	collider->body->GetFixtureList()->SetSensor(true);
 }
 
 bool Ball::isCollected() {
@@ -69,14 +68,20 @@ bool Ball::isCollected() {
 void Ball::ThrowBall(Vector2 _position, int _button) {
 	// apply to ball
 
+	float density = 8.0f;
+
 	thrown = true;
 	collider->body->SetType(b2_dynamicBody);
-	collider->body->SetActive(true);
+	collider->body->SetBullet(true);
+	collider->body->SetAwake(true);
 	collider->body->SetTransform(_position.AsBox2D(), 0.0f);
-	collider->body->SetLinearVelocity({ (75.0f * _button), 0.0f });
-	this->collider->body->GetFixtureList()[0].SetSensor(false);
-	this->collider->SetCollisionMask(MASK_BALL_NOCOLLIDE);
+	collider->body->SetLinearVelocity({ (300.0f * _button), 0.0f });
+	collider->body->GetFixtureList()->SetSensor(false);
+	collider->body->GetFixtureList()->SetDensity(density);
 
+	collider->SetCollisionMask(MASK_BALL_NOCOLLIDE);
+
+	std::cout << _button << std::endl;
 }
 
 bool Ball::IsThrown() {

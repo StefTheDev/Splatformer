@@ -17,7 +17,7 @@ constexpr int MASK_PLAYER_DEFAULT		= 0b1111010;
 constexpr int MASK_COIN_DEFAULT			= 0b0000100;
 
 constexpr int MASK_BALL_DEFAULT			= 0b0000110;
-constexpr int MASK_BALL_NOCOLLIDE		= 0b0000000;
+constexpr int MASK_BALL_NOCOLLIDE		= 0b0000100;
 
 constexpr int MASK_SENSOR_PLAYER		= 0b0000010;
 constexpr int MASK_SENSOR_PLATFORM		= 0b0001000;
