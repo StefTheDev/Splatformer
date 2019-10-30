@@ -33,6 +33,8 @@ GameScene::GameScene() {
 	sceneWorld->SetContactListener(contactListener);
 	sceneWorld->SetAllowSleeping(false);
 
+	std::cout << SoundManager::loopChannel->stop() << std::endl;
+
 	SoundManager::PlaySound("game bgm", FMOD_LOOP_NORMAL);
 }
 

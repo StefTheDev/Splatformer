@@ -86,5 +86,5 @@ void MenuScene::Load(SDL_Renderer* _gameRenderer)
 
 void MenuScene::Unload()
 {
-	std::cout << SoundManager::loopChannel->stop() << std::endl;
+	//std::cout << SoundManager::loopChannel->stop() << std::endl;
 }
