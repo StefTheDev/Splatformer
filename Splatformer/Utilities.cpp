@@ -177,8 +177,7 @@ void PlatformingListener::BeginContact(b2Contact* contact) {
 			ball = static_cast<Ball*>(fixtureAData->data);
 		}
 
-		if (!ball->IsThrown() && !ball->isCollected()) {
-
+		if (!ball->IsThrown() && !ball->isCollected() && !player->HasBall()) {
 			ball->Collect();
 			player->GainBall(ball);
 		}

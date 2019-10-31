@@ -13,6 +13,8 @@ GameManager::~GameManager()
 
 bool GameManager::Initialise(std::string _title)
 {
+	SoundManager::Initialise();
+	SoundManager::LoadSounds("Resources/Sounds");
 
 	Uint32 flags = SDL_WINDOW_SHOWN;
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
@@ -27,7 +29,7 @@ bool GameManager::Initialise(std::string _title)
 		renderer = SDL_CreateRenderer(window, -1, 0);
 		surface = SDL_GetWindowSurface(window);
 
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+		SDL_SetRenderDrawColor(renderer, 10, 10, 10, 255);
 		SDL_UpdateWindowSurface(window);
 
 		timeCurrentFrame = SDL_GetPerformanceCounter();
@@ -38,6 +40,7 @@ bool GameManager::Initialise(std::string _title)
 		scenes.push_back(std::make_unique<SceneStorage<Lobby>>());
 		scenes.push_back(std::make_unique<SceneStorage<GameScene>>());
 		scenes.push_back(std::make_unique<SceneStorage<WinScene>>());
+		scenes.push_back(std::make_unique<SceneStorage<InstructionScene>>());
 
 		scenes[MENU]->LoadScene(renderer);
 
@@ -45,8 +48,7 @@ bool GameManager::Initialise(std::string _title)
 		Input::GetInstance()->Initialise();
 	}
 
-	SoundManager::Initialise();
-	SoundManager::LoadSounds("Resources/Sounds");
+
 
 	Switch(MENU);
 

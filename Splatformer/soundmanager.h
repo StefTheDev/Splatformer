@@ -33,10 +33,10 @@ namespace SoundManager {
 	void Update();
 
 	//Play a sound using its file name sans extension, and sets the mode of the sound using FMOD_MODE
-	void PlaySound(std::string soundName, FMOD_MODE soundMode);
+	FMOD_RESULT PlaySound(std::string soundName, FMOD_MODE soundMode);
 
 	//Play a sound using its file name sans extension
-	void PlaySound(std::string soundName);
+	FMOD_RESULT PlaySound(std::string soundName);
 
 	//Sets the mode of the sound using FMOD_MODE
 	void SetSound(std::string soundName, FMOD_MODE soundMode);

@@ -18,6 +18,7 @@ std::string levelNames[] = {
 	"LevelTwo",
 	"LevelThree",
 	"LevelFour",
+	"LevelFive",
 	"JasonLevel",
 };
 
@@ -31,6 +32,8 @@ GameScene::GameScene() {
 	sceneWorld = std::make_unique<b2World>(gravity);
 	sceneWorld->SetContactListener(contactListener);
 	sceneWorld->SetAllowSleeping(false);
+
+	std::cout << SoundManager::loopChannel->stop() << std::endl;
 
 	SoundManager::PlaySound("game bgm", FMOD_LOOP_NORMAL);
 }
@@ -50,12 +53,14 @@ GameScene::~GameScene()
 void GameScene::Load(SDL_Renderer* _gameRenderer) {
 
 	Input::GetInstance()->inGame = true;
+	Input::GetInstance()->Initialise();
 
 	for (int i = 0; i < SDL_NumJoysticks(); ++i) {
 		if (SDL_IsGameController(i)) {
 			controllers.push_back(SDL_GameControllerOpen(i));
 		}
 	}
+
 
 	playerSprite = std::make_shared<Sprite>("Resources/Sprites/Apple.png", _gameRenderer, false);
 	platformSprite = std::make_shared<Sprite>("Resources/Sprites/PlatformSpriteSheet.png", _gameRenderer, false);
@@ -120,20 +125,21 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	distanceFromBeginningToEnd = (respawnPoints.front()->GetPosition() - respawnPoints.back()->GetPosition()).Magnitude();
 
 	camera->SetPosition(respawnPoints[0]->GetPosition());
-	/*for (auto it = respawnPoints.begin(); it != respawnPoints.end(); it++) {
+	for (auto it = respawnPoints.begin(); it != respawnPoints.end(); it++) {
 		camera->PushTargetBack((*it)->GetPosition());
-	}*/
+	}
 	camera->SetMoveSpeed(cameraSpeed);
 
 	float xScale = 0.8f;
 	float xOffset = ((1920 * xScale) / (players.size() + 1)) * -0.5f;
+
 	float stepDist = (1920 * xScale) / (players.size() + 1);
 
 	for (int i = 0; i < players.size(); i++)
 	{
 		std::unique_ptr<UIText> score = std::make_unique<UIText>();
 		score->LoadSprite(nullptr);
-		score->Initialise(Vector2(xOffset + (i * stepDist), 400.0f), "Test", 36, SDL_Color{ 0, 0, 0 }, _gameRenderer);
+		score->Initialise(Vector2(xOffset + (i * stepDist), 400.0f), "Test", 36, SDL_Color{ 255, 255, 255 }, _gameRenderer);
 		scores.push_back(std::move(score));
 	}
 }

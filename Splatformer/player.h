@@ -26,7 +26,7 @@ public:
 	int GetDeaths() { return deaths; }
 
 	void GainBall(Ball* ball);
-	bool GetBall();
+	bool HasBall();
 
 	void SetCanJump(bool newCanJump);
 
@@ -36,6 +36,8 @@ public:
 	bool CheckIsAlive() { return !isDead; }
 
 	static int GetJumps();
+
+	Collider* GetCollider();
 private:
 	Uint32 jumpTimerCallback(Uint32 interval, void* param);
 
