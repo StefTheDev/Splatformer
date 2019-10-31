@@ -6,8 +6,8 @@ Coin::Coin(Vector2 _position){
 
 	_position.y *= -1.0f;
 
-	_position.x *= 40.0f;
-	_position.y *= 75.0f;
+	_position.x *= 75.0f;
+	_position.y *= 40.0f;
 
 	Entity::Initialise(_position, { width, height });
 }
