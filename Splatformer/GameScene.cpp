@@ -17,9 +17,6 @@ std::string levelNames[] = {
 	"LevelOne",
 	"LevelTwo",
 	"LevelThree",
-	"LevelFour",
-	"LevelFive",
-	"JasonLevel",
 };
 
 GameScene::GameScene() {

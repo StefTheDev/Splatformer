@@ -3,15 +3,12 @@
 #include <stdlib.h>
 #include <time.h> 
 
-unsigned int maxLevels = 6;
+unsigned int maxLevels = 3;
 
 std::string levelTitles[] = {
-	"One",
-	"Two",
-	"Three",
-	"Four",
-	"Five",
-	"Jason"
+	"Entry",
+	"Drop Down",
+	"Flicker Stance",
 };
 
 Lobby::Lobby() {

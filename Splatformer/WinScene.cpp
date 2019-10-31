@@ -32,6 +32,7 @@ void WinScene::Load(SDL_Renderer* gameRenderer)
 
 	ScoreData highestScorer;
 
+	int highscorers = 1;
 	for (int i = 0; i < tempScoreData.size(); i++)
 	{
 		if (i == 0) {
@@ -39,6 +40,7 @@ void WinScene::Load(SDL_Renderer* gameRenderer)
 		}
 		else
 		{
+			if (highestScorer.score == tempScoreData[i].score) highscorers += 1;
 			if (highestScorer.score < tempScoreData[i].score) highestScorer = tempScoreData[i];
 		}
 	}
@@ -49,10 +51,16 @@ void WinScene::Load(SDL_Renderer* gameRenderer)
 		std::unique_ptr<UIText> scorer = std::make_unique<UIText>();
 		scorer->LoadSprite(nullptr);
 
-		if (score.index == highestScorer.index)
+		if (score.score == highestScorer.score)
 		{
-			std::string text = "Player " + std::to_string(i + 1) + ": " + std::to_string(tempScoreData[i].score) + " WINNER!";
-			scorer->Initialise(Vector2(0.0f, i * 64), text.c_str(), 32, SDL_Color{ 255, 0, 255 }, gameRenderer);
+			if (highscorers > 1) {
+				std::string text = "Player " + std::to_string(i + 1) + ": " + std::to_string(tempScoreData[i].score) + " DRAW!";
+				scorer->Initialise(Vector2(0.0f, i * 64), text.c_str(), 32, SDL_Color{ 255, 255, 0 }, gameRenderer);
+			}
+			else {
+				std::string text = "Player " + std::to_string(i + 1) + ": " + std::to_string(tempScoreData[i].score) + " WINNER!";
+				scorer->Initialise(Vector2(0.0f, i * 64), text.c_str(), 32, SDL_Color{ 255, 0, 255 }, gameRenderer);
+			}
 		}
 		else
 		{
