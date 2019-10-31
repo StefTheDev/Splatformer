@@ -72,7 +72,7 @@ void WinScene::Load(SDL_Renderer* gameRenderer)
 	}
 
 	std::unique_ptr<UIText> back = std::make_unique<UIText>();
-	back->Initialise(Vector2(0.0f, 300.0f), "(B) Menu", 32, SDL_Color{ 255, 255, 255 }, gameRenderer);
+	back->Initialise(Vector2(0.0f, 300.0f), "(B) Main Menu", 32, SDL_Color{ 255, 255, 255 }, gameRenderer);
 	objects.push_back(std::move(back));
 	/* Needed for gold Sprint
 	std::unique_ptr<UIButton> play = std::make_unique<UIButton>();

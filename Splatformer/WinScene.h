@@ -15,4 +15,5 @@ public:
 private:
 	void Load(SDL_Renderer* gameRenderer) override;
 	void Unload() override;
+	void ButtonDown(SDL_JoystickID _gamepadID, Uint8 _button) override;
 };

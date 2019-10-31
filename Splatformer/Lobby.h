@@ -20,6 +20,5 @@ public:
 private:
 	void Load(SDL_Renderer* gameRenderer) override;
 	void Unload() override;
-
 	std::map<SDL_JoystickID, Player> players;
 };
