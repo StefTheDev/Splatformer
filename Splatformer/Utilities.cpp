@@ -65,7 +65,7 @@ void PlatformingListener::PreSolve(b2Contact* contact, const b2Manifold* oldMani
 		Vector2 position;
 		float32 top, halfHeight;
 		Player* player;
-		Platform* platform;
+		RespawnPlatform* platform;
 
 		if (fixtureAData->type == PLR) {
 			player = static_cast<Player*>(fixtureAData->data);
@@ -90,6 +90,11 @@ void PlatformingListener::PreSolve(b2Contact* contact, const b2Manifold* oldMani
 			contact->SetEnabled(false);
 		} else {
 			player->SetCanJump(true);
+
+			if ((player->GetPosition().y + player->GetDimensions().y / 2) < (platform->GetPosition().y - platform->GetDimensions().y / 2) && !platform->GetActive()) {
+				platform->Activate();
+				player->addCoins(5);
+			}
 		}
 	} else if ((fixtureAData->type == PLT || fixtureAData->type == CBALL) && (fixtureBData->type == PLT || fixtureBData->type == CBALL)) {
 
@@ -184,28 +189,28 @@ void PlatformingListener::BeginContact(b2Contact* contact) {
 
 		return;
 
-	} else if ((fixtureAData->type == PLR || fixtureAData->type == RESPAWN) && (fixtureBData->type == PLR || fixtureBData->type == RESPAWN)) {
-		Player* player;
-		RespawnPlatform* respawnPlatform;
+	} //else if ((fixtureAData->type == PLR || fixtureAData->type == RESPAWN) && (fixtureBData->type == PLR || fixtureBData->type == RESPAWN)) {
+	//	Player* player;
+	//	RespawnPlatform* respawnPlatform;
 
-		if (fixtureAData->type == PLR) {
-			player = static_cast<Player*>(fixtureAData->data);
+	//	if (fixtureAData->type == PLR) {
+	//		player = static_cast<Player*>(fixtureAData->data);
 
-			respawnPlatform = static_cast<RespawnPlatform*>(fixtureBData->data);
-		} else {
-			player = static_cast<Player*>(fixtureBData->data);
+	//		respawnPlatform = static_cast<RespawnPlatform*>(fixtureBData->data);
+	//	} else {
+	//		player = static_cast<Player*>(fixtureBData->data);
 
-			respawnPlatform = static_cast<RespawnPlatform*>(fixtureAData->data);
-		}
+	//		respawnPlatform = static_cast<RespawnPlatform*>(fixtureAData->data);
+	//	}
 
-		if ((player->GetPosition().y + player->GetDimensions().y / 2) < (respawnPlatform->GetPosition().y - respawnPlatform->GetDimensions().y / 2) && !respawnPlatform->GetActive()) {
-			respawnPlatform->Activate();
-			player->addCoins(5);
-		}
+	//	//if ((player->GetPosition().y + player->GetDimensions().y / 2) < (respawnPlatform->GetPosition().y - respawnPlatform->GetDimensions().y / 2) && !respawnPlatform->GetActive()) {
+	//	//	respawnPlatform->Activate();
+	//	//	player->addCoins(5);
+	//	//}
 
 
-		return;
-	}
+	//	return;
+	//}
 
 }
 
