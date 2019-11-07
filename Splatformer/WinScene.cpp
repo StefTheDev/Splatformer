@@ -97,7 +97,7 @@ void WinScene::Load(SDL_Renderer* gameRenderer)
 			}
 			else {
 				std::string text = ": " + std::to_string(tempScoreData[i].score) + " WINNER!";
-				scorer->Initialise(Vector2(), text.c_str(), fontSize, SDL_Color{ 255, 0, 255 }, gameRenderer);
+				scorer->Initialise(Vector2(), text.c_str(), fontSize, SDL_Color{ 0, 255, 0 }, gameRenderer);
 				Vector2 textPos = Vector2(static_cast<float>(scorer->GetDimensions().x * 0.5f), i * 64.0f);
 				scorer->SetPosition(textPos);
 			}

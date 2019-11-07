@@ -54,6 +54,7 @@ private:
 	int deaths = 0;
 
 	//Jumping variables
+	float jumpGracePeriod = 0;
 	bool canJump = false;
 	bool jumpedInAir = false;
 	

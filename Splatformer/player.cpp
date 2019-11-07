@@ -6,6 +6,8 @@ constexpr float MAX_MOVE_SPEED = 480.0f;
 
 int Player::currentJumps = 0;
 
+const float gracePeriod = 0.1f;
+
 Uint32 resetGravScale(Uint32 _interval, void* _param) {
 	b2Body* body = static_cast<b2Body*>(_param);
 
@@ -98,6 +100,8 @@ void Player::Update(Camera* _gameCamera) {
 
 	jumpedInAir = (jumpedInAir && !canJump);
 
+	if (!canJump && jumpGracePeriod > 0.0f) jumpGracePeriod -= deltaTime;
+
 	GetSprite()->Play("idle");
 	Entity::Update();
 }
@@ -125,9 +129,9 @@ int Player::getCoins() {
 }
 
 void Player::Jump() {
-	if (canJump || !jumpedInAir) {
+	if (jumpGracePeriod > 0 || !jumpedInAir) {
 		collider->body->SetGravityScale(0.4f);
-		if (!canJump) {
+		if (!(jumpGracePeriod > 0.0f)) {
 			jumpedInAir = true;
 			collider->body->SetLinearVelocity({ collider->body->GetLinearVelocity().x, airJumpForce });
 			jumpTimer = SDL_AddTimer(maxAirJumpTime, resetGravScale, static_cast<void*>(collider->body.get()));
@@ -136,6 +140,7 @@ void Player::Jump() {
 			collider->body->SetLinearVelocity({ collider->body->GetLinearVelocity().x, jumpForce });
 			jumpTimer = SDL_AddTimer(maxJumpTime, resetGravScale, static_cast<void*>(collider->body.get()));
 			SoundManager::PlaySound("Jump");
+			jumpGracePeriod = 0.0f;
 		}
 		//Increment global jump count
 		currentJumps++;
@@ -174,6 +179,7 @@ void Player::MoveHorizontal(float _scale) {
 
 void Player::SetCanJump(bool _newCanJump) {
 	canJump = _newCanJump;
+	if (canJump) jumpGracePeriod = gracePeriod;
 }
 
 void Player::Kill() {
