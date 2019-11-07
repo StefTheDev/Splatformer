@@ -27,7 +27,8 @@ void Lobby::Update() {
 	static_cast<UIText*>(objects[4].get())->SetText("< " + levelTitles[SELECTED_LEVEL] + " >");
 }
 
-void Lobby::Render(SDL_Renderer* gameRenderer) {
+void Lobby::Render(SDL_Renderer* gameRenderer) 
+{
 
 }
 
@@ -65,7 +66,6 @@ void Lobby::Load(SDL_Renderer* _gameRenderer)
 	srand(time(NULL));
 
 	Input::GetInstance()->inGame = false;
-
 
 	std::unique_ptr<UIText> label = std::make_unique<UIText>();
 
