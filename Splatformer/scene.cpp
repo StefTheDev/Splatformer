@@ -163,3 +163,7 @@ void Scene::Quit() {
 Camera* Scene::GetCamera() {
 	return camera;
 }
+
+std::vector<std::unique_ptr<Entity>>& Scene::GetObjects() {
+	return objects;
+}

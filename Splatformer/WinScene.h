@@ -12,7 +12,14 @@ public:
 	void Update() override;
 	void Render(SDL_Renderer* gameRenderer) override;
 
+	//Just storing it until we need it
+	std::unique_ptr<UIButton> play;
+
 private:
+	SDL_TimerID waitTimer;
+
+	bool canInteract = false;
+
 	void Load(SDL_Renderer* gameRenderer) override;
 	void Unload() override;
 };

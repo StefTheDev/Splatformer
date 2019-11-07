@@ -1,5 +1,17 @@
 #include "WinScene.h"
 #include "GameManager.h"
+#include "SpriteManager.h"
+
+std::string spriteNames[] = {
+	"AppleSprite",
+	"BananaSprite",
+	"CarrotSprite",
+	"OnionSprite"
+};
+
+float spriteXOffset = -40.0f;
+int fontSize = 32;
+
 
 WinScene::WinScene()
 {
@@ -15,8 +27,30 @@ void WinScene::Update()
 
 }
 
-void WinScene::Render(SDL_Renderer* _gameRenderer)
-{
+void WinScene::Render(SDL_Renderer* _gameRenderer){
+	std::vector<ScoreData> tempScoreData = GameManager::GetInstance()->GetScoreData();
+
+	
+
+	for (int i = 0; i < tempScoreData.size(); i++) {
+		SpriteManager::Get()->GetSprite(spriteNames[i])->Draw(
+			_gameRenderer,
+			Vector2(WINDOW_WIDTH * 0.5f - (PLAYER_WIDTH * 0.5f) + spriteXOffset, (WINDOW_HEIGHT * 0.5f) + (i * 64.0f) - (PLAYER_WIDTH * 0.5f)),
+			Vector2(PLAYER_WIDTH, PLAYER_HEIGHT)
+		);
+	}
+		
+}
+
+Uint32 timerCallback(Uint32 interval, void* param) {
+
+	WinScene* thisScene = static_cast<WinScene*>(param);
+
+	thisScene->GetObjects().push_back(std::move(thisScene->play));
+
+	static_cast<UIButton*>(thisScene->GetObjects().back().get())->SetHover(true);
+
+	return 0;
 }
 
 void WinScene::Load(SDL_Renderer* gameRenderer)
@@ -51,38 +85,43 @@ void WinScene::Load(SDL_Renderer* gameRenderer)
 		std::unique_ptr<UIText> scorer = std::make_unique<UIText>();
 		scorer->LoadSprite(nullptr);
 
+
+
 		if (score.score == highestScorer.score)
 		{
 			if (highscorers > 1) {
-				std::string text = "Player " + std::to_string(i + 1) + ": " + std::to_string(tempScoreData[i].score) + " DRAW!";
-				scorer->Initialise(Vector2(0.0f, i * 64), text.c_str(), 32, SDL_Color{ 255, 255, 0 }, gameRenderer);
+				std::string text = ": " + std::to_string(tempScoreData[i].score) + " TIED!";
+				scorer->Initialise(Vector2(), text.c_str(), fontSize, SDL_Color{ 255, 255, 0 }, gameRenderer);
+				Vector2 textPos = Vector2(static_cast<float>(scorer->GetDimensions().x * 0.5f), i * 64.0f);
+				scorer->SetPosition(textPos);
 			}
 			else {
-				std::string text = "Player " + std::to_string(i + 1) + ": " + std::to_string(tempScoreData[i].score) + " WINNER!";
-				scorer->Initialise(Vector2(0.0f, i * 64), text.c_str(), 32, SDL_Color{ 255, 0, 255 }, gameRenderer);
+				std::string text = ": " + std::to_string(tempScoreData[i].score) + " WINNER!";
+				scorer->Initialise(Vector2(), text.c_str(), fontSize, SDL_Color{ 255, 0, 255 }, gameRenderer);
+				Vector2 textPos = Vector2(static_cast<float>(scorer->GetDimensions().x * 0.5f), i * 64.0f);
+				scorer->SetPosition(textPos);
 			}
 		}
 		else
 		{
-			std::string text = "Player " + std::to_string(i + 1) + ": " + std::to_string(tempScoreData[i].score) + "";
-			scorer->Initialise(Vector2(0.0f, i * 64), text.c_str(), 32, SDL_Color{ 255, 255, 255 }, gameRenderer);
+			std::string text = ": " + std::to_string(tempScoreData[i].score) + "";
+			scorer->Initialise(Vector2(), text.c_str(), fontSize, SDL_Color{ 255, 255, 255 }, gameRenderer);
+			Vector2 textPos = Vector2(static_cast<float>(scorer->GetDimensions().x * 0.5f), i * 64.0f);
+			scorer->SetPosition(textPos);
 		}
 
 		objects.push_back(std::move(scorer));
 	}
 
-
-	std::unique_ptr<UIButton> play = std::make_unique<UIButton>();
+	play = std::make_unique<UIButton>();
 	play->LoadSprite(nullptr);
-	play->Initialise(Vector2(0.0f, 300.0f), "MAIN MENU", 64, gameRenderer, [this]
-		{
-			GameManager::GetInstance()->Switch(MENU);
-		});
-
-	objects.push_back(std::move(play));
-	static_cast<UIButton*>(objects.back().get())->SetHover(true);
+	play->Initialise(Vector2(0.0f, 300.0f), "RETURN TO MENU", 64, gameRenderer, [this] {
+		GameManager::GetInstance()->Switch(MENU);
+	});
 
 	SoundManager::PlaySound("Victory", FMOD_DEFAULT);
+
+	waitTimer = SDL_AddTimer(5000, timerCallback, this);
 }
 
 void WinScene::Unload()

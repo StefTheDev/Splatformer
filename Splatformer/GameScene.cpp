@@ -19,6 +19,13 @@ std::string levelNames[] = {
 	"LevelThree",
 };
 
+std::string sprNames[] = {
+	"AppleSprite",
+	"BananaSprite",
+	"CarrotSprite",
+	"OnionSprite"
+};
+
 GameScene::GameScene() {
 	b2Vec2 gravity(0.0f, -39.2f);
 
@@ -128,15 +135,15 @@ void GameScene::Load(SDL_Renderer* _gameRenderer) {
 	camera->SetMoveSpeed(cameraSpeed);
 
 	float xScale = 0.8f;
-	float xOffset = ((1920 * xScale) / (players.size() + 1)) * -0.5f;
+	float xOffset = ((WINDOW_WIDTH * xScale) / (players.size() + 1)) * -0.5f;
 
-	float stepDist = (1920 * xScale) / (players.size() + 1);
+	float stepDist = (WINDOW_WIDTH * xScale) / (players.size() + 1);
 
 	for (int i = 0; i < players.size(); i++)
 	{
 		std::unique_ptr<UIText> score = std::make_unique<UIText>();
 		score->LoadSprite(nullptr);
-		score->Initialise(Vector2(xOffset + (i * stepDist), 400.0f), "Test", 36, SDL_Color{ 255, 255, 255 }, _gameRenderer);
+		score->Initialise(Vector2(xOffset + (i * stepDist), 400.0f), "Test", 36, SDL_Color{ 25, 255, 0 }, _gameRenderer);
 		scores.push_back(std::move(score));
 	}
 }
@@ -165,7 +172,7 @@ void GameScene::Update() {
 	for (int i = 0; i < players.size(); i++)
 	{
 		scores[i]->Update();
-		scores[i]->SetText("Player " + std::to_string(i + 1) + ": " + std::to_string(players[i]->getCoins() - players[i]->GetDeaths()));
+		scores[i]->SetText(": " + std::to_string(players[i]->getCoins() - players[i]->GetDeaths()));
 
 		if (players[i]->CheckIsAlive()) {
 			allDead = false;
@@ -229,6 +236,12 @@ void GameScene::Render(SDL_Renderer* _gameRenderer)
 	for (int i = 0; i < players.size(); i++)
 	{
 		scores[i]->Render(_gameRenderer);
+
+		SpriteManager::Get()->GetSprite(sprNames[i])->Draw(
+			_gameRenderer,
+			scores[i]->GetPosition() - (scores[i]->GetDimensions() * 0.5f) + (Vector2(WINDOW_WIDTH, WINDOW_HEIGHT) * 0.5f) - Vector2(30.0f, 0.0f),
+			Vector2(40.0f, 40.0f)
+		);
 	}
 
 	// PROGRESS BAR

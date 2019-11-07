@@ -46,6 +46,8 @@ public:
 
 	bool loaded = false;
 
+	std::vector<std::unique_ptr<Entity>>& GetObjects();
+
 protected:
 	virtual void Load(SDL_Renderer* gameRenderer) = 0;
 	virtual void Unload() = 0;
