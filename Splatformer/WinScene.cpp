@@ -24,13 +24,13 @@ void WinScene::Load(SDL_Renderer* gameRenderer)
 	std::unique_ptr<UIText> header = std::make_unique<UIText>();
 
 	header->LoadSprite(nullptr);
-	header->Initialise(Vector2(0.0f, -320.0f), "GAME OVER!", 128, SDL_Color{ 0, 255, 255 }, gameRenderer);
+	header->Initialise(Vector2(0.0f, -320.0f), "LEVEL COMPLETE!", 128, SDL_Color{ 0, 255, 255 }, gameRenderer);
 
 	objects.push_back(std::move(header));
 
 	std::vector<ScoreData> tempScoreData = GameManager::GetInstance()->GetScoreData();
 
-	ScoreData highestScorer;
+	ScoreData highestScorer{};
 
 	int highscorers = 1;
 	for (int i = 0; i < tempScoreData.size(); i++)
