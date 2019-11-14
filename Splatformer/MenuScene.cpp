@@ -24,6 +24,7 @@ void MenuScene::Load(SDL_Renderer* _gameRenderer)
 
 	Input::GetInstance()->inGame = false;
 	//SoundManager::loopChannel
+	SoundManager::loopChannel->stop();
 	std::cout << SoundManager::PlaySound("menu bgm", FMOD_LOOP_NORMAL) << std::endl;
 	//SoundManager::LoadSounds("Resources\Sounds");
 	//SoundManager::PlaySound("Horn");
